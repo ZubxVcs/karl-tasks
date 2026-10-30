@@ -2,7 +2,7 @@
 
 Aplikasi manajemen tugas dan jadwal harian Karl dengan struktur multi-page modular (FastAPI, SQLite, Jinja2, Vanilla CSS/JS).
 
-## 📁 Struktur File & Halaman:
+## Struktur File & Halaman:
 ```text
 karl_tasks/
 ├── app.py                  # Backend FastAPI REST API & Page Routes
@@ -20,7 +20,7 @@ karl_tasks/
     └── profile.html        # Halaman 4: Ganti Foto Profil / Avatar Kustom & Info Sistem
 ```
 
-## 🚀 Cara Menjalankan:
+## Cara Menjalankan:
 ```bash
 pip install fastapi uvicorn jinja2
 python3 -m uvicorn app:app --host 0.0.0.0 --port 8089
