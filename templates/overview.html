@@ -569,10 +569,10 @@ function renderBentoAppointmentCard(t) {
           </div>
         </div>
       </div>
-      <div class="bac-actions-col" onclick="event.stopPropagation()">
-        <button class="bac-btn-round btn-done" title="Tandai Selesai" onclick="toggleTaskStatus(${t.id}, true)">✓</button>
-        <button class="bac-btn-round btn-view" title="Buka Detail" onclick="openTaskDetail(${t.id}, event)">👁</button>
-        <button class="bac-btn-round btn-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">✎</button>
+      <div class="bac-stripes-col" title="Detail Tugas">
+        <span class="bac-stripe-line"></span>
+        <span class="bac-stripe-line"></span>
+        <span class="bac-stripe-line"></span>
       </div>
     </div>
   `;

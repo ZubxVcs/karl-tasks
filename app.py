@@ -266,27 +266,34 @@ def serve_overview(request: Request):
         
     return templates.TemplateResponse(request, template_name, {
         "active_page": "overview",
+        "current_theme": theme_cookie,
         "page_title": "Karl Tasks • Overview"
     })
 
 @app.get("/calendar", response_class=HTMLResponse)
 def serve_calendar(request: Request):
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "calendar.html", {
         "active_page": "calendar",
+        "current_theme": theme_cookie,
         "page_title": "Karl • Calendar & Schedule"
     })
 
 @app.get("/tasks", response_class=HTMLResponse)
 def serve_tasks(request: Request):
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "tasks.html", {
         "active_page": "tasks",
+        "current_theme": theme_cookie,
         "page_title": "Karl • Projects & Tasks"
     })
 
 @app.get("/settings", response_class=HTMLResponse)
 def serve_settings(request: Request):
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "settings.html", {
         "active_page": "settings",
+        "current_theme": theme_cookie,
         "page_title": "Karl • Pengaturan & Desain"
     })
 
@@ -294,6 +301,7 @@ def serve_settings(request: Request):
 def serve_theme_karl(request: Request):
     return templates.TemplateResponse(request, "overview_karl.html", {
         "active_page": "overview",
+        "current_theme": "default",
         "page_title": "Karl Tasks • Command Center"
     })
 
@@ -301,6 +309,7 @@ def serve_theme_karl(request: Request):
 def serve_theme_bento(request: Request):
     return templates.TemplateResponse(request, "overview_bento.html", {
         "active_page": "overview",
+        "current_theme": "bento",
         "page_title": "Karl Tasks • Medical Bento Squircle"
     })
 
@@ -308,12 +317,15 @@ def serve_theme_bento(request: Request):
 def serve_theme_student(request: Request):
     return templates.TemplateResponse(request, "overview_student.html", {
         "active_page": "overview",
+        "current_theme": "student",
         "page_title": "Karl Tasks • Student Course Hub"
     })
 
 @app.get("/profile", response_class=HTMLResponse)
 def serve_profile(request: Request):
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "settings.html", {
         "active_page": "settings",
+        "current_theme": theme_cookie,
         "page_title": "Karl • Pengaturan & Desain"
     })

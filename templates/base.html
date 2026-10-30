@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-design="{{ current_theme | default('default') }}">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function() {
+      var match = document.cookie.match(new RegExp('(^| )karl_ui_design=([^;]+)'));
+      var d = match ? match[2] : (localStorage.getItem('karl_ui_design') || 'default');
+      document.documentElement.setAttribute('data-design', d);
+      var t = localStorage.getItem('karl_ui_theme');
+      if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>{{ page_title | default("Karl Tasks | Command Center") }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=19.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=21.0">
 </head>
-<body>
+<body data-design="{{ current_theme | default('default') }}">
 
   <!-- ==================== DESKTOP TOPBAR ==================== -->
   <header class="pc-topbar">
@@ -386,7 +395,7 @@
       </div>
       <div class="modal-body-scroll" style="padding: 20px;">
         <div class="design-option-list">
-          <button class="design-option-card" onclick="setDesignTheme('default')">
+          <button class="design-option-card" onclick="setDesignTheme('default'); window.location.href='/theme/karl';">
             <div class="design-option-preview design-preview-crimson">
               <div class="dp-bar dp-bar1"></div>
               <div class="dp-bar dp-bar2"></div>
@@ -398,7 +407,7 @@
             </div>
             <div class="design-option-check" id="design-check-default"></div>
           </button>
-          <button class="design-option-card" onclick="setDesignTheme('bento')">
+          <button class="design-option-card" onclick="setDesignTheme('bento'); window.location.href='/theme/bento';">
             <div class="design-option-preview design-preview-bento">
               <div class="dp-sq dp-sq1"></div>
               <div class="dp-sq dp-sq2"></div>
@@ -411,7 +420,7 @@
             </div>
             <div class="design-option-check" id="design-check-bento"></div>
           </button>
-          <button class="design-option-card" onclick="setDesignTheme('student')">
+          <button class="design-option-card" onclick="setDesignTheme('student'); window.location.href='/theme/student';">
             <div class="design-option-preview design-preview-student">
               <div class="dp-pill dp-pill1"></div>
               <div class="dp-pill dp-pill2"></div>
@@ -428,7 +437,7 @@
     </div>
   </div>
 
-  <script src="/static/js/main.js?v=19.0"></script>
+  <script src="/static/js/main.js?v=21.0"></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

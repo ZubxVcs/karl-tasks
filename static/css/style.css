@@ -3821,3 +3821,98 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
 }
+
+/* ========================================================
+   BENTO STRIPES INDICATOR (REPLACES 3 BUTTONS)
+   ======================================================== */
+.bac-stripes-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 8px 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.bento-appointment-card:hover .bac-stripes-col {
+  background: rgba(22, 24, 34, 0.08);
+  transform: translateX(2px);
+}
+
+.bac-stripe-line {
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 9999px;
+  background: #64748B;
+  transition: all 0.2s ease;
+}
+
+.bac-stripe-line:nth-child(2) {
+  width: 70%;
+}
+
+.bac-stripe-line:nth-child(3) {
+  width: 85%;
+}
+
+[data-theme="dark"] .bac-stripes-col {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .bac-stripe-line {
+  background: #94A3B8;
+}
+
+[data-theme="dark"] .bento-appointment-card:hover .bac-stripes-col {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ========================================================
+   TASK BUCKETS PERFECT CENTERING & ICON SYMMETRY
+   ======================================================== */
+.bento-col-buckets {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.bento-buckets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.bento-bucket-card {
+  padding: 18px 14px;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.bucket-icon-circle {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  min-height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+}

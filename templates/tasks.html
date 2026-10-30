@@ -71,16 +71,10 @@ function renderTasksList() {
             </div>
           </div>
         </div>
-        <div class="bac-actions-col">
-          <button class="bac-btn-round" title="Status" onclick="toggleTaskStatus(${t.id}, ${!t.completed}, event)">
-            ${t.completed ? '↩' : '✓'}
-          </button>
-          <button class="bac-btn-round" title="Detail" onclick="openTaskDetail(${t.id}, event)">
-            👁
-          </button>
-          <button class="bac-btn-round" title="Edit" onclick="openEditModal(${t.id}, event)">
-            ✎
-          </button>
+        <div class="bac-stripes-col" title="Detail Tugas">
+          <span class="bac-stripe-line"></span>
+          <span class="bac-stripe-line"></span>
+          <span class="bac-stripe-line"></span>
         </div>
       </div>
     `).join('');
