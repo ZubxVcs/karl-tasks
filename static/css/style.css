@@ -4157,3 +4157,157 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
 .confirm-btn-proceed:active {
   transform: scale(0.96);
 }
+
+/* ========================================================
+   UNIVERSAL CRUD ACTIONS (INLINE BUTTONS & DETAIL SHEET)
+   ======================================================== */
+.sheet-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.action-btn-sheet {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.18s ease;
+}
+
+.btn-sheet-edit {
+  background: var(--card-subtle);
+  border-color: var(--border);
+  color: var(--text-main);
+}
+.btn-sheet-edit:hover {
+  background: var(--border);
+}
+
+.btn-sheet-status {
+  background: #10B981;
+  color: #FFFFFF;
+}
+.btn-sheet-status.is-done {
+  background: #64748B;
+}
+
+.btn-sheet-delete {
+  background: rgba(239, 68, 68, 0.12);
+  color: #EF4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+.btn-sheet-delete:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+/* Bento Inline Actions */
+.bac-actions-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bac-btn-action {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-act-done {
+  background: #E6FBF5;
+  color: #10B981;
+}
+.btn-act-done:hover {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.btn-act-edit {
+  background: var(--card-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+}
+.btn-act-edit:hover {
+  background: var(--border);
+}
+
+.btn-act-del {
+  background: #FFE8ED;
+  color: #EF4444;
+}
+.btn-act-del:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+/* Student Hub Inline Actions */
+.str-actions-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.str-mini-btn {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(108, 93, 211, 0.15);
+  background: #F0F2F9;
+  color: #6C5DD3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.str-mini-btn:hover {
+  background: #6C5DD3;
+  color: #FFFFFF;
+}
+
+.btn-str-delete {
+  color: #EF4444;
+  border-color: rgba(239, 68, 68, 0.18);
+  background: #FFF0F0;
+}
+.btn-str-delete:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .str-mini-btn {
+  background: #252A3D;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #D8B4FE;
+}
+[data-theme="dark"] .btn-str-delete {
+  background: #341D24;
+  color: #FFA5B5;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+[data-theme="dark"] .btn-str-delete:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+}

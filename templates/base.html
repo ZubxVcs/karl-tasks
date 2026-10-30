@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=24.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=26.0">
      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
 </head>
 <body data-design="{{ current_theme | default('default') }}">
@@ -370,9 +370,23 @@
           <input type="file" id="dropzone-input" style="display: none;">
         </div>
 
-        <!-- Action Row -->
+        <!-- Action Row: Full CRUD (Edit, Selesai/Batal, Hapus) & Share WA -->
         <div class="sheet-actions">
-          <button class="action-btn-close" onclick="closeDetailSheet()">Tutup</button>
+          <button type="button" class="action-btn-sheet btn-sheet-edit" id="btn-detail-edit" onclick="editFromDetail()">
+            <i class="ph ph-pencil-simple"></i>
+            <span>Edit</span>
+          </button>
+          <button type="button" class="action-btn-sheet btn-sheet-status" id="btn-detail-status" onclick="toggleStatusFromDetail()">
+            <i class="ph ph-check-circle" id="icon-detail-status"></i>
+            <span id="label-detail-status">Selesai</span>
+          </button>
+          <button type="button" class="action-btn-sheet btn-sheet-delete" id="btn-detail-delete" onclick="deleteFromDetail()">
+            <i class="ph ph-trash"></i>
+            <span>Hapus</span>
+          </button>
+        </div>
+
+        <div style="margin-top: 10px;">
           <a id="btn-share-wa" href="#" target="_blank" class="action-btn-wa">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.97.531 1.939.817 2.796.817 3.179 0 5.767-2.587 5.767-5.766.001-3.181-2.586-5.767-5.767-5.767zm7.505 5.766c-.001 4.14-3.366 7.505-7.505 7.505-.884 0-1.748-.157-2.553-.459l-3.567.935.952-3.479c-.352-.871-.537-1.808-.537-2.756 0-4.14 3.365-7.506 7.505-7.506 4.14 0 7.505 3.365 7.505 7.506z"/></svg>
             <span>Kirim Tugas ke WhatsApp</span>
@@ -456,7 +470,7 @@
     </div>
   </div>
 
-  <script src="/static/js/main.js?v=24.0"></script>
+  <script src="/static/js/main.js?v=26.0"></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

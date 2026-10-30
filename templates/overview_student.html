@@ -192,18 +192,28 @@ function renderStudentView() {
     } else {
       studentContainer.innerHTML = activeList.map(t => `
         <div class="student-task-row ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)">
-          <div class="str-checkbox" onclick="toggleTaskStatus(${t.id}, true, event)">
-            <div class="str-check-circle"></div>
+          <div class="str-checkbox" onclick="event.stopPropagation(); toggleTaskStatus(${t.id}, ${!t.completed}, event)" title="${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}">
+            <div class="str-check-circle ${t.completed ? 'checked' : ''}">
+              ${t.completed ? '<i class="ph ph-check" style="font-size: 0.75rem; color: #fff;"></i>' : ''}
+            </div>
           </div>
           <div class="str-info">
-            <div class="str-title">${escapeHtml(t.title)}</div>
+            <div class="str-title" style="${t.completed ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${escapeHtml(t.title)}</div>
             <div class="str-meta">
               <span class="str-cat-pill">${escapeHtml(t.category || 'Tugas')}</span>
               <span class="str-due">${formatHumanDate(t.deadline)}</span>
               <span class="str-prio">Prio: ${escapeHtml(t.priority)}</span>
             </div>
           </div>
-          <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+          <div class="str-actions-inline" onclick="event.stopPropagation()">
+            <button class="str-mini-btn btn-str-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+              <i class="ph ph-pencil-simple"></i>
+            </button>
+            <button class="str-mini-btn btn-str-delete" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+              <i class="ph ph-trash"></i>
+            </button>
+            <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+          </div>
         </div>
       `).join('');
     }

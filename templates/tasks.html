@@ -71,18 +71,26 @@ function renderTasksList() {
             </div>
           </div>
         </div>
-        <div class="bac-stripes-col" title="Detail Tugas">
-          <span class="bac-stripe-line"></span>
-          <span class="bac-stripe-line"></span>
-          <span class="bac-stripe-line"></span>
+        <div class="bac-actions-inline" onclick="event.stopPropagation()">
+          <button class="bac-btn-action btn-act-done" title="${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}" onclick="toggleTaskStatus(${t.id}, ${!t.completed}, event)">
+            <i class="ph ${t.completed ? 'ph-arrow-counter-clockwise' : 'ph-check'}"></i>
+          </button>
+          <button class="bac-btn-action btn-act-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+            <i class="ph ph-pencil-simple"></i>
+          </button>
+          <button class="bac-btn-action btn-act-del" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+            <i class="ph ph-trash"></i>
+          </button>
         </div>
       </div>
     `).join('');
   } else if (design === 'student') {
     container.innerHTML = filtered.map(t => `
       <div class="student-task-row ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)">
-        <div class="str-checkbox" onclick="toggleTaskStatus(${t.id}, ${!t.completed}, event)">
-          <div class="str-check-circle" style="${t.completed ? 'background: #6C5DD3; border-color: #6C5DD3;' : ''}"></div>
+        <div class="str-checkbox" onclick="event.stopPropagation(); toggleTaskStatus(${t.id}, ${!t.completed}, event)" title="${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}">
+          <div class="str-check-circle ${t.completed ? 'checked' : ''}">
+            ${t.completed ? '<i class="ph ph-check" style="font-size: 0.75rem; color: #fff;"></i>' : ''}
+          </div>
         </div>
         <div class="str-info">
           <div class="str-title" style="${t.completed ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${escapeHtml(t.title)}</div>
@@ -92,7 +100,15 @@ function renderTasksList() {
             <span class="str-prio">Prio: ${escapeHtml(t.priority)}</span>
           </div>
         </div>
-        <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+        <div class="str-actions-inline" onclick="event.stopPropagation()">
+          <button class="str-mini-btn btn-str-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+            <i class="ph ph-pencil-simple"></i>
+          </button>
+          <button class="str-mini-btn btn-str-delete" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+            <i class="ph ph-trash"></i>
+          </button>
+          <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+        </div>
       </div>
     `).join('');
   } else {

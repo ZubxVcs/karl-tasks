@@ -569,10 +569,16 @@ function renderBentoAppointmentCard(t) {
           </div>
         </div>
       </div>
-      <div class="bac-stripes-col" title="Detail Tugas">
-        <span class="bac-stripe-line"></span>
-        <span class="bac-stripe-line"></span>
-        <span class="bac-stripe-line"></span>
+      <div class="bac-actions-inline" onclick="event.stopPropagation()">
+        <button class="bac-btn-action btn-act-done" title="Tandai Selesai" onclick="toggleTaskStatus(${t.id}, true)">
+          <i class="ph ph-check"></i>
+        </button>
+        <button class="bac-btn-action btn-act-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+          <i class="ph ph-pencil-simple"></i>
+        </button>
+        <button class="bac-btn-action btn-act-del" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+          <i class="ph ph-trash"></i>
+        </button>
       </div>
     </div>
   `;
@@ -592,7 +598,15 @@ function renderStudentCard(t) {
           <span class="str-prio prio-${t.priority.toLowerCase()}">${t.priority}</span>
         </div>
       </div>
-      <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+      <div class="str-actions-inline" onclick="event.stopPropagation()">
+        <button class="str-mini-btn btn-str-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+          <i class="ph ph-pencil-simple"></i>
+        </button>
+        <button class="str-mini-btn btn-str-delete" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+          <i class="ph ph-trash"></i>
+        </button>
+        <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+      </div>
     </div>
   `;
 }

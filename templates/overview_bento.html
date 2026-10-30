@@ -194,10 +194,16 @@ function renderBentoView() {
               </div>
             </div>
           </div>
-          <div class="bac-stripes-col" title="Detail Tugas">
-            <span class="bac-stripe-line"></span>
-            <span class="bac-stripe-line"></span>
-            <span class="bac-stripe-line"></span>
+          <div class="bac-actions-inline" onclick="event.stopPropagation()">
+            <button class="bac-btn-action btn-act-done" title="${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}" onclick="toggleTaskStatus(${t.id}, ${!t.completed}, event)">
+              <i class="ph ${t.completed ? 'ph-arrow-counter-clockwise' : 'ph-check'}"></i>
+            </button>
+            <button class="bac-btn-action btn-act-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+              <i class="ph ph-pencil-simple"></i>
+            </button>
+            <button class="bac-btn-action btn-act-del" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+              <i class="ph ph-trash"></i>
+            </button>
           </div>
         </div>
       `).join('');

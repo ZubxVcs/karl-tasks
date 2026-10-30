@@ -364,9 +364,47 @@ function openTaskDetail(id, ev) {
   if (expandIcon) expandIcon.style.display = 'block';
   if (compressIcon) compressIcon.style.display = 'none';
 
+  // Update Detail Sheet CRUD buttons
+  const statusLabel = document.getElementById('label-detail-status');
+  const statusIcon = document.getElementById('icon-detail-status');
+  const btnStatus = document.getElementById('btn-detail-status');
+  if (statusLabel && statusIcon && btnStatus) {
+    if (task.completed) {
+      statusLabel.innerText = 'Batal';
+      statusIcon.className = 'ph ph-arrow-counter-clockwise';
+      btnStatus.classList.add('is-done');
+    } else {
+      statusLabel.innerText = 'Selesai';
+      statusIcon.className = 'ph ph-check-circle';
+      btnStatus.classList.remove('is-done');
+    }
+  }
+
   // Open Sheet with Push Animation
   const sheetModal = document.getElementById('detail-sheet-modal');
   if (sheetModal) sheetModal.classList.add('open');
+}
+
+function editFromDetail() {
+  if (!currentDetailTaskId) return;
+  const id = currentDetailTaskId;
+  closeDetailSheet();
+  setTimeout(() => openEditModal(id), 150);
+}
+
+async function toggleStatusFromDetail() {
+  if (!currentDetailTaskId) return;
+  const task = (typeof allTasks !== 'undefined' ? allTasks : []).find(t => t.id === currentDetailTaskId);
+  const nextStatus = task ? !task.completed : true;
+  await toggleTaskStatus(currentDetailTaskId, nextStatus);
+  closeDetailSheet();
+}
+
+async function deleteFromDetail() {
+  if (!currentDetailTaskId) return;
+  const id = currentDetailTaskId;
+  closeDetailSheet();
+  setTimeout(() => deleteTask(id), 150);
 }
 
 function closeDetailSheet() {
