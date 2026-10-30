@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=23.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=24.0">
 </head>
 <body data-design="{{ current_theme | default('default') }}">
 
@@ -439,26 +439,26 @@
 
   <!-- ==================== CUSTOM CONFIRMATION MODAL ==================== -->
   <div class="modal-overlay" id="custom-confirm-modal" style="display: none; z-index: 1000;" onclick="handleCustomConfirm(false)">
-    <div class="modal-card" style="max-width: 400px; text-align: center; padding: 28px 24px;" onclick="event.stopPropagation()">
-      <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(239, 27, 24, 0.12); color: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.5rem; font-weight: 800;">
+    <div class="modal-confirm-box" onclick="event.stopPropagation()">
+      <div class="confirm-icon-bubble">
         ⚠️
       </div>
-      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px;" id="confirm-modal-title">Ganti Desain Antarmuka?</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;" id="confirm-modal-desc">
+      <h3 class="confirm-modal-heading" id="confirm-modal-title">Ganti Desain Antarmuka?</h3>
+      <p class="confirm-modal-paragraph" id="confirm-modal-desc">
         Apakah kamu yakin ingin beralih ke desain ini? Halaman akan diperbarui otomatis sesuai tata letak pilihanmu.
       </p>
-      <div style="display: flex; gap: 12px; justify-content: center;">
-        <button type="button" class="btn-secondary" style="flex: 1; min-height: 44px; font-weight: 700;" onclick="handleCustomConfirm(false)">
+      <div class="confirm-actions-row">
+        <button type="button" class="confirm-btn-cancel" onclick="handleCustomConfirm(false)">
           Batal
         </button>
-        <button type="button" class="btn-primary" style="flex: 1; min-height: 44px; font-weight: 700;" id="confirm-modal-yes" onclick="handleCustomConfirm(true)">
+        <button type="button" class="confirm-btn-proceed" id="confirm-modal-yes" onclick="handleCustomConfirm(true)">
           Ya, Ganti
         </button>
       </div>
     </div>
   </div>
 
-  <script src="/static/js/main.js?v=23.0"></script>
+  <script src="/static/js/main.js?v=24.0"></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>
