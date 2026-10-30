@@ -860,12 +860,16 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
 .hero-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #FFFFFF !important;
   letter-spacing: -0.02em;
   display: flex;
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
+}
+
+[data-theme="light"] .hero-title {
+  color: #0A0D14 !important;
 }
 
 .hero-pipe {
