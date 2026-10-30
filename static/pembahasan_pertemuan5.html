@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembahasan & Cara Tulis Lembar Jawaban - Pertemuan 5</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-orange: #ff5c00;
+            --primary-orange-light: #fff8f5;
+            --primary-blue: #0284c7;
+            --dark-bg: #0f172a;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --box-bg: #f8fafc;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: #ffffff;
+            border: 2px solid var(--primary-orange);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .soal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+
+        .soal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+
+        .badge-no {
+            background: var(--primary-orange);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+
+        .soal-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        .pertanyaan {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            color: #334155;
+            background: var(--box-bg);
+            padding: 10px 14px;
+            border-left: 3px solid #94a3b8;
+            border-radius: 4px;
+        }
+
+        /* Format Penulisan di Kertas Jawaban */
+        .format-kertas {
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-left: 5px solid var(--primary-orange);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-top: 10px;
+            font-size: 1.05rem;
+        }
+
+        .kertas-label {
+            font-family: Arial, sans-serif;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--primary-orange);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .baris-tulis {
+            margin-bottom: 4px;
+            text-align: justify;
+        }
+
+        .indent {
+            margin-left: 24px;
+        }
+
+        .jawaban-akhir {
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: var(--primary-orange-light);
+            border: 1px dashed var(--primary-orange);
+            border-radius: 6px;
+            font-weight: bold;
+            color: #9a3412;
+            display: inline-block;
+        }
+
+        .btn-copy-box {
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .btn-copy {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+
+        .btn-copy:hover {
+            background: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>LEMBAR PENYELESAIAN TUGAS MATEMATIKA</h1>
+        <p>Pertemuan 5: Relasi dan Fungsi (Format Standar Penulisan Buku/Kertas Jawaban)</p>
+    </div>
+
+    <!-- SOAL 1 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 1</span>
+            <span class="soal-title">Relasi Diagram Panah</span>
+        </div>
+        <div class="pertanyaan">
+            Relasi dari himpunan \(A = \{2, 5, 7\}\) ke himpunan \(B = \{4, 9, 10, 14, 15\}\) pada diagram panah adalah . . . .
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Diketahui:</b></div>
+            <div class="baris-tulis indent">• Himpunan \(A = \{2, 5, 7\}\)</div>
+            <div class="baris-tulis indent">• Himpunan \(B = \{4, 9, 10, 14, 15\}\)</div>
+            <div class="baris-tulis indent">• Pasangan relasi: \((2, 4), (2, 10), (2, 14), (5, 10), (5, 15), (7, 14)\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Penyelesaian:</b></div>
+            <div class="baris-tulis indent">• Anggota 2 membagi habis 4, 10, dan 14 (2 adalah faktor dari 4, 10, 14).</div>
+            <div class="baris-tulis indent">• Anggota 5 membagi habis 10 dan 15 (5 adalah faktor dari 10, 15).</div>
+            <div class="baris-tulis indent">• Anggota 7 membagi habis 14 (7 adalah faktor dari 14).</div>
+            <div class="baris-tulis indent">Maka relasi yang menghubungkan himpunan \(A\) ke \(B\) adalah <b>"faktor dari"</b>.</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah B. faktor dari</div>
+        </div>
+    </div>
+
+    <!-- SOAL 2 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 2</span>
+            <span class="soal-title">Relasi Pasangan Berurutan</span>
+        </div>
+        <div class="pertanyaan">
+            Relasi dari himpunan \(P\) ke \(Q\) dinyatakan dalam himpunan pasangan berurutan \(\{(2, 3), (3, 4), (6, 7), (8, 9)\}\). Relasi tersebut adalah . . . .
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Diketahui:</b></div>
+            <div class="baris-tulis indent">Pasangan berurutan \((x, y) = \{(2, 3), (3, 4), (6, 7), (8, 9)\}\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Penyelesaian:</b></div>
+            <div class="baris-tulis indent">Periksa hubungan antara nilai \(x\) dan nilai \(y\):</div>
+            <div class="baris-tulis indent">• \(2 = 3 - 1\) &nbsp;&rarr;&nbsp; 2 adalah satu kurang dari 3</div>
+            <div class="baris-tulis indent">• \(3 = 4 - 1\) &nbsp;&rarr;&nbsp; 3 adalah satu kurang dari 4</div>
+            <div class="baris-tulis indent">• \(6 = 7 - 1\) &nbsp;&rarr;&nbsp; 6 adalah satu kurang dari 7</div>
+            <div class="baris-tulis indent">• \(8 = 9 - 1\) &nbsp;&rarr;&nbsp; 8 adalah satu kurang dari 9</div>
+            <div class="baris-tulis indent">Secara umum berlaku hubungan \(x = y - 1\) (satu kurang dari).</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah B. satu kurang dari</div>
+        </div>
+    </div>
+
+    <!-- SOAL 3 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 3</span>
+            <span class="soal-title">Identifikasi Pemetaan (Fungsi)</span>
+        </div>
+        <div class="pertanyaan">
+            Diagram panah yang merupakan pemetaan dari \(A\) ke \(B\) adalah . . . .
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Syarat Pemetaan (Fungsi):</b></div>
+            <div class="baris-tulis indent">Setiap anggota daerah asal (\(A\)) harus memiliki tepat satu pasangan di daerah kawan (\(B\)).</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Analisis Diagram:</b></div>
+            <div class="baris-tulis indent">• <b>Diagram (i):</b> Semua anggota \(A\) mempunyai tepat satu pasangan di \(B\) &rarr; <b>Pemetaan</b>.</div>
+            <div class="baris-tulis indent">• <b>Diagram (ii):</b> Ada anggota \(A\) yang memiliki 2 pasangan di \(B\) &rarr; <i>Bukan pemetaan</i>.</div>
+            <div class="baris-tulis indent">• <b>Diagram (iii):</b> Ada anggota \(A\) yang tidak memiliki pasangan di \(B\) &rarr; <i>Bukan pemetaan</i>.</div>
+            <div class="baris-tulis indent">• <b>Diagram (iv):</b> Semua anggota \(A\) mempunyai tepat satu pasangan di \(B\) &rarr; <b>Pemetaan</b>.</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah C. (i) dan (iv)</div>
+        </div>
+    </div>
+
+    <!-- SOAL 4 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 4</span>
+            <span class="soal-title">Pemetaan Pasangan Berurutan</span>
+        </div>
+        <div class="pertanyaan">
+            Di antara himpunan pasangan berurutan berikut, yang merupakan pemetaan adalah . . . .
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Syarat Pemetaan:</b> Elemen pertama (\(x\)) tidak boleh muncul berulang (tidak boleh ada yang sama).</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Uji Pilihan:</b></div>
+            <div class="baris-tulis indent">• A. \(\{(1, a), (2, b), (3, c), (1, d)\}\) &rarr; angka 1 muncul 2 kali (Bukan).</div>
+            <div class="baris-tulis indent">• B. \(\{(1, a), (2, b), (3, b), (2, c)\}\) &rarr; angka 2 muncul 2 kali (Bukan).</div>
+            <div class="baris-tulis indent">• C. \(\{(1, a), (2, a), (3, a), (4, b)\}\) &rarr; elemen pertama \(\{1, 2, 3, 4\}\) semuanya berbeda (<b>Pemetaan</b>).</div>
+            <div class="baris-tulis indent">• D. \(\{(1, a), (2, c), (3, b), (3, d)\}\) &rarr; angka 3 muncul 2 kali (Bukan).</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah C. {(1, a), (2, a), (3, a), (4, b)}</div>
+        </div>
+    </div>
+
+    <!-- SOAL 5 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 5</span>
+            <span class="soal-title">Diagram Cartesius Pemetaan</span>
+        </div>
+        <div class="pertanyaan">
+            Diagram Cartesius berikut yang merupakan pemetaan dari \(A\) ke \(B\) adalah . . . .
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Dasar Teori (Uji Garis Vertikal):</b></div>
+            <div class="baris-tulis indent">Grafik merupakan pemetaan jika setiap garis vertikal sejajar sumbu \(B\) hanya memotong kurva tepat di satu titik.</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Analisis Gambar:</b></div>
+            <div class="baris-tulis indent">• Pilihan A berupa kurva linear kontinu. Setiap satu nilai \(x\) memiliki tepat satu nilai \(y\).</div>
+            <div class="baris-tulis indent">• Pilihan B, C, dan D memotong garis vertikal di lebih dari satu titik sehingga bukan fungsi.</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah A</div>
+        </div>
+    </div>
+
+    <!-- SOAL 6 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 6</span>
+            <span class="soal-title">Menentukan Range Pemetaan</span>
+        </div>
+        <div class="pertanyaan">
+            Range dari pemetaan yang ditunjukkan oleh diagram panah di bawah adalah . . . .<br>
+            <i>Himpunan \(P = \{a, b, c\}\), Himpunan \(Q = \{1, 2, 3, 4, 5\}\). Panah: \(a \to 2\), \(b \to 2\), \(c \to 4\).</i>
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Diketahui:</b></div>
+            <div class="baris-tulis indent">• Domain (daerah asal) = \(\{a, b, c\}\)</div>
+            <div class="baris-tulis indent">• Kodomain (daerah kawan) = \(\{1, 2, 3, 4, 5\}\)</div>
+            <div class="baris-tulis indent">• Pasangan: \(a \to 2\), \(b \to 2\), \(c \to 4\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Penyelesaian:</b></div>
+            <div class="baris-tulis indent">Range (daerah hasil) adalah himpunan semua anggota kodomain yang memiliki pasangan di domain:</div>
+            <div class="baris-tulis indent">Anggota \(Q\) yang terkena panah relasi adalah 2 dan 4.</div>
+            <div class="baris-tulis indent">\(\text{Range} = \{2, 4\}\)</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah D. {2, 4}</div>
+        </div>
+    </div>
+
+    <!-- SOAL 7 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 7</span>
+            <span class="soal-title">Menentukan Daerah Hasil (Range) Fungsi Kuadrat</span>
+        </div>
+        <div class="pertanyaan">
+            Diketahui pemetaan \(f : x \to 9 - x^2\). Jika domain \(f = \{x \mid x \leq 5, x \in \text{bilangan asli}\}\), maka daerah hasilnya adalah . . . .
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Diketahui:</b></div>
+            <div class="baris-tulis indent">Rumus fungsi: \(f(x) = 9 - x^2\)</div>
+            <div class="baris-tulis indent">Domain = \(\{1, 2, 3, 4, 5\}\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Penyelesaian (Substitusi nilai \(x\)):</b></div>
+            <div class="baris-tulis indent">• Untuk \(x = 1\) &rarr; \(f(1) = 9 - (1)^2 = 9 - 1 = 8\)</div>
+            <div class="baris-tulis indent">• Untuk \(x = 2\) &rarr; \(f(2) = 9 - (2)^2 = 9 - 4 = 5\)</div>
+            <div class="baris-tulis indent">• Untuk \(x = 3\) &rarr; \(f(3) = 9 - (3)^2 = 9 - 9 = 0\)</div>
+            <div class="baris-tulis indent">• Untuk \(x = 4\) &rarr; \(f(4) = 9 - (4)^2 = 9 - 16 = -7\)</div>
+            <div class="baris-tulis indent">• Untuk \(x = 5\) &rarr; \(f(5) = 9 - (5)^2 = 9 - 25 = -16\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;">Diperoleh himpunan daerah hasil: \(\{-16, -7, 0, 5, 8\}\).</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah A. {-16, -7, 0, 5, 8}</div>
+        </div>
+    </div>
+
+    <!-- SOAL 8 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 8</span>
+            <span class="soal-title">Menemukan Rumus Pemetaan</span>
+        </div>
+        <div class="pertanyaan">
+            Diagram panah menunjukkan pemetaan \(f : A \rightarrow B\) dengan \(A = \{2, 5, 8\}\) dan \(B = \{1, 7, 13\}\). Rumus pemetaannya adalah . . . .
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Diketahui:</b></div>
+            <div class="baris-tulis indent">Bentuk umum fungsi linear: \(f(x) = ax + b\)</div>
+            <div class="baris-tulis indent">Titik pasangan: \((2, 1), (5, 7), (8, 13)\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Penyelesaian:</b></div>
+            <div class="baris-tulis indent">1. Menentukan nilai \(a\) (gradien):</div>
+            <div class="baris-tulis indent" style="margin-left: 36px;">\(a = \frac{7 - 1}{5 - 2} = \frac{6}{3} = 2\)</div>
+            <div class="baris-tulis indent">2. Menentukan nilai \(b\) (substitusi \(x = 2, f(2) = 1\)):</div>
+            <div class="baris-tulis indent" style="margin-left: 36px;">\(f(2) = 2(2) + b = 1\)</div>
+            <div class="baris-tulis indent" style="margin-left: 36px;">\(4 + b = 1\)</div>
+            <div class="baris-tulis indent" style="margin-left: 36px;">\(b = 1 - 4 = -3\)</div>
+            <div class="baris-tulis indent">3. Menyusun rumus fungsi:</div>
+            <div class="baris-tulis indent" style="margin-left: 36px;">\(f(x) = 2x - 3\)</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah C. f(x) = 2x - 3</div>
+        </div>
+    </div>
+
+    <!-- SOAL 9 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 9</span>
+            <span class="soal-title">Menghitung Nilai Bayangan Fungsi</span>
+        </div>
+        <div class="pertanyaan">
+            Pada pemetaan \(f : x \rightarrow \frac{3}{2}(x + 1) - 7\), bayangan dari 7 adalah . . . .
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Diketahui:</b></div>
+            <div class="baris-tulis indent">Rumus fungsi: \(f(x) = \frac{3}{2}(x + 1) - 7\)</div>
+            <div class="baris-tulis indent">Nilai \(x = 7\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Penyelesaian:</b></div>
+            <div class="baris-tulis indent">\(f(7) = \frac{3}{2}(7 + 1) - 7\)</div>
+            <div class="baris-tulis indent">\(f(7) = \frac{3}{2}(8) - 7\)</div>
+            <div class="baris-tulis indent">\(f(7) = (3 \times 4) - 7\)</div>
+            <div class="baris-tulis indent">\(f(7) = 12 - 7\)</div>
+            <div class="baris-tulis indent">\(f(7) = 5\)</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah C. 5</div>
+        </div>
+    </div>
+
+    <!-- SOAL 10 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 10</span>
+            <span class="soal-title">Fungsi Pecahan Aljabar</span>
+        </div>
+        <div class="pertanyaan">
+            Suatu pemetaan mempunyai rumus \(f(x) = \frac{2x - 5}{x + 3}\). Jika \(f(a) = -5\), maka nilai \(a = \dots.\)
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Diketahui:</b></div>
+            <div class="baris-tulis indent">\(f(x) = \frac{2x - 5}{x + 3}\) dan \(f(a) = -5\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Penyelesaian:</b></div>
+            <div class="baris-tulis indent">\(\frac{2a - 5}{a + 3} = -5\)</div>
+            <div class="baris-tulis indent">\(2a - 5 = -5(a + 3)\)</div>
+            <div class="baris-tulis indent">\(2a - 5 = -5a - 15\)</div>
+            <div class="baris-tulis indent">\(2a + 5a = -15 + 5\)</div>
+            <div class="baris-tulis indent">\(7a = -10\)</div>
+            <div class="baris-tulis indent">\(a = -\frac{10}{7}\)</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah C. -10/7</div>
+        </div>
+    </div>
+
+    <!-- SOAL 11 -->
+    <div class="soal-card">
+        <div class="soal-header">
+            <span class="badge-no">SOAL 11</span>
+            <span class="soal-title">Menentukan Nilai Parameter Fungsi</span>
+        </div>
+        <div class="pertanyaan">
+            Diketahui pemetaan \(g : x \rightarrow mx + 5\). Jika \(g(3) = 2\), maka nilai \(m = \dots.\)
+        </div>
+        <div class="format-kertas">
+            <span class="kertas-label">✍️ Format Penulisan di Kertas:</span>
+            <div class="baris-tulis"><b>Diketahui:</b></div>
+            <div class="baris-tulis indent">Rumus fungsi: \(g(x) = mx + 5\)</div>
+            <div class="baris-tulis indent">Nilai \(g(3) = 2\)</div>
+            <div class="baris-tulis" style="margin-top: 6px;"><b>Penyelesaian:</b></div>
+            <div class="baris-tulis indent">\(g(3) = m(3) + 5 = 2\)</div>
+            <div class="baris-tulis indent">\(3m + 5 = 2\)</div>
+            <div class="baris-tulis indent">\(3m = 2 - 5\)</div>
+            <div class="baris-tulis indent">\(3m = -3\)</div>
+            <div class="baris-tulis indent">\(m = \frac{-3}{3}\)</div>
+            <div class="baris-tulis indent">\(m = -1\)</div>
+            <div class="jawaban-akhir">Jadi, pilihan jawaban yang benar adalah C. -1</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

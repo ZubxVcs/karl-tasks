@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-head-row">
+  <h2 class="section-title">Pengaturan & Desain</h2>
+  <span class="section-action" onclick="window.location.reload()">Refresh</span>
+</div>
+
+<!-- SECTION 1: PROFIL PENGGUNA -->
+<div class="settings-card profile-banner-card">
+  <div class="profile-banner-avatar">
+    <img src="/static/img/karl_logo_square.png" alt="Karl Logo" class="profile-logo-img">
+  </div>
+  <div class="profile-banner-details">
+    <div class="profile-badge-row">
+      <span class="pill-badge pill-primary">Owner & Operator</span>
+      <span class="pill-badge pill-neutral">Teknik Informatika</span>
+    </div>
+    <h3 class="profile-user-name">Karl Firjatullah</h3>
+    <p class="profile-meta-text">NIM: 2611070020 | Universitas Sains Indonesia (USI)</p>
+  </div>
+</div>
+
+<!-- SECTION 2: PILIH DESAIN ANTARMUKA -->
+<div class="section-head-row" style="margin-top: 28px;">
+  <h2 class="section-title">Pilih Desain Antarmuka</h2>
+  <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Klik untuk ganti layout</span>
+</div>
+
+<div class="design-selection-grid">
+  <!-- THEME 1: KARL COMMAND CENTER -->
+  <div class="design-card" id="theme-card-default" onclick="selectDesignEngine('default')">
+    <div class="design-card-preview preview-karl-style">
+      <div class="preview-mini-banner">
+        <div class="preview-mini-logo"></div>
+        <div class="preview-mini-lines">
+          <div class="pml-1"></div>
+          <div class="pml-2"></div>
+        </div>
+      </div>
+      <div class="preview-mini-cards">
+        <div class="pmc-box pmc-red"></div>
+        <div class="pmc-box pmc-orange"></div>
+      </div>
+    </div>
+    <div class="design-card-content">
+      <div class="design-card-top">
+        <h4 class="design-card-title">Karl Command Center</h4>
+        <span class="design-status-pill" id="status-pill-default">Aktif</span>
+      </div>
+      <p class="design-card-desc">Desain agresif bertema logo orisinal Karl. Dilengkapi banner logo menyala, kartu metrik cepat, dan chip kategori interaktif.</p>
+      <div class="design-card-tags">
+        <span class="tag-pill">Merah Crimson #EF1B18</span>
+        <span class="tag-pill">Orange Starburst #E76720</span>
+        <span class="tag-pill">Dark Slate</span>
+      </div>
+      <button class="btn-use-design" id="btn-select-default">Gunakan Desain Ini</button>
+    </div>
+  </div>
+
+  <!-- THEME 2: MEDICAL BENTO SQUIRCLE -->
+  <div class="design-card" id="theme-card-bento" onclick="selectDesignEngine('bento')">
+    <div class="design-card-preview preview-bento-style">
+      <div class="preview-bento-shell">
+        <div class="preview-bento-board">
+          <div class="pbb-col">
+            <div class="pbb-sq sq-rose"></div>
+            <div class="pbb-sq sq-blue"></div>
+          </div>
+          <div class="pbb-col">
+            <div class="pbb-sq sq-lavender"></div>
+            <div class="pbb-sq sq-amber"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="design-card-content">
+      <div class="design-card-top">
+        <h4 class="design-card-title">Medical Bento Squircle</h4>
+        <span class="design-status-pill" id="status-pill-bento">Aktif</span>
+      </div>
+      <p class="design-card-desc">Kanvas melayang bergaya dashboard medis modern. Struktur kolom task buckets, kartu fokus bento pastel, dan kartu tugas bergaya jadwal janji dengan tombol bulat gelap.</p>
+      <div class="design-card-tags">
+        <span class="tag-pill">Floating Board #222531</span>
+        <span class="tag-pill">Pastel Bento</span>
+        <span class="tag-pill">Squircle 28px</span>
+      </div>
+      <button class="btn-use-design" id="btn-select-bento">Gunakan Desain Ini</button>
+    </div>
+  </div>
+
+  <!-- THEME 3: STUDENT COURSE HUB -->
+  <div class="design-card" id="theme-card-student" onclick="selectDesignEngine('student')">
+    <div class="design-card-preview preview-student-style">
+      <div class="preview-student-board">
+        <div class="psb-head">
+          <div class="psb-avatar"></div>
+          <div class="psb-text"></div>
+        </div>
+        <div class="psb-rings">
+          <div class="psb-circle psb-violet"></div>
+          <div class="psb-circle psb-mint"></div>
+        </div>
+      </div>
+    </div>
+    <div class="design-card-content">
+      <div class="design-card-top">
+        <h4 class="design-card-title">Student Course Hub</h4>
+        <span class="design-status-pill" id="status-pill-student">Aktif</span>
+      </div>
+      <p class="design-card-desc">Dashboard produktivitas kuliah bernuansa periwinkle violet. Kartu putih bersih, sapaan ramah ala kampus, progress capaian materi, dan pill badges membulat halus.</p>
+      <div class="design-card-tags">
+        <span class="tag-pill">Violet Periwinkle #6C5DD3</span>
+        <span class="tag-pill">Clean White</span>
+        <span class="tag-pill">Pill 9999px</span>
+      </div>
+      <button class="btn-use-design" id="btn-select-student">Gunakan Desain Ini</button>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: MODE TAMPILAN & SERVER STATUS -->
+<div class="section-head-row" style="margin-top: 28px;">
+  <h2 class="section-title">Preferensi & Sistem</h2>
+</div>
+
+<div class="settings-card" style="margin-bottom: 24px;">
+  <div class="settings-row" style="padding-bottom: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">Mode Gelap / Terang</div>
+      <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Sesuaikan kenyamanan mata saat siang atau malam</div>
+    </div>
+    <button class="btn-secondary" onclick="toggleTheme()" style="min-height: 44px; display: inline-flex; align-items: center; gap: 8px;">
+      🌓 Ganti Tema
+    </button>
+  </div>
+
+  <div class="settings-row" style="padding-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">Bersihkan Cache Aplikasi</div>
+      <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Muat ulang data tugas dan refresh local storage</div>
+    </div>
+    <button class="btn-secondary" onclick="clearAppCache()" style="min-height: 44px; color: var(--accent-red);">
+      🗑 Bersihkan Cache
+    </button>
+  </div>
+</div>
+
+<div id="settings-toast" class="toast">Desain berhasil diaktifkan!</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function updateSettingsView() {
+  const current = localStorage.getItem('karl_ui_design') || 'default';
+
+  // Reset all cards
+  ['default', 'bento', 'student'].forEach(theme => {
+    const card = document.getElementById(`theme-card-${theme}`);
+    const pill = document.getElementById(`status-pill-${theme}`);
+    const btn = document.getElementById(`btn-select-${theme}`);
+
+    if (card && pill && btn) {
+      if (theme === current) {
+        card.classList.add('selected');
+        pill.style.display = 'inline-block';
+        btn.innerText = 'Desain Sedang Digunakan';
+        btn.classList.add('active');
+      } else {
+        card.classList.remove('selected');
+        pill.style.display = 'none';
+        btn.innerText = 'Gunakan Desain Ini';
+        btn.classList.remove('active');
+      }
+    }
+  });
+}
+
+function selectDesignEngine(name) {
+  setDesignTheme(name);
+  updateSettingsView();
+  
+  const toast = document.getElementById('settings-toast');
+  if (toast) {
+    toast.innerText = `Desain ${name === 'bento' ? 'Medical Bento' : (name === 'student' ? 'Student Hub' : 'Karl Command Center')} aktif!`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+}
+
+function clearAppCache() {
+  if (confirm('Bersihkan cache dan muat ulang halaman?')) {
+    localStorage.removeItem('karl_custom_avatar');
+    window.location.reload();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateSettingsView();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-head-row">
+  <h2 class="section-title">Profil & Pengaturan</h2>
+  <span class="section-action" onclick="resetAvatar()">Reset PP</span>
+</div>
+
+<div class="profile-card">
+  <div class="profile-avatar-large user-avatar-box">
+    <span class="avatar-initials">KF</span>
+  </div>
+  
+  <div>
+    <div class="profile-name-text">Karl Firjatullah</div>
+    <div class="profile-bio-text">Teknik Informatika • Universitas Sains Indonesia (USI)</div>
+  </div>
+
+  <label class="avatar-upload-label">
+    📷 Ganti Foto / PP
+    <input type="file" id="avatar-file-input" accept="image/*" style="display: none;" onchange="handleAvatarUpload(event)">
+  </label>
+
+  <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-top: 8px;">Atau Pilih Avatar Favorit:</div>
+  <div class="avatar-presets">
+    <button class="preset-btn" onclick="setAvatarPreset('🦊')" title="Fox">🦊</button>
+    <button class="preset-btn" onclick="setAvatarPreset('🚀')" title="Rocket">🚀</button>
+    <button class="preset-btn" onclick="setAvatarPreset('⚡')" title="Lightning">⚡</button>
+    <button class="preset-btn" onclick="setAvatarPreset('💻')" title="Coding">💻</button>
+    <button class="preset-btn" onclick="setAvatarPreset('☕')" title="Coffee">☕</button>
+  </div>
+</div>
+
+<div class="focus-card" style="cursor: default;">
+  <span class="focus-badge">🔗 Integrasi Sistem</span>
+  <div class="focus-title">Terhubung 2 Arah dengan Bot WA (Hermes)</div>
+  <div class="focus-time">Database SQLite lokal homelab otomatis sinkron saat kamu ngobrol atau kasih tugas ke bot di WhatsApp.</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Profile page specific initialization if any
+</script>
+{% endblock %}

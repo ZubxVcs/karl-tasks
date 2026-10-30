@@ -1,0 +1,591 @@
+// Karl Tasks Studio - Shared JS
+const monthNames = [
+  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+];
+
+function formatHumanDate(dateStr) {
+  if (!dateStr) return 'Tanpa deadline';
+  const parts = dateStr.split('-');
+  if (parts.length === 3) {
+    const d = parseInt(parts[2], 10);
+    const m = parseInt(parts[1], 10) - 1;
+    const y = parts[0];
+    return `${d} ${monthNames[m] || ''} ${y}`;
+  }
+  return dateStr;
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.innerText = str;
+  return d.innerHTML;
+}
+
+// Theme handling
+function initTheme() {
+  const isDark = localStorage.getItem('karl_ui_theme') === 'dark';
+  if (isDark) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.body.setAttribute('data-theme', 'dark');
+  }
+}
+
+function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  document.body.setAttribute('data-theme', next);
+  localStorage.setItem('karl_ui_theme', next);
+}
+
+// Design theme handling
+function applySavedDesign() {
+  const saved = localStorage.getItem('karl_ui_design') || 'default';
+  document.documentElement.setAttribute('data-design', saved);
+  document.body.setAttribute('data-design', saved);
+  updateDesignChecks(saved);
+}
+
+function setDesignTheme(name) {
+  localStorage.setItem('karl_ui_design', name);
+  document.documentElement.setAttribute('data-design', name);
+  document.body.setAttribute('data-design', name);
+  updateDesignChecks(name);
+  closeDesignModal();
+  if (typeof applyCurrentLayout === 'function') {
+    applyCurrentLayout();
+  }
+  if (typeof renderAllViews === 'function') {
+    renderAllViews();
+  }
+}
+
+function updateDesignChecks(active) {
+  const checkDefault = document.getElementById('design-check-default');
+  const checkBento = document.getElementById('design-check-bento');
+  const checkStudent = document.getElementById('design-check-student');
+  if (checkDefault) checkDefault.classList.toggle('active', active === 'default');
+  if (checkBento) checkBento.classList.toggle('active', active === 'bento');
+  if (checkStudent) checkStudent.classList.toggle('active', active === 'student');
+}
+
+function openDesignModal() {
+  const modal = document.getElementById('design-modal');
+  if (modal) {
+    const current = localStorage.getItem('karl_ui_design') || 'default';
+    updateDesignChecks(current);
+    modal.classList.add('open');
+  }
+}
+
+function closeDesignModal() {
+  const modal = document.getElementById('design-modal');
+  if (modal) modal.classList.remove('open');
+}
+
+// Avatar handling
+function applySavedAvatar() {
+  const saved = localStorage.getItem('karl_custom_avatar');
+  const avatarBoxes = document.querySelectorAll('.user-avatar-box');
+  
+  avatarBoxes.forEach(box => {
+    if (saved) {
+      if (saved.startsWith('data:image') || saved.startsWith('http')) {
+        box.innerHTML = `<img src="${saved}" alt="PP Karl">`;
+      } else {
+        box.innerHTML = `<span style="font-size: 1.4rem;">${saved}</span>`;
+      }
+    } else {
+      box.innerHTML = '<img src="/static/img/karl_logo_square.png" alt="Karl">';
+    }
+  });
+}
+
+function handleAvatarUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    const dataUrl = evt.target.result;
+    localStorage.setItem('karl_custom_avatar', dataUrl);
+    applySavedAvatar();
+  };
+  reader.readAsDataURL(file);
+}
+
+function setAvatarPreset(emoji) {
+  localStorage.setItem('karl_custom_avatar', emoji);
+  applySavedAvatar();
+}
+
+function resetAvatar() {
+  localStorage.removeItem('karl_custom_avatar');
+  applySavedAvatar();
+}
+
+// Modal handling
+function openModal() {
+  const modal = document.getElementById('task-modal');
+  if (modal) {
+    const today = new Date().toISOString().split('T')[0];
+    const dateInput = document.getElementById('input-task-date');
+    if (dateInput && !dateInput.value) {
+      dateInput.value = today;
+    }
+    const imgInput = document.getElementById('input-task-img');
+    if (imgInput) imgInput.value = '';
+    const webInput = document.getElementById('input-task-web');
+    if (webInput) webInput.value = '';
+    const instInput = document.getElementById('input-task-inst');
+    if (instInput) instInput.value = '';
+    const matInput = document.getElementById('input-task-mat');
+    if (matInput) matInput.value = '';
+    modal.classList.add('open');
+  }
+}
+
+function closeModal() {
+  const modal = document.getElementById('task-modal');
+  if (modal) modal.classList.remove('open');
+}
+
+// Edit Modal Handling
+function openEditModal(id, ev) {
+  if (ev) ev.stopPropagation();
+  // Tutup menu kebab yang terbuka
+  document.querySelectorAll('.kebab-menu').forEach(m => m.classList.remove('show'));
+
+  // Cari dari allTasks atau fetch langsung jika belum siap
+  let task = (typeof allTasks !== 'undefined' ? allTasks : []).find(t => t.id === id);
+  
+  const populateAndShow = (t) => {
+    document.getElementById('edit-task-id').value = t.id;
+    document.getElementById('edit-task-title').value = t.title || '';
+    document.getElementById('edit-task-cat').value = t.category || 'Umum';
+    document.getElementById('edit-task-prio').value = t.priority || 'Sedang';
+    document.getElementById('edit-task-date').value = t.deadline || '';
+    const imgInput = document.getElementById('edit-task-img');
+    if (imgInput) imgInput.value = t.image_url || '';
+    const webInput = document.getElementById('edit-task-web');
+    if (webInput) webInput.value = t.web_preview_url || '';
+    const instInput = document.getElementById('edit-task-inst');
+    if (instInput) instInput.value = t.instructions || '';
+    const matInput = document.getElementById('edit-task-mat');
+    if (matInput) matInput.value = t.materials || '';
+
+    const modal = document.getElementById('edit-task-modal');
+    if (modal) modal.classList.add('open');
+  };
+
+  if (task) {
+    populateAndShow(task);
+  } else {
+    fetch('/api/todos')
+      .then(res => res.json())
+      .then(tasks => {
+        if (typeof allTasks !== 'undefined') allTasks = tasks;
+        const found = tasks.find(t => t.id === id);
+        if (found) populateAndShow(found);
+      });
+  }
+}
+
+function closeEditModal() {
+  const modal = document.getElementById('edit-task-modal');
+  if (modal) modal.classList.remove('open');
+}
+
+// Helper function: convert text with URLs and file paths into clickable HTML links (<a href>)
+function linkifyText(text) {
+  if (!text) return '';
+  // Escape basic HTML
+  let escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // Match standard URLs (http:// or https://)
+  const urlRegex = /(https?:\/\/[^\s<]+)/g;
+  escaped = escaped.replace(urlRegex, function(url) {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="content-text-link">${url}</a>`;
+  });
+
+  // Match local /download/ or /uploads/ paths
+  const localPathRegex = /(^|[\s(])(\/(?:download|uploads)\/[^\s<)]+)/g;
+  escaped = escaped.replace(localPathRegex, function(match, prefix, path) {
+    return `${prefix}<a href="${path}" target="_blank" download class="content-text-link">📥 ${path}</a>`;
+  });
+
+  return escaped;
+}
+
+// ==================== TASK DETAIL SLIDE SHEET HANDLER ====================
+let currentDetailTaskId = null;
+
+function openTaskDetail(id, ev) {
+  if (ev && (ev.target.closest('.kebab-btn') || ev.target.closest('.kebab-menu'))) {
+    return;
+  }
+  const task = (typeof allTasks !== 'undefined' ? allTasks : []).find(t => t.id === id);
+  if (!task) return;
+  currentDetailTaskId = task.id;
+
+  // Title, Category, Deadline
+  document.getElementById('detail-title').innerText = task.title;
+  document.getElementById('detail-cat').innerText = task.category || 'Umum';
+  document.getElementById('detail-date').innerText = `Deadline: ${formatHumanDate(task.deadline)}`;
+
+  // Center Image (Hanya tampil jika tugas memiliki image_url)
+  const imgWrap = document.getElementById('detail-center-img-wrap');
+  const imgEl = document.getElementById('detail-img');
+  if (task.image_url && task.image_url.trim() !== '') {
+    imgEl.src = task.image_url;
+    imgWrap.style.display = 'flex';
+  } else {
+    imgWrap.style.display = 'none';
+    imgEl.src = '';
+  }
+
+  // Instructions Block
+  const instBlock = document.getElementById('block-inst');
+  const instText = document.getElementById('detail-inst');
+  if (task.instructions && task.instructions.trim() !== '') {
+    instText.innerHTML = linkifyText(task.instructions);
+    instBlock.style.display = 'block';
+  } else {
+    instBlock.style.display = 'none';
+  }
+
+  // Materials & Answers Block
+  const matBlock = document.getElementById('block-mat');
+  const matText = document.getElementById('detail-mat');
+  if (task.materials && task.materials.trim() !== '') {
+    matText.innerHTML = linkifyText(task.materials);
+    matBlock.style.display = 'block';
+  } else {
+    matBlock.style.display = 'none';
+  }
+
+  // Interactive Webview Block
+  const webBlock = document.getElementById('block-web');
+  const iframeEl = document.getElementById('detail-iframe');
+  if (task.web_preview_url && task.web_preview_url.trim() !== '') {
+    iframeEl.src = task.web_preview_url;
+    webBlock.style.display = 'block';
+  } else {
+    iframeEl.src = 'about:blank';
+    webBlock.style.display = 'none';
+  }
+
+  // File Download Link
+  const fileWrap = document.getElementById('file-link-wrap');
+  const fileBtn = document.getElementById('btn-download-file');
+  const fileNameLabel = document.getElementById('file-name-label');
+  if (task.file_url && task.file_url.trim() !== '') {
+    fileBtn.href = task.file_url;
+    if (fileNameLabel) {
+      const parts = task.file_url.split('/');
+      let rawName = decodeURIComponent(parts[parts.length - 1]);
+      // Bersihkan timestamp angka di depan nama file jika ada
+      rawName = rawName.replace(/^\d+_/, '');
+      fileNameLabel.innerText = rawName;
+    }
+    fileWrap.style.display = 'block';
+  } else {
+    fileWrap.style.display = 'none';
+  }
+
+  // WhatsApp Share Link
+  const waBtn = document.getElementById('btn-share-wa');
+  const waMsg = encodeURIComponent(
+    `*TUGAS: ${task.title}*\n` +
+    `• Kategori: ${task.category}\n` +
+    `• Deadline: ${formatHumanDate(task.deadline)}\n\n` +
+    (task.materials ? `*Rincian Jawaban/Materi:*\n${task.materials}\n\n` : '') +
+    (task.file_url ? `📎 Link Berkas: ${window.location.origin}${task.file_url}\n` : '') +
+    `🌐 Dashboard: ${window.location.origin}/tasks`
+  );
+  waBtn.href = `https://api.whatsapp.com/send?text=${waMsg}`;
+
+  // Reset Fullscreen State saat dibuka
+  const sheetBox = document.getElementById('detail-sheet-box');
+  if (sheetBox) sheetBox.classList.remove('fullscreen');
+  const expandIcon = document.getElementById('icon-expand');
+  const compressIcon = document.getElementById('icon-compress');
+  if (expandIcon) expandIcon.style.display = 'block';
+  if (compressIcon) compressIcon.style.display = 'none';
+
+  // Open Sheet with Push Animation
+  const sheetModal = document.getElementById('detail-sheet-modal');
+  if (sheetModal) sheetModal.classList.add('open');
+}
+
+function closeDetailSheet() {
+  const sheetModal = document.getElementById('detail-sheet-modal');
+  if (sheetModal) sheetModal.classList.remove('open');
+  const sheetBox = document.getElementById('detail-sheet-box');
+  if (sheetBox) sheetBox.classList.remove('fullscreen');
+  const wrap = document.getElementById('iframe-wrap');
+  if (wrap) wrap.classList.remove('web-fullscreen');
+  const btn = document.getElementById('btn-web-fullscreen');
+  if (btn) btn.innerText = '⛶ Buka Web Fullscreen';
+  const iframeEl = document.getElementById('detail-iframe');
+  if (iframeEl) iframeEl.src = 'about:blank';
+}
+
+function toggleFullscreenSheet() {
+  const sheetBox = document.getElementById('detail-sheet-box');
+  const expandIcon = document.getElementById('icon-expand');
+  const compressIcon = document.getElementById('icon-compress');
+  if (!sheetBox) return;
+
+  const isFull = sheetBox.classList.toggle('fullscreen');
+  if (isFull) {
+    if (expandIcon) expandIcon.style.display = 'none';
+    if (compressIcon) compressIcon.style.display = 'block';
+  } else {
+    if (expandIcon) expandIcon.style.display = 'block';
+    if (compressIcon) compressIcon.style.display = 'none';
+  }
+}
+
+function toggleWebviewFullscreen() {
+  const wrap = document.getElementById('iframe-wrap');
+  const btn = document.getElementById('btn-web-fullscreen');
+  if (!wrap) return;
+
+  const isWebFull = wrap.classList.toggle('web-fullscreen');
+  if (isWebFull) {
+    btn.innerText = '✕ Tutup Fullscreen Web';
+  } else {
+    btn.innerText = '⛶ Buka Web Fullscreen';
+  }
+}
+
+async function handleTaskImageUpload(e, target) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      if (target === 'input') {
+        document.getElementById('input-task-img').value = data.url;
+      } else {
+        document.getElementById('edit-task-img').value = data.url;
+      }
+      alert('Foto dokumen/slide berhasil diunggah!');
+    }
+  } catch (err) {
+    alert('Gagal mengunggah foto.');
+  }
+}
+
+// Drag & Drop File Upload Handler
+function initDropzone() {
+  const dropzone = document.getElementById('task-dropzone');
+  const fileInput = document.getElementById('dropzone-input');
+  if (!dropzone || !fileInput) return;
+
+  dropzone.onclick = () => fileInput.click();
+
+  dropzone.ondragover = (e) => {
+    e.preventDefault();
+    dropzone.classList.add('dragover');
+  };
+  dropzone.ondragleave = () => dropzone.classList.remove('dragover');
+
+  dropzone.ondrop = (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) {
+      uploadFileForTask(e.dataTransfer.files[0]);
+    }
+  };
+
+  fileInput.onchange = () => {
+    if (fileInput.files.length) {
+      uploadFileForTask(fileInput.files[0]);
+    }
+  };
+}
+
+async function uploadFileForTask(file) {
+  if (!currentDetailTaskId) return;
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      await fetch(`/api/todos/${currentDetailTaskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ file_url: data.url })
+      });
+      alert(`Berkas ${data.filename} berhasil diunggah!`);
+      const task = (typeof allTasks !== 'undefined' ? allTasks : []).find(t => t.id === currentDetailTaskId);
+      if (task) task.file_url = data.url;
+      const fileWrap = document.getElementById('file-link-wrap');
+      const fileBtn = document.getElementById('btn-download-file');
+      fileBtn.href = data.url;
+      fileWrap.style.display = 'block';
+    }
+  } catch (err) {
+    alert('Gagal mengunggah berkas.');
+  }
+}
+
+async function submitEditTask() {
+  const id = document.getElementById('edit-task-id').value;
+  const title = document.getElementById('edit-task-title').value.trim();
+  if (!title) {
+    alert('Judul tugas tidak boleh kosong');
+    return;
+  }
+  const category = document.getElementById('edit-task-cat').value;
+  const priority = document.getElementById('edit-task-prio').value;
+  const deadline = document.getElementById('edit-task-date').value || '';
+  const imgInput = document.getElementById('edit-task-img');
+  const image_url = imgInput ? imgInput.value.trim() : '';
+  const webInput = document.getElementById('edit-task-web');
+  const web_preview_url = webInput ? webInput.value.trim() : '';
+  const instInput = document.getElementById('edit-task-inst');
+  const instructions = instInput ? instInput.value.trim() : '';
+  const matInput = document.getElementById('edit-task-mat');
+  const materials = matInput ? matInput.value.trim() : '';
+
+  try {
+    const res = await fetch(`/api/todos/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, category, priority, deadline, image_url, web_preview_url, instructions, materials })
+    });
+    if (res.ok) {
+      closeEditModal();
+      if (typeof reloadPageData === 'function') {
+        await reloadPageData();
+      } else {
+        window.location.reload();
+      }
+    } else {
+      alert('Gagal memperbarui tugas');
+    }
+  } catch (e) {
+    alert('Gagal memperbarui tugas');
+  }
+}
+
+async function submitNewTask() {
+  const titleInput = document.getElementById('input-task-title');
+  const title = titleInput.value.trim();
+  if (!title) {
+    alert('Judul tugas tidak boleh kosong');
+    return;
+  }
+
+  const category = document.getElementById('input-task-cat').value;
+  const priority = document.getElementById('input-task-prio').value;
+  const deadline = document.getElementById('input-task-date').value || '';
+  const imgInput = document.getElementById('input-task-img');
+  const image_url = imgInput ? imgInput.value.trim() : '';
+  const webInput = document.getElementById('input-task-web');
+  const web_preview_url = webInput ? webInput.value.trim() : '';
+  const instInput = document.getElementById('input-task-inst');
+  const instructions = instInput ? instInput.value.trim() : '';
+  const matInput = document.getElementById('input-task-mat');
+  const materials = matInput ? matInput.value.trim() : '';
+
+  try {
+    const res = await fetch('/api/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, category, priority, deadline, image_url, web_preview_url, instructions, materials })
+    });
+    if (res.ok) {
+      titleInput.value = '';
+      if (imgInput) imgInput.value = '';
+      if (webInput) webInput.value = '';
+      if (instInput) instInput.value = '';
+      if (matInput) matInput.value = '';
+      closeModal();
+      if (typeof reloadPageData === 'function') {
+        await reloadPageData();
+      } else {
+        window.location.reload();
+      }
+    }
+  } catch (e) {
+    alert('Gagal menambahkan tugas');
+  }
+}
+
+async function toggleTaskStatus(id, completed) {
+  try {
+    await fetch(`/api/todos/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ completed })
+    });
+    // Update array lokal agar instan
+    if (typeof allTasks !== 'undefined') {
+      const t = allTasks.find(item => item.id === id);
+      if (t) t.completed = completed;
+    }
+    if (typeof reloadPageData === 'function') {
+      await reloadPageData();
+    } else {
+      window.location.reload();
+    }
+  } catch (e) {
+    alert('Gagal memperbarui status tugas');
+  }
+}
+
+async function deleteTask(id) {
+  if (!confirm('Hapus tugas ini?')) return;
+  try {
+    await fetch(`/api/todos/${id}`, { method: 'DELETE' });
+    if (typeof reloadPageData === 'function') {
+      await reloadPageData();
+    } else {
+      window.location.reload();
+    }
+  } catch (e) {
+    alert('Gagal menghapus tugas');
+  }
+}
+
+function toggleKebab(id, ev) {
+  ev.stopPropagation();
+  document.querySelectorAll('.kebab-menu').forEach(m => {
+    if (m.id !== `kebab-${id}`) m.classList.remove('show');
+  });
+  document.getElementById(`kebab-${id}`)?.classList.toggle('show');
+}
+
+window.addEventListener('click', () => {
+  document.querySelectorAll('.kebab-menu').forEach(m => m.classList.remove('show'));
+});
+
+// Auto-run on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  applySavedDesign();
+  initTheme();
+  applySavedAvatar();
+  initDropzone();
+});

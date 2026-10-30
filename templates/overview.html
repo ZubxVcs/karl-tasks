@@ -1,0 +1,604 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- ========================================================
+     LAYOUT 1: KARL COMMAND CENTER (DEFAULT)
+     ======================================================== -->
+<div class="layout-view layout-karl" id="view-karl">
+  <!-- Karl Hero Banner -->
+  <div class="karl-hero-banner">
+    <div class="hero-logo-wrap">
+      <img src="/static/img/karl_logo_square.png" alt="Karl Logo" class="hero-logo-img">
+    </div>
+    <div class="hero-text-block">
+      <div class="hero-title">Karl Tasks <span class="hero-pipe">|</span> Command Center</div>
+      <div class="hero-status" id="hero-status-line">
+        <span class="hero-status-dot"></span>
+        <span id="hero-status-text">Memuat status...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Card -->
+  <div class="progress-card" id="progress-card">
+    <div class="progress-header">
+      <span class="progress-label">Progress Keseluruhan</span>
+      <span class="progress-pct" id="progress-pct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+    </div>
+    <div class="progress-sub" id="progress-sub">0 dari 0 tugas selesai</div>
+  </div>
+
+  <!-- Category Quick Filters -->
+  <div class="quick-cat-row">
+    <button class="qcat-chip active" data-cat="all" onclick="filterByCat('all')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      Semua
+    </button>
+    <button class="qcat-chip" data-cat="Kuliah" onclick="filterByCat('Kuliah')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Kuliah
+    </button>
+    <button class="qcat-chip" data-cat="Homelab" onclick="filterByCat('Homelab')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Homelab
+    </button>
+    <button class="qcat-chip" data-cat="Coding" onclick="filterByCat('Coding')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Coding
+    </button>
+    <button class="qcat-chip" data-cat="Umum" onclick="filterByCat('Umum')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Umum
+    </button>
+  </div>
+
+  <!-- Metric Cards -->
+  <div class="metrics-grid">
+    <a href="/tasks" class="metric-card card-purple">
+      <div class="metric-top">
+        <span class="metric-val" id="metric-total">0</span>
+        <div class="metric-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        </div>
+      </div>
+      <div class="metric-bottom">
+        <span class="metric-lbl">Total Tugas</span>
+        <span class="chevron-icon">&rsaquo;</span>
+      </div>
+    </a>
+
+    <a href="/tasks" class="metric-card card-green">
+      <div class="metric-top">
+        <span class="metric-val" id="metric-completed">0</span>
+        <div class="metric-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="9 12 12 15 16 10"></polyline></svg>
+        </div>
+      </div>
+      <div class="metric-bottom">
+        <span class="metric-lbl">Selesai</span>
+        <span class="chevron-icon">&rsaquo;</span>
+      </div>
+    </a>
+
+    <a href="/tasks" class="metric-card card-orange">
+      <div class="metric-top">
+        <span class="metric-val" id="metric-pending">0</span>
+        <div class="metric-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+      </div>
+      <div class="metric-bottom">
+        <span class="metric-lbl">Berjalan</span>
+        <span class="chevron-icon">&rsaquo;</span>
+      </div>
+    </a>
+
+    <a href="/tasks" class="metric-card card-cyan">
+      <div class="metric-top">
+        <span class="metric-val" id="metric-high">0</span>
+        <div class="metric-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+      </div>
+      <div class="metric-bottom">
+        <span class="metric-lbl">Prioritas Tinggi</span>
+        <span class="chevron-icon">&rsaquo;</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Priority Focus Card -->
+  <div class="section-head-row">
+    <h2 class="section-title">Fokus Utama</h2>
+    <a href="/calendar" class="section-action">Kalender &rsaquo;</a>
+  </div>
+  <a href="/calendar" class="focus-card" id="focus-banner">
+    <span class="focus-badge">⚡ Target Utama</span>
+    <div class="focus-title" id="focus-title">Memuat target fokus...</div>
+    <div class="focus-time" id="focus-deadline">Jadwal target</div>
+  </a>
+
+  <!-- All Active Tasks Section in Home -->
+  <div class="section-head-row" style="margin-top: 28px;">
+    <h2 class="section-title">Daftar Tugas Aktif</h2>
+    <a href="/tasks" class="section-action">Kelola Semua &rsaquo;</a>
+  </div>
+  <div class="tasks-container" id="overview-tasks-list">
+    <div style="text-align: center; padding: 24px; color: var(--text-muted); background: var(--card); border-radius: 20px; border: 1px solid var(--border);">
+      Memuat semua tugas...
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================
+     LAYOUT 2: MEDICAL BENTO DASHBOARD (SQUIRCLE CANVAS)
+     ======================================================== -->
+<div class="layout-view layout-bento" id="view-bento" style="display: none;">
+  <div class="bento-outer-container">
+    <div class="bento-grid-wrapper">
+      
+      <!-- Bento Column Left: Task Buckets ("What do you need?") -->
+      <div class="bento-col-buckets">
+        <div class="bento-section-title">
+          <span>Task Buckets</span>
+          <button class="bento-add-mini-btn" onclick="openModal()" title="Tambah Tugas">+</button>
+        </div>
+        <p class="bento-section-sub">Kategori tugas aktif kuliah & project</p>
+        
+        <div class="bento-buckets-grid">
+          <div class="bento-bucket-card bento-bk-kuliah" onclick="filterByCat('Kuliah')">
+            <div class="bucket-icon-circle">🎓</div>
+            <div class="bucket-name">Kuliah USI</div>
+            <div class="bucket-count" id="bento-count-kuliah">0 Tugas</div>
+          </div>
+          <div class="bento-bucket-card bento-bk-coding" onclick="filterByCat('Coding')">
+            <div class="bucket-icon-circle">💻</div>
+            <div class="bucket-name">Coding Lab</div>
+            <div class="bucket-count" id="bento-count-coding">0 Tugas</div>
+          </div>
+          <div class="bento-bucket-card bento-bk-homelab" onclick="filterByCat('Homelab')">
+            <div class="bucket-icon-circle">🖥</div>
+            <div class="bucket-name">Homelab</div>
+            <div class="bucket-count" id="bento-count-homelab">0 Tugas</div>
+          </div>
+          <div class="bento-bucket-card bento-bk-umum" onclick="filterByCat('Umum')">
+            <div class="bucket-icon-circle">📌</div>
+            <div class="bucket-name">Umum</div>
+            <div class="bucket-count" id="bento-count-umum">0 Tugas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento Column Right: Focus of the Day & Appointments -->
+      <div class="bento-col-main">
+        <!-- Top Bento Row: Focus of the Day & Stats -->
+        <div class="bento-top-row">
+          <!-- Large Highlight Feature Card -->
+          <div class="bento-focus-card" id="bento-featured-card">
+            <div class="bento-fc-badge">Target Hari Ini</div>
+            <div class="bento-fc-title" id="bento-featured-title">Memuat target...</div>
+            <div class="bento-fc-meta" id="bento-featured-meta">Deadline terdekat</div>
+            <div class="bento-fc-footer">
+              <span class="bento-prio-tag" id="bento-featured-tag">Prioritas Tinggi</span>
+              <button class="bento-fc-action" id="bento-featured-btn" onclick="openFeaturedDetail()">Lihat Detail &rsaquo;</button>
+            </div>
+          </div>
+
+          <!-- Small Metrics Tiles -->
+          <div class="bento-metric-tile bento-tile-green">
+            <div class="bento-tile-icon">✓</div>
+            <div class="bento-tile-val" id="bento-stat-completed">0</div>
+            <div class="bento-tile-lbl">Tugas Selesai</div>
+          </div>
+          <div class="bento-metric-tile bento-tile-blue">
+            <div class="bento-tile-icon">⏱</div>
+            <div class="bento-tile-val" id="bento-stat-active">0</div>
+            <div class="bento-tile-lbl">Tugas Berjalan</div>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Task Appointments List -->
+        <div class="bento-appointments-section">
+          <div class="bento-section-title" style="margin-top: 14px;">
+            <span>Jadwal Penyerahan Tugas</span>
+            <span class="bento-cat-indicator" id="bento-active-filter-label">Filter: Semua</span>
+          </div>
+
+          <div class="bento-cards-list" id="bento-tasks-list">
+            <div style="text-align: center; padding: 24px; color: var(--text-muted);">
+              Memuat jadwal tugas...
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================
+     LAYOUT 3: STUDENT COURSE HUB (PERIWINKLE PRODUCTIVITY)
+     ======================================================== -->
+<div class="layout-view layout-student" id="view-student" style="display: none;">
+  <!-- Student Hero Greeting -->
+  <div class="student-hero-greeting">
+    <div class="student-greeting-left">
+      <div class="student-avatar-box">
+        <img src="/static/img/karl_logo_square.png" alt="Karl">
+      </div>
+      <div>
+        <h1 class="student-greeting-title">Hi, Karl!</h1>
+        <p class="student-greeting-sub">Apa rencana belajarmu hari ini?</p>
+      </div>
+    </div>
+    <div class="student-greeting-right">
+      <button class="student-btn-new-board" onclick="openModal()">+ Tambah Tugas</button>
+    </div>
+  </div>
+
+  <!-- 4 Action Shortcuts Cards -->
+  <div class="student-shortcuts-grid">
+    <div class="student-sc-card student-sc-add" onclick="openModal()">
+      <div class="student-sc-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </div>
+      <div class="student-sc-title">Tugas Baru</div>
+      <div class="student-sc-desc">Catat deadline dosen</div>
+    </div>
+    <div class="student-sc-card student-sc-kuliah" onclick="filterByCat('Kuliah')">
+      <div class="student-sc-icon">📚</div>
+      <div class="student-sc-title">Mata Kuliah USI</div>
+      <div class="student-sc-desc" id="sc-kuliah-desc">0 tugas terdaftar</div>
+    </div>
+    <div class="student-sc-card student-sc-coding" onclick="filterByCat('Coding')">
+      <div class="student-sc-icon">⚡</div>
+      <div class="student-sc-title">Sprint Coding</div>
+      <div class="student-sc-desc" id="sc-coding-desc">0 tugas berjalan</div>
+    </div>
+    <div class="student-sc-card student-sc-homelab" onclick="filterByCat('Homelab')">
+      <div class="student-sc-icon">🛠</div>
+      <div class="student-sc-title">Homelab Ops</div>
+      <div class="student-sc-desc" id="sc-homelab-desc">Server & tunnel</div>
+    </div>
+  </div>
+
+  <!-- Student Split Content Grid -->
+  <div class="student-content-grid">
+    <!-- Left Column: Assignments List -->
+    <div class="student-left-column">
+      <div class="student-section-header">
+        <h3 class="student-column-title">Today's Assignments</h3>
+        <span class="student-link-all" onclick="window.location.href='/tasks'">Lihat Semua &rsaquo;</span>
+      </div>
+
+      <div class="student-assignments-list" id="student-tasks-list">
+        <div style="text-align: center; padding: 24px; color: var(--text-muted);">
+          Memuat daftar tugas...
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Course Progress Analytics -->
+    <div class="student-right-column">
+      <div class="student-section-header">
+        <h3 class="student-column-title">Capaian Semester</h3>
+        <span class="student-pct-badge" id="student-overall-rate">0% Selesai</span>
+      </div>
+
+      <div class="student-progress-cards-stack">
+        <!-- Subject 1: Kuliah -->
+        <div class="student-subject-card">
+          <div class="student-sb-header">
+            <span class="student-sb-name">Tugas Kuliah TI</span>
+            <span class="student-sb-score" id="st-score-kuliah">0%</span>
+          </div>
+          <div class="student-sb-track">
+            <div class="student-sb-fill fill-violet" id="st-fill-kuliah" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Subject 2: Coding -->
+        <div class="student-subject-card">
+          <div class="student-sb-header">
+            <span class="student-sb-name">Coding & Lab</span>
+            <span class="student-sb-score" id="st-score-coding">0%</span>
+          </div>
+          <div class="student-sb-track">
+            <div class="student-sb-fill fill-cyan" id="st-fill-coding" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Subject 3: Homelab -->
+        <div class="student-subject-card">
+          <div class="student-sb-header">
+            <span class="student-sb-name">Homelab & Server</span>
+            <span class="student-sb-score" id="st-score-homelab">0%</span>
+          </div>
+          <div class="student-sb-track">
+            <div class="student-sb-fill fill-amber" id="st-fill-homelab" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Motivation Banner -->
+        <div class="student-motivation-banner">
+          <div class="smb-badge">🎯 Target Belajar</div>
+          <h4 class="smb-title">Konsisten & Tuntas</h4>
+          <p class="smb-text">Kerjakan tugas dengan deadline terdekat hari ini agar akhir pekan lebih santai.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let allTasks = [];
+let currentCatFilter = 'all';
+let featuredTaskId = null;
+
+function applyCurrentLayout() {
+  const currentDesign = localStorage.getItem('karl_ui_design') || 'default';
+  
+  const viewKarl = document.getElementById('view-karl');
+  const viewBento = document.getElementById('view-bento');
+  const viewStudent = document.getElementById('view-student');
+
+  if (viewKarl) viewKarl.style.display = (currentDesign === 'default') ? 'block' : 'none';
+  if (viewBento) viewBento.style.display = (currentDesign === 'bento') ? 'block' : 'none';
+  if (viewStudent) viewStudent.style.display = (currentDesign === 'student') ? 'block' : 'none';
+}
+
+function filterByCat(cat) {
+  currentCatFilter = cat;
+  
+  // Update chips in Karl view
+  document.querySelectorAll('.qcat-chip').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === cat);
+  });
+
+  // Update label in Bento view
+  const bentoFilterLbl = document.getElementById('bento-active-filter-label');
+  if (bentoFilterLbl) {
+    bentoFilterLbl.innerText = `Filter: ${cat === 'all' ? 'Semua' : cat}`;
+  }
+
+  renderAllViews();
+}
+
+function openFeaturedDetail() {
+  if (featuredTaskId) {
+    openTaskDetail(featuredTaskId);
+  }
+}
+
+async function reloadPageData() {
+  try {
+    const res = await fetch('/api/todos');
+    allTasks = await res.json();
+    applyCurrentLayout();
+    renderAllViews();
+  } catch (e) {
+    console.error('Error loading data:', e);
+  }
+}
+
+function renderAllViews() {
+  const tasks = allTasks;
+  const total = tasks.length;
+  const completed = tasks.filter(t => t.completed).length;
+  const pending = total - completed;
+  const high = tasks.filter(t => t.priority === 'Tinggi' && !t.completed).length;
+  const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  // Filter tasks for lists
+  let activeList = tasks.filter(t => !t.completed);
+  if (currentCatFilter !== 'all') {
+    activeList = activeList.filter(t => t.category === currentCatFilter);
+  }
+
+  // 1. POPULATE LAYOUT KARL
+  const metricTotal = document.getElementById('metric-total');
+  if (metricTotal) {
+    document.getElementById('metric-total').innerText = total;
+    document.getElementById('metric-completed').innerText = completed;
+    document.getElementById('metric-pending').innerText = pending;
+    document.getElementById('metric-high').innerText = high;
+    document.getElementById('progress-pct').innerText = `${completionRate}%`;
+    document.getElementById('progress-fill').style.width = `${completionRate}%`;
+    document.getElementById('progress-sub').innerText = `${completed} dari ${total} tugas selesai`;
+
+    const statusText = document.getElementById('hero-status-text');
+    if (pending === 0 && total > 0) {
+      statusText.innerText = 'Semua tugas selesai, kerja bagus Karl!';
+    } else if (high > 0) {
+      statusText.innerText = `${high} tugas prioritas tinggi aktif`;
+    } else {
+      statusText.innerText = `${pending} tugas masih berjalan`;
+    }
+
+    const activeHigh = tasks.find(t => t.priority === 'Tinggi' && !t.completed);
+    const focusTitle = document.getElementById('focus-title');
+    const focusDeadline = document.getElementById('focus-deadline');
+    if (activeHigh) {
+      focusTitle.innerText = activeHigh.title;
+      focusDeadline.innerText = `Deadline: ${formatHumanDate(activeHigh.deadline)} | Kategori: ${activeHigh.category}`;
+    } else if (tasks.find(t => !t.completed)) {
+      const any = tasks.find(t => !t.completed);
+      focusTitle.innerText = any.title;
+      focusDeadline.innerText = `Deadline: ${formatHumanDate(any.deadline)} | Kategori: ${any.category}`;
+    } else {
+      focusTitle.innerText = 'Semua tugas beres!';
+      focusDeadline.innerText = 'Tidak ada tugas aktif';
+    }
+
+    const overviewContainer = document.getElementById('overview-tasks-list');
+    if (activeList.length === 0) {
+      overviewContainer.innerHTML = `<div style="text-align: center; padding: 24px; color: var(--text-muted); background: var(--card); border-radius: 20px; border: 1px solid var(--border);">Tidak ada tugas aktif pada kategori ini.</div>`;
+    } else {
+      overviewContainer.innerHTML = activeList.map(t => renderKarlCard(t)).join('');
+    }
+  }
+
+  // 2. POPULATE LAYOUT BENTO
+  const bentoCountKuliah = document.getElementById('bento-count-kuliah');
+  if (bentoCountKuliah) {
+    const kKuliah = tasks.filter(t => t.category === 'Kuliah' && !t.completed).length;
+    const kCoding = tasks.filter(t => t.category === 'Coding' && !t.completed).length;
+    const kHomelab = tasks.filter(t => t.category === 'Homelab' && !t.completed).length;
+    const kUmum = tasks.filter(t => t.category === 'Umum' && !t.completed).length;
+
+    document.getElementById('bento-count-kuliah').innerText = `${kKuliah} Tugas`;
+    document.getElementById('bento-count-coding').innerText = `${kCoding} Tugas`;
+    document.getElementById('bento-count-homelab').innerText = `${kHomelab} Tugas`;
+    document.getElementById('bento-count-umum').innerText = `${kUmum} Tugas`;
+
+    document.getElementById('bento-stat-completed').innerText = completed;
+    document.getElementById('bento-stat-active').innerText = pending;
+
+    const featured = tasks.find(t => t.priority === 'Tinggi' && !t.completed) || tasks.find(t => !t.completed);
+    if (featured) {
+      featuredTaskId = featured.id;
+      document.getElementById('bento-featured-title').innerText = featured.title;
+      document.getElementById('bento-featured-meta').innerText = `Deadline: ${formatHumanDate(featured.deadline)} | ${featured.category}`;
+      document.getElementById('bento-featured-tag').innerText = `Prioritas ${featured.priority}`;
+    } else {
+      featuredTaskId = null;
+      document.getElementById('bento-featured-title').innerText = 'Semua target tuntas!';
+      document.getElementById('bento-featured-meta').innerText = 'Tidak ada tugas yang tertunda';
+      document.getElementById('bento-featured-tag').innerText = 'Status Aman';
+    }
+
+    const bentoContainer = document.getElementById('bento-tasks-list');
+    if (activeList.length === 0) {
+      bentoContainer.innerHTML = `<div style="text-align: center; padding: 28px; color: var(--text-muted); background: var(--card); border-radius: 24px; border: 1px solid var(--border);">Tidak ada jadwal tugas untuk kategori ini.</div>`;
+    } else {
+      bentoContainer.innerHTML = activeList.map(t => renderBentoAppointmentCard(t)).join('');
+    }
+  }
+
+  // 3. POPULATE LAYOUT STUDENT
+  const studentOverall = document.getElementById('student-overall-rate');
+  if (studentOverall) {
+    document.getElementById('student-overall-rate').innerText = `${completionRate}% Selesai`;
+    
+    const countKuliah = tasks.filter(t => t.category === 'Kuliah').length;
+    const doneKuliah = tasks.filter(t => t.category === 'Kuliah' && t.completed).length;
+    const rateKuliah = countKuliah > 0 ? Math.round((doneKuliah / countKuliah) * 100) : 0;
+
+    const countCoding = tasks.filter(t => t.category === 'Coding').length;
+    const doneCoding = tasks.filter(t => t.category === 'Coding' && t.completed).length;
+    const rateCoding = countCoding > 0 ? Math.round((doneCoding / countCoding) * 100) : 0;
+
+    const countHomelab = tasks.filter(t => t.category === 'Homelab').length;
+    const doneHomelab = tasks.filter(t => t.category === 'Homelab' && t.completed).length;
+    const rateHomelab = countHomelab > 0 ? Math.round((doneHomelab / countHomelab) * 100) : 0;
+
+    document.getElementById('st-score-kuliah').innerText = `${rateKuliah}% (${doneKuliah}/${countKuliah})`;
+    document.getElementById('st-fill-kuliah').style.width = `${rateKuliah}%`;
+
+    document.getElementById('st-score-coding').innerText = `${rateCoding}% (${doneCoding}/${countCoding})`;
+    document.getElementById('st-fill-coding').style.width = `${rateCoding}%`;
+
+    document.getElementById('st-score-homelab').innerText = `${rateHomelab}% (${doneHomelab}/${countHomelab})`;
+    document.getElementById('st-fill-homelab').style.width = `${rateHomelab}%`;
+
+    const activeK = tasks.filter(t => t.category === 'Kuliah' && !t.completed).length;
+    const activeC = tasks.filter(t => t.category === 'Coding' && !t.completed).length;
+    document.getElementById('sc-kuliah-desc').innerText = `${activeK} tugas aktif`;
+    document.getElementById('sc-coding-desc').innerText = `${activeC} tugas aktif`;
+
+    const studentContainer = document.getElementById('student-tasks-list');
+    if (activeList.length === 0) {
+      studentContainer.innerHTML = `<div style="text-align: center; padding: 28px; color: var(--text-muted); background: var(--card); border-radius: 20px; border: 1px solid var(--border);">Belum ada tugas pada bagian ini. Santai sejenak!</div>`;
+    } else {
+      studentContainer.innerHTML = activeList.map(t => renderStudentCard(t)).join('');
+    }
+  }
+}
+
+function renderKarlCard(t) {
+  return `
+    <div class="project-card" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)" style="cursor: pointer;">
+      <div class="project-card-header">
+        <span class="date-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          ${formatHumanDate(t.deadline)}
+        </span>
+        <button class="kebab-btn" onclick="toggleKebab(${t.id}, event)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="5" cy="12" r="2"></circle></svg>
+        </button>
+        <div class="kebab-menu" id="kebab-${t.id}">
+          <div class="kebab-item" onclick="openTaskDetail(${t.id}, event)">Lihat Detail</div>
+          <div class="kebab-item" onclick="openEditModal(${t.id}, event)">Edit Tugas</div>
+          <div class="kebab-item" onclick="toggleTaskStatus(${t.id}, true)">Tandai Selesai</div>
+          <div class="kebab-item delete" onclick="deleteTask(${t.id})">Hapus Tugas</div>
+        </div>
+      </div>
+      <div class="project-title">${escapeHtml(t.title)}</div>
+      <div class="project-card-footer">
+        <div class="priority-indicator">
+          <span class="dot-prio-${t.priority}"></span>
+          <span>Prioritas: ${t.priority}</span>
+        </div>
+        <span class="category-tag">${t.category}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderBentoAppointmentCard(t) {
+  return `
+    <div class="bento-appointment-card" onclick="openTaskDetail(${t.id}, event)">
+      <div class="bac-main">
+        <div class="bac-top-row">
+          <span class="bac-cat-pill cat-${t.category.toLowerCase()}">${t.category}</span>
+          <span class="bac-prio-indicator prio-${t.priority.toLowerCase()}">Prioritas ${t.priority}</span>
+        </div>
+        <h4 class="bac-title">${escapeHtml(t.title)}</h4>
+        <div class="bac-schedule-row">
+          <div class="bac-sch-item">
+            <span class="bac-sch-lbl">Tenggat Waktu</span>
+            <span class="bac-sch-val">📅 ${formatHumanDate(t.deadline)}</span>
+          </div>
+        </div>
+      </div>
+      <div class="bac-actions-col" onclick="event.stopPropagation()">
+        <button class="bac-btn-round btn-done" title="Tandai Selesai" onclick="toggleTaskStatus(${t.id}, true)">✓</button>
+        <button class="bac-btn-round btn-view" title="Buka Detail" onclick="openTaskDetail(${t.id}, event)">👁</button>
+        <button class="bac-btn-round btn-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">✎</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderStudentCard(t) {
+  return `
+    <div class="student-task-row" onclick="openTaskDetail(${t.id}, event)">
+      <div class="str-checkbox" onclick="event.stopPropagation(); toggleTaskStatus(${t.id}, true);" title="Selesaikan">
+        <div class="str-check-circle"></div>
+      </div>
+      <div class="str-info">
+        <div class="str-title">${escapeHtml(t.title)}</div>
+        <div class="str-meta">
+          <span class="str-cat-pill">${t.category}</span>
+          <span class="str-due">⏰ Deadline: ${formatHumanDate(t.deadline)}</span>
+          <span class="str-prio prio-${t.priority.toLowerCase()}">${t.priority}</span>
+        </div>
+      </div>
+      <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+    </div>
+  `;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  reloadPageData();
+});
+</script>
+{% endblock %}
