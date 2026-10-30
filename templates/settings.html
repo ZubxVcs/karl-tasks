@@ -184,7 +184,12 @@ function selectDesignEngine(name) {
   if (toast) {
     toast.innerText = `Desain ${name === 'bento' ? 'Medical Bento' : (name === 'student' ? 'Student Hub' : 'Karl Command Center')} aktif!`;
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2200);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      // Redirect ke template tema terkait
+      const targetPath = name === 'bento' ? '/theme/bento' : (name === 'student' ? '/theme/student' : '/theme/karl');
+      window.location.href = targetPath;
+    }, 600);
   }
 }
 

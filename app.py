@@ -254,9 +254,19 @@ def download_custom_file(filename: str):
 
 @app.get("/", response_class=HTMLResponse)
 def serve_overview(request: Request):
-    return templates.TemplateResponse(request, "overview.html", {
+    # Cek cookie tema jika ada, default ke overview.html
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
+    template_name = "overview.html"
+    if theme_cookie == "bento":
+        template_name = "overview_bento.html"
+    elif theme_cookie == "student":
+        template_name = "overview_student.html"
+    elif theme_cookie == "karl":
+        template_name = "overview_karl.html"
+        
+    return templates.TemplateResponse(request, template_name, {
         "active_page": "overview",
-        "page_title": "Karl • Overview"
+        "page_title": "Karl Tasks • Overview"
     })
 
 @app.get("/calendar", response_class=HTMLResponse)
@@ -278,6 +288,27 @@ def serve_settings(request: Request):
     return templates.TemplateResponse(request, "settings.html", {
         "active_page": "settings",
         "page_title": "Karl • Pengaturan & Desain"
+    })
+
+@app.get("/theme/karl", response_class=HTMLResponse)
+def serve_theme_karl(request: Request):
+    return templates.TemplateResponse(request, "overview_karl.html", {
+        "active_page": "overview",
+        "page_title": "Karl Tasks • Command Center"
+    })
+
+@app.get("/theme/bento", response_class=HTMLResponse)
+def serve_theme_bento(request: Request):
+    return templates.TemplateResponse(request, "overview_bento.html", {
+        "active_page": "overview",
+        "page_title": "Karl Tasks • Medical Bento Squircle"
+    })
+
+@app.get("/theme/student", response_class=HTMLResponse)
+def serve_theme_student(request: Request):
+    return templates.TemplateResponse(request, "overview_student.html", {
+        "active_page": "overview",
+        "page_title": "Karl Tasks • Student Course Hub"
     })
 
 @app.get("/profile", response_class=HTMLResponse)

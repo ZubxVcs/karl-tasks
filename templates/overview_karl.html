@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="layout-view layout-karl" id="view-karl">
+  <!-- Karl Hero Banner -->
+  <div class="karl-hero-banner">
+    <div class="hero-logo-wrap">
+      <img src="/static/img/karl_logo_square.png" alt="Karl Logo" class="hero-logo-img">
+    </div>
+    <div class="hero-text-block">
+      <div class="hero-title">Karl Tasks <span class="hero-pipe">|</span> Command Center</div>
+      <div class="hero-status" id="hero-status-line">
+        <span class="hero-status-dot"></span>
+        <span id="hero-status-text">Memuat status...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Card -->
+  <div class="progress-card" id="progress-card">
+    <div class="progress-header">
+      <span class="progress-label">Progress Keseluruhan</span>
+      <span class="progress-pct" id="progress-pct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+    </div>
+    <div class="progress-sub" id="progress-sub">0 dari 0 tugas selesai</div>
+  </div>
+
+  <!-- Category Quick Filters -->
+  <div class="quick-cat-row">
+    <button class="qcat-chip active" data-cat="all" onclick="filterByCat('all')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      Semua
+    </button>
+    <button class="qcat-chip" data-cat="Kuliah" onclick="filterByCat('Kuliah')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Kuliah
+    </button>
+    <button class="qcat-chip" data-cat="Homelab" onclick="filterByCat('Homelab')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Homelab
+    </button>
+    <button class="qcat-chip" data-cat="Coding" onclick="filterByCat('Coding')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Coding
+    </button>
+    <button class="qcat-chip" data-cat="Umum" onclick="filterByCat('Umum')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Umum
+    </button>
+  </div>
+
+  <!-- Metric Cards -->
+  <div class="metrics-grid">
+    <a href="/tasks" class="metric-card card-purple">
+      <div class="metric-top">
+        <span class="metric-val" id="metric-total">0</span>
+        <div class="metric-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        </div>
+      </div>
+      <div class="metric-bottom">
+        <span class="metric-lbl">Total Tugas</span>
+        <span class="chevron-icon">&rsaquo;</span>
+      </div>
+    </a>
+
+    <a href="/tasks" class="metric-card card-green">
+      <div class="metric-top">
+        <span class="metric-val" id="metric-completed">0</span>
+        <div class="metric-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="9 12 12 15 16 10"></polyline></svg>
+        </div>
+      </div>
+      <div class="metric-bottom">
+        <span class="metric-lbl">Selesai</span>
+        <span class="chevron-icon">&rsaquo;</span>
+      </div>
+    </a>
+
+    <a href="/tasks" class="metric-card card-orange">
+      <div class="metric-top">
+        <span class="metric-val" id="metric-pending">0</span>
+        <div class="metric-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+      </div>
+      <div class="metric-bottom">
+        <span class="metric-lbl">Berjalan</span>
+        <span class="chevron-icon">&rsaquo;</span>
+      </div>
+    </a>
+
+    <a href="/tasks" class="metric-card card-cyan">
+      <div class="metric-top">
+        <span class="metric-val" id="metric-high">0</span>
+        <div class="metric-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+      </div>
+      <div class="metric-bottom">
+        <span class="metric-lbl">Prioritas Tinggi</span>
+        <span class="chevron-icon">&rsaquo;</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Priority Focus Card -->
+  <div class="section-head-row">
+    <h2 class="section-title">Fokus Utama</h2>
+    <a href="/calendar" class="section-action">Kalender &rsaquo;</a>
+  </div>
+  <a href="/calendar" class="focus-card" id="focus-banner">
+    <span class="focus-badge">⚡ Target Utama</span>
+    <div class="focus-title" id="focus-title">Memuat target fokus...</div>
+    <div class="focus-time" id="focus-deadline">Jadwal target</div>
+  </a>
+
+  <!-- All Active Tasks Section in Home -->
+  <div class="section-head-row" style="margin-top: 28px;">
+    <h2 class="section-title">Daftar Tugas Aktif</h2>
+    <a href="/tasks" class="section-action">Kelola Semua &rsaquo;</a>
+  </div>
+  <div class="tasks-container" id="overview-tasks-list">
+    <div style="text-align: center; padding: 24px; color: var(--text-muted); background: var(--card); border-radius: 20px; border: 1px solid var(--border);">
+      Memuat semua tugas...
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let allTasks = [];
+let currentCatFilter = 'all';
+
+function filterByCat(cat) {
+  currentCatFilter = cat;
+  document.querySelectorAll('.qcat-chip').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === cat);
+  });
+  renderKarlView();
+}
+
+async function reloadPageData() {
+  try {
+    const res = await fetch('/api/todos');
+    allTasks = await res.json();
+    renderKarlView();
+  } catch (e) {
+    console.error('Error loading data:', e);
+  }
+}
+
+function renderKarlView() {
+  const tasks = allTasks;
+  const total = tasks.length;
+  const completed = tasks.filter(t => t.completed).length;
+  const pending = total - completed;
+  const high = tasks.filter(t => t.priority === 'Tinggi' && !t.completed).length;
+  const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  let activeList = tasks.filter(t => !t.completed);
+  if (currentCatFilter !== 'all') {
+    activeList = activeList.filter(t => t.category === currentCatFilter);
+  }
+
+  document.getElementById('metric-total').innerText = total;
+  document.getElementById('metric-completed').innerText = completed;
+  document.getElementById('metric-pending').innerText = pending;
+  document.getElementById('metric-high').innerText = high;
+  document.getElementById('progress-pct').innerText = `${completionRate}%`;
+  document.getElementById('progress-fill').style.width = `${completionRate}%`;
+  document.getElementById('progress-sub').innerText = `${completed} dari ${total} tugas selesai`;
+
+  const heroStatusText = document.getElementById('hero-status-text');
+  if (heroStatusText) {
+    heroStatusText.innerText = `${pending} Tugas Berjalan • ${high} Prioritas Tinggi`;
+  }
+
+  const focusBanner = document.getElementById('focus-banner');
+  const focusTitle = document.getElementById('focus-title');
+  const focusDeadline = document.getElementById('focus-deadline');
+  if (focusBanner && focusTitle && focusDeadline) {
+    if (activeList.length > 0) {
+      const topTask = activeList[0];
+      focusTitle.innerText = topTask.title;
+      focusDeadline.innerText = `Batas: ${formatHumanDate(topTask.deadline)} • ${topTask.category}`;
+      focusBanner.onclick = (e) => { e.preventDefault(); openTaskDetail(topTask.id); };
+    } else {
+      focusTitle.innerText = 'Semua tugas telah tuntas!';
+      focusDeadline.innerText = 'Kerja bagus, tidak ada deadline aktif.';
+      focusBanner.onclick = null;
+    }
+  }
+
+  const container = document.getElementById('overview-tasks-list');
+  if (container) {
+    if (activeList.length === 0) {
+      container.innerHTML = '<div style="text-align: center; padding: 32px; color: var(--text-muted); background: var(--card); border-radius: 20px; border: 1px solid var(--border);">Tidak ada tugas aktif di kategori ini.</div>';
+    } else {
+      container.innerHTML = activeList.map(t => `
+        <div class="project-card ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)" style="cursor: pointer;">
+          <div class="project-card-header">
+            <span class="date-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              ${formatHumanDate(t.deadline)}
+            </span>
+            <button class="kebab-btn" onclick="toggleKebab(${t.id}, event)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="5" cy="12" r="2"></circle></svg>
+            </button>
+            <div class="kebab-menu" id="kebab-${t.id}">
+              <div class="kebab-item" onclick="openTaskDetail(${t.id}, event)">👁 Lihat Detail</div>
+              <div class="kebab-item" onclick="openEditModal(${t.id}, event)">✎ Edit Tugas</div>
+              <div class="kebab-item" onclick="toggleTaskStatus(${t.id}, ${!t.completed})">${t.completed ? '↩ Batal Selesai' : '✓ Tandai Selesai'}</div>
+              <div class="kebab-item delete" onclick="deleteTask(${t.id})">✕ Hapus Tugas</div>
+            </div>
+          </div>
+          <div class="project-title">${escapeHtml(t.title)}</div>
+          <div class="project-card-footer">
+            <div class="priority-indicator">
+              <span class="dot-prio-${t.priority}"></span>
+              <span>Prioritas: ${t.priority}</span>
+            </div>
+            <span class="category-tag">${t.category}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setDesignTheme('default');
+  reloadPageData();
+});
+</script>
+{% endblock %}

@@ -50,6 +50,7 @@ function applySavedDesign() {
 
 function setDesignTheme(name) {
   localStorage.setItem('karl_ui_design', name);
+  document.cookie = `karl_ui_design=${name}; path=/; max-age=31536000; SameSite=Lax`;
   document.documentElement.setAttribute('data-design', name);
   document.body.setAttribute('data-design', name);
   updateDesignChecks(name);
