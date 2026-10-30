@@ -3916,3 +3916,119 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
   justify-content: center;
   margin: 0 auto 10px;
 }
+
+/* ========================================================
+   STUDENT COURSE HUB: DARK MODE CONTRAST & SPACIOUS FIXES
+   ======================================================== */
+/* Greeting card in dark mode */
+[data-theme="dark"] .student-hero-greeting {
+  background: #1B1E2E !important;
+  border-color: rgba(108, 93, 211, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .student-greeting-title {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .student-greeting-sub {
+  color: #94A3B8 !important;
+}
+
+/* 4 Shortcut cards in dark mode & spacious layout */
+.student-shortcuts-grid {
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.student-sc-card {
+  padding: 18px 16px;
+  border-radius: 22px;
+}
+
+[data-theme="dark"] .student-sc-card {
+  background: #1B1E2E !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .student-sc-title {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .student-sc-desc {
+  color: #94A3B8 !important;
+}
+
+/* Section titles in dark mode */
+[data-theme="dark"] .student-column-title {
+  color: #FFFFFF !important;
+}
+
+/* Assignments list row spacious & high contrast */
+.student-assignments-list {
+  gap: 14px;
+}
+
+.student-task-row {
+  padding: 18px 20px;
+  border-radius: 20px;
+  gap: 16px;
+  border: 1px solid rgba(108, 93, 211, 0.12);
+}
+
+.str-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1B1D28;
+  margin-bottom: 6px;
+}
+
+[data-theme="dark"] .student-task-row {
+  background: #1B1E2E !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .str-title {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .str-due {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .str-cat-pill {
+  background: rgba(108, 93, 211, 0.2) !important;
+  color: #D8B4FE !important;
+}
+
+[data-theme="dark"] .str-action-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #FFFFFF !important;
+}
+
+/* Course progress cards in dark mode */
+.student-progress-cards-stack {
+  gap: 14px;
+}
+
+.student-subject-card {
+  padding: 18px 20px;
+  border-radius: 20px;
+}
+
+[data-theme="dark"] .student-subject-card {
+  background: #1B1E2E !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .student-sb-name {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .student-sb-score {
+  color: #A78BFA !important;
+}
+
+[data-theme="dark"] .student-sb-track {
+  background: #282C40 !important;
+}

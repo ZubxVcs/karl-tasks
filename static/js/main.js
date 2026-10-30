@@ -86,6 +86,51 @@ function closeDesignModal() {
   if (modal) modal.classList.remove('open');
 }
 
+// Custom Confirmation for Theme Switching
+let pendingThemeSwitch = null;
+
+function requestThemeSwitch(themeName) {
+  const current = localStorage.getItem('karl_ui_design') || 'default';
+  if (themeName === current) {
+    closeDesignModal();
+    return;
+  }
+  
+  pendingThemeSwitch = themeName;
+  const names = {
+    'default': 'Karl Command Center (Merah Crimson)',
+    'bento': 'Medical Bento Squircle (Canvas Pastel)',
+    'student': 'Student Course Hub (Violet Periwinkle)'
+  };
+  
+  const titleEl = document.getElementById('confirm-modal-title');
+  const descEl = document.getElementById('confirm-modal-desc');
+  const modal = document.getElementById('custom-confirm-modal');
+  
+  if (titleEl) titleEl.innerText = 'Ganti Desain Antarmuka?';
+  if (descEl) descEl.innerText = `Kamu akan beralih ke tema "${names[themeName] || themeName}". Halaman akan dimuat ulang dengan tata letak pilihanmu. Lanjutkan?`;
+  
+  closeDesignModal();
+  if (modal) {
+    modal.style.display = 'flex';
+  }
+}
+
+function handleCustomConfirm(confirmed) {
+  const modal = document.getElementById('custom-confirm-modal');
+  if (modal) modal.style.display = 'none';
+  
+  if (confirmed && pendingThemeSwitch) {
+    const target = pendingThemeSwitch;
+    pendingThemeSwitch = null;
+    setDesignTheme(target);
+    const targetPath = target === 'bento' ? '/theme/bento' : (target === 'student' ? '/theme/student' : '/theme/karl');
+    window.location.href = targetPath;
+  } else {
+    pendingThemeSwitch = null;
+  }
+}
+
 // Avatar handling
 function applySavedAvatar() {
   const saved = localStorage.getItem('karl_custom_avatar');
