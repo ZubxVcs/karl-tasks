@@ -16,7 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=25.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=24.0">
+     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
 </head>
 <body data-design="{{ current_theme | default('default') }}">
 
@@ -67,9 +68,6 @@
       </div>
     </div>
     <div>
-      <button class="header-icon-btn" onclick="openDesignModal()" title="Ganti Desain">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.04-.23-.29-.38-.63-.38-1.01 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-5.52-4.48-9.95-10-9.95z"></path><circle cx="7.5" cy="11.5" r="1.5"></circle><circle cx="10.5" cy="7.5" r="1.5"></circle><circle cx="16.5" cy="11.5" r="1.5"></circle><circle cx="13.5" cy="7.5" r="1.5"></circle></svg>
-      </button>
       <button class="header-icon-btn" onclick="toggleTheme()" title="Ganti Tema">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
@@ -441,9 +439,9 @@
   <div class="modal-overlay" id="custom-confirm-modal" style="display: none; z-index: 1000;" onclick="handleCustomConfirm(false)">
     <div class="modal-confirm-box" onclick="event.stopPropagation()">
       <div class="confirm-icon-bubble">
-        ⚠️
+        <i class="ph ph-warning"></i>
       </div>
-      <h3 class="confirm-modal-heading" id="confirm-modal-title">Ganti Desain Antarmuka?</h3>
+      <h3 class="confirm-modal-heading" id="confirm-modal-title">Ganti Desain?</h3>
       <p class="confirm-modal-paragraph" id="confirm-modal-desc">
         Apakah kamu yakin ingin beralih ke desain ini? Halaman akan diperbarui otomatis sesuai tata letak pilihanmu.
       </p>
@@ -452,7 +450,7 @@
           Batal
         </button>
         <button type="button" class="confirm-btn-proceed" id="confirm-modal-yes" onclick="handleCustomConfirm(true)">
-          Ya, Ganti
+          Yaa
         </button>
       </div>
     </div>

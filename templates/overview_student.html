@@ -9,12 +9,12 @@
         <img src="/static/img/karl_logo_square.png" alt="Karl">
       </div>
       <div>
-        <h1 class="student-greeting-title">Hi, Karl!</h1>
+        <h1 class="student-greeting-title">Haloo, Karl!</h1>
         <p class="student-greeting-sub">Apa rencana belajarmu hari ini?</p>
       </div>
     </div>
     <div class="student-greeting-right">
-      <button class="student-btn-new-board" onclick="openModal()">+ Tambah Tugas</button>
+      <button class="student-btn-new-board" onclick="openModal()"><i class="ph ph-plus"></i> Tambah Tugas</button>
     </div>
   </div>
 
@@ -31,17 +31,23 @@
       <div class="student-sc-desc">Catat deadline dosen</div>
     </div>
     <div class="student-sc-card student-sc-kuliah" onclick="filterByCat('Kuliah')">
-      <div class="student-sc-icon">📚</div>
+      <div class="student-sc-icon">
+        <i class="ph ph-book-bookmark"></i>
+      </div>
       <div class="student-sc-title">Mata Kuliah USI</div>
       <div class="student-sc-desc" id="sc-kuliah-desc">0 tugas terdaftar</div>
     </div>
     <div class="student-sc-card student-sc-coding" onclick="filterByCat('Coding')">
-      <div class="student-sc-icon">⚡</div>
+      <div class="student-sc-icon">
+        <i class="ph ph-code"></i>
+      </div>
       <div class="student-sc-title">Sprint Coding</div>
       <div class="student-sc-desc" id="sc-coding-desc">0 tugas berjalan</div>
     </div>
     <div class="student-sc-card student-sc-homelab" onclick="filterByCat('Homelab')">
-      <div class="student-sc-icon">🛠</div>
+      <div class="student-sc-icon">
+        <i class="ph ph-hard-drives"></i>
+      </div>
       <div class="student-sc-title">Homelab Ops</div>
       <div class="student-sc-desc" id="sc-homelab-desc">Server & tunnel</div>
     </div>

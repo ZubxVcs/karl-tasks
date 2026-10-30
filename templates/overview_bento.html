@@ -9,28 +9,38 @@
       <div class="bento-col-buckets">
         <div class="bento-section-title">
           <span>Task Buckets</span>
-          <button class="bento-add-mini-btn" onclick="openModal()" title="Tambah Tugas">+</button>
+          <button class="bento-add-mini-btn" onclick="openModal()" title="Tambah Tugas">
+            <i class="ph ph-plus"></i>
+          </button>
         </div>
         <p class="bento-section-sub">Kategori tugas aktif kuliah & project</p>
         
         <div class="bento-buckets-grid">
           <div class="bento-bucket-card bento-bk-kuliah" onclick="filterByCat('Kuliah')">
-            <div class="bucket-icon-circle">🎓</div>
+            <div class="bucket-icon-circle">
+              <i class="ph ph-graduation-cap"></i>
+            </div>
             <div class="bucket-name">Kuliah USI</div>
             <div class="bucket-count" id="bento-count-kuliah">0 Tugas</div>
           </div>
           <div class="bento-bucket-card bento-bk-coding" onclick="filterByCat('Coding')">
-            <div class="bucket-icon-circle">💻</div>
+            <div class="bucket-icon-circle">
+              <i class="ph ph-code"></i>
+            </div>
             <div class="bucket-name">Coding Lab</div>
             <div class="bucket-count" id="bento-count-coding">0 Tugas</div>
           </div>
           <div class="bento-bucket-card bento-bk-homelab" onclick="filterByCat('Homelab')">
-            <div class="bucket-icon-circle">🖥</div>
+            <div class="bucket-icon-circle">
+              <i class="ph ph-desktop"></i>
+            </div>
             <div class="bucket-name">Homelab</div>
             <div class="bucket-count" id="bento-count-homelab">0 Tugas</div>
           </div>
           <div class="bento-bucket-card bento-bk-umum" onclick="filterByCat('Umum')">
-            <div class="bucket-icon-circle">📌</div>
+            <div class="bucket-icon-circle">
+              <i class="ph ph-push-pin"></i></i>
+            </div>
             <div class="bucket-name">Umum</div>
             <div class="bucket-count" id="bento-count-umum">0 Tugas</div>
           </div>
