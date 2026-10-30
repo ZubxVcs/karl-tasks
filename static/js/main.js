@@ -656,14 +656,40 @@ async function deleteTask(id) {
 
 function toggleKebab(id, ev) {
   ev.stopPropagation();
-  document.querySelectorAll('.kebab-menu').forEach(m => {
-    if (m.id !== `kebab-${id}`) m.classList.remove('show');
+  const currentMenu = document.getElementById(`kebab-${id}`);
+  const willShow = currentMenu ? !currentMenu.classList.contains('show') : false;
+
+  // Tutup semua menu lain dan reset z-index parent card
+  document.querySelectorAll('.kebab-menu').forEach(m => m.classList.remove('show'));
+  document.querySelectorAll('.project-card, .bento-appointment-card, .student-task-row').forEach(c => {
+    c.style.zIndex = '';
   });
-  document.getElementById(`kebab-${id}`)?.classList.toggle('show');
+
+  if (willShow && currentMenu) {
+    currentMenu.classList.add('show');
+    // Angkat parent card ke z-index tinggi agar popup tidak tertutup kartu di bawahnya
+    const parentCard = currentMenu.closest('.project-card, .bento-appointment-card, .student-task-row');
+    if (parentCard) {
+      parentCard.style.zIndex = '999';
+    }
+
+    // Auto-adjust positioning agar tidak terpotong tepi layar bawah
+    const rect = currentMenu.getBoundingClientRect();
+    if (rect.bottom > window.innerHeight - 20) {
+      currentMenu.style.top = 'auto';
+      currentMenu.style.bottom = '48px';
+    } else {
+      currentMenu.style.top = '';
+      currentMenu.style.bottom = '';
+    }
+  }
 }
 
 window.addEventListener('click', () => {
   document.querySelectorAll('.kebab-menu').forEach(m => m.classList.remove('show'));
+  document.querySelectorAll('.project-card, .bento-appointment-card, .student-task-row').forEach(c => {
+    c.style.zIndex = '';
+  });
 });
 
 // Auto-run on DOM ready

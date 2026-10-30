@@ -205,9 +205,9 @@ function renderStudentView() {
               <span class="str-prio">Prio: ${escapeHtml(t.priority)}</span>
             </div>
           </div>
-          <button class="str-action-btn" onclick="toggleKebab(${t.id}, event)" title="Opsi Tugas">
-            <span>Detail</span>
-            <i class="ph ph-dots-three-vertical" style="font-size: 0.95rem;"></i>
+          <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)" title="Buka Detail Tugas">Detail</button>
+          <button class="str-kebab-trigger" onclick="toggleKebab(${t.id}, event)" title="Opsi Lainnya">
+            <i class="ph ph-dots-three-vertical"></i>
           </button>
           <div class="kebab-menu" id="kebab-${t.id}">
             <div class="kebab-item" onclick="openTaskDetail(${t.id}, event)">
