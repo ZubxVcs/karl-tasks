@@ -56,7 +56,7 @@ function renderTasksList() {
 
   if (design === 'bento') {
     container.innerHTML = filtered.map(t => `
-      <div class="bento-appointment-card ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)">
+      <div class="bento-appointment-card ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)" style="position: relative;">
         <div class="bac-main">
           <div class="bac-top-row">
             <span class="bac-cat-pill cat-${(t.category||'umum').toLowerCase()}">${escapeHtml(t.category || 'Umum')}</span>
@@ -71,22 +71,34 @@ function renderTasksList() {
             </div>
           </div>
         </div>
-        <div class="bac-actions-inline" onclick="event.stopPropagation()">
-          <button class="bac-btn-action btn-act-done" title="${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}" onclick="toggleTaskStatus(${t.id}, ${!t.completed}, event)">
-            <i class="ph ${t.completed ? 'ph-arrow-counter-clockwise' : 'ph-check'}"></i>
-          </button>
-          <button class="bac-btn-action btn-act-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+        <button class="bac-stripes-col" title="Menu Opsi Tugas" onclick="toggleKebab(${t.id}, event)">
+          <span class="bac-stripe-line"></span>
+          <span class="bac-stripe-line"></span>
+          <span class="bac-stripe-line"></span>
+        </button>
+        <div class="kebab-menu" id="kebab-${t.id}">
+          <div class="kebab-item" onclick="openTaskDetail(${t.id}, event)">
+            <i class="ph ph-eye"></i>
+            <span>Detail</span>
+          </div>
+          <div class="kebab-item" onclick="openEditModal(${t.id}, event)">
             <i class="ph ph-pencil-simple"></i>
-          </button>
-          <button class="bac-btn-action btn-act-del" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+            <span>Edit</span>
+          </div>
+          <div class="kebab-item" onclick="toggleTaskStatus(${t.id}, ${!t.completed})">
+            <i class="ph ${t.completed ? 'ph-arrow-counter-clockwise' : 'ph-check'}"></i>
+            <span>${t.completed ? 'Batal Selesai' : 'Selesai'}</span>
+          </div>
+          <div class="kebab-item delete" onclick="deleteTask(${t.id})">
             <i class="ph ph-trash"></i>
-          </button>
+            <span>Hapus</span>
+          </div>
         </div>
       </div>
     `).join('');
   } else if (design === 'student') {
     container.innerHTML = filtered.map(t => `
-      <div class="student-task-row ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)">
+      <div class="student-task-row ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)" style="position: relative;">
         <div class="str-checkbox" onclick="event.stopPropagation(); toggleTaskStatus(${t.id}, ${!t.completed}, event)" title="${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}">
           <div class="str-check-circle ${t.completed ? 'checked' : ''}">
             ${t.completed ? '<i class="ph ph-check" style="font-size: 0.75rem; color: #fff;"></i>' : ''}
@@ -100,14 +112,27 @@ function renderTasksList() {
             <span class="str-prio">Prio: ${escapeHtml(t.priority)}</span>
           </div>
         </div>
-        <div class="str-actions-inline" onclick="event.stopPropagation()">
-          <button class="str-mini-btn btn-str-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+        <button class="str-action-btn" onclick="toggleKebab(${t.id}, event)" title="Opsi Tugas">
+          <span>Detail</span>
+          <i class="ph ph-dots-three-vertical" style="font-size: 0.95rem;"></i>
+        </button>
+        <div class="kebab-menu" id="kebab-${t.id}">
+          <div class="kebab-item" onclick="openTaskDetail(${t.id}, event)">
+            <i class="ph ph-eye"></i>
+            <span>Detail Lengkap</span>
+          </div>
+          <div class="kebab-item" onclick="openEditModal(${t.id}, event)">
             <i class="ph ph-pencil-simple"></i>
-          </button>
-          <button class="str-mini-btn btn-str-delete" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+            <span>Edit Tugas</span>
+          </div>
+          <div class="kebab-item" onclick="toggleTaskStatus(${t.id}, ${!t.completed})">
+            <i class="ph ${t.completed ? 'ph-arrow-counter-clockwise' : 'ph-check'}"></i>
+            <span>${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}</span>
+          </div>
+          <div class="kebab-item delete" onclick="deleteTask(${t.id})">
             <i class="ph ph-trash"></i>
-          </button>
-          <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+            <span>Hapus Tugas</span>
+          </div>
         </div>
       </div>
     `).join('');

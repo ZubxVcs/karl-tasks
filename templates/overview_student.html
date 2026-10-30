@@ -191,7 +191,7 @@ function renderStudentView() {
       studentContainer.innerHTML = '<div style="text-align: center; padding: 32px; color: var(--text-muted); background: #fff; border-radius: 18px; border: 1px solid rgba(108,93,211,0.12);">Tidak ada tugas aktif di filter ini.</div>';
     } else {
       studentContainer.innerHTML = activeList.map(t => `
-        <div class="student-task-row ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)">
+        <div class="student-task-row ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)" style="position: relative;">
           <div class="str-checkbox" onclick="event.stopPropagation(); toggleTaskStatus(${t.id}, ${!t.completed}, event)" title="${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}">
             <div class="str-check-circle ${t.completed ? 'checked' : ''}">
               ${t.completed ? '<i class="ph ph-check" style="font-size: 0.75rem; color: #fff;"></i>' : ''}
@@ -205,14 +205,27 @@ function renderStudentView() {
               <span class="str-prio">Prio: ${escapeHtml(t.priority)}</span>
             </div>
           </div>
-          <div class="str-actions-inline" onclick="event.stopPropagation()">
-            <button class="str-mini-btn btn-str-edit" title="Edit Tugas" onclick="openEditModal(${t.id}, event)">
+          <button class="str-action-btn" onclick="toggleKebab(${t.id}, event)" title="Opsi Tugas">
+            <span>Detail</span>
+            <i class="ph ph-dots-three-vertical" style="font-size: 0.95rem;"></i>
+          </button>
+          <div class="kebab-menu" id="kebab-${t.id}">
+            <div class="kebab-item" onclick="openTaskDetail(${t.id}, event)">
+              <i class="ph ph-eye"></i>
+              <span>Detail Lengkap</span>
+            </div>
+            <div class="kebab-item" onclick="openEditModal(${t.id}, event)">
               <i class="ph ph-pencil-simple"></i>
-            </button>
-            <button class="str-mini-btn btn-str-delete" title="Hapus Tugas" onclick="deleteTask(${t.id})">
+              <span>Edit Tugas</span>
+            </div>
+            <div class="kebab-item" onclick="toggleTaskStatus(${t.id}, ${!t.completed})">
+              <i class="ph ${t.completed ? 'ph-arrow-counter-clockwise' : 'ph-check'}"></i>
+              <span>${t.completed ? 'Batal Selesai' : 'Tandai Selesai'}</span>
+            </div>
+            <div class="kebab-item delete" onclick="deleteTask(${t.id})">
               <i class="ph ph-trash"></i>
-            </button>
-            <button class="str-action-btn" onclick="openTaskDetail(${t.id}, event)">Detail</button>
+              <span>Hapus Tugas</span>
+            </div>
           </div>
         </div>
       `).join('');
