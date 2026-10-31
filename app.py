@@ -1,10 +1,32 @@
 import os
 import sqlite3
+import hashlib
 from typing import Optional
-from fastapi import FastAPI, HTTPException, Query
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, HTTPException, Query, Request, UploadFile, File, Response
+from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+ADMIN_PIN = os.environ.get("KARL_ADMIN_PIN", "2611070020")
+ADMIN_TOKEN = hashlib.sha256(ADMIN_PIN.encode()).hexdigest()[:32]
+
+def is_admin_request(request: Request) -> bool:
+    token = request.cookies.get("karl_admin_token") or request.headers.get("X-Admin-Token")
+    if token == ADMIN_TOKEN:
+        return True
+    if request.client and request.client.host in ["127.0.0.1", "::1"]:
+        if not request.headers.get("CF-Connecting-IP"):
+            return True
+    return False
+
+def require_admin(request: Request):
+    if not is_admin_request(request):
+        raise HTTPException(
+            status_code=403,
+            detail="Akses ditolak: Operasi tulis hanya diizinkan untuk Admin (Karl). Pengunjung publik hanya memiliki akses pratinjau (read-only)."
+        )
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "tasks.db")
@@ -38,6 +60,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 class TaskCreate(BaseModel):
     title: str
@@ -119,8 +148,30 @@ def get_tasks():
         for r in rows
     ]
 
+class AdminLoginRequest(BaseModel):
+    pin: str
+
+@app.post("/api/admin/login")
+def admin_login(data: AdminLoginRequest, response: Response):
+    if data.pin.strip() == ADMIN_PIN:
+        response.set_cookie(
+            key="karl_admin_token",
+            value=ADMIN_TOKEN,
+            max_age=31536000,
+            samesite="lax",
+            httponly=False
+        )
+        return {"success": True, "token": ADMIN_TOKEN, "message": "Login Admin Berhasil"}
+    raise HTTPException(status_code=401, detail="PIN Admin Salah")
+
+@app.post("/api/admin/logout")
+def admin_logout(response: Response):
+    response.delete_cookie("karl_admin_token")
+    return {"success": True, "message": "Logout Berhasil"}
+
 @app.post("/api/todos")
-def create_task(item: TaskCreate):
+def create_task(item: TaskCreate, request: Request):
+    require_admin(request)
     cleaned_title = item.title.strip()
     if not cleaned_title:
         raise HTTPException(status_code=400, detail="Title cannot be empty")
@@ -151,7 +202,8 @@ def create_task(item: TaskCreate):
     }
 
 @app.patch("/api/todos/{task_id}")
-def update_task(task_id: int, item: TaskUpdate):
+def update_task(task_id: int, item: TaskUpdate, request: Request):
+    require_admin(request)
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute("SELECT id FROM tasks WHERE id = ?", (task_id,))
@@ -206,7 +258,8 @@ def update_task(task_id: int, item: TaskUpdate):
     return {"success": True}
 
 @app.delete("/api/todos/{task_id}")
-def delete_task(task_id: int):
+def delete_task(task_id: int, request: Request):
+    require_admin(request)
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
@@ -214,31 +267,18 @@ def delete_task(task_id: int):
     conn.close()
     return {"success": True}
 
-from fastapi.responses import HTMLResponse, FileResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-from fastapi import Request, UploadFile, File
-
-
 def _is_readonly(request: Request, view: str = None, readonly: str = None) -> bool:
     if request.url.path.startswith("/view"):
         return True
-    if view == "readonly" or readonly == "1":
+    if view in ["readonly", "1", "true"] or readonly in ["1", "true", "readonly"]:
+        return True
+    if not is_admin_request(request):
         return True
     return False
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
-STATIC_DIR = os.path.join(BASE_DIR, "static")
-UPLOADS_DIR = os.path.join(BASE_DIR, "uploads")
-os.makedirs(UPLOADS_DIR, exist_ok=True)
-
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-app.mount("/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
-templates = Jinja2Templates(directory=TEMPLATES_DIR)
-
 @app.post("/api/upload")
-async def upload_task_file(file: UploadFile = File(...)):
+async def upload_task_file(request: Request, file: UploadFile = File(...)):
+    require_admin(request)
     filename = file.filename
     clean_name = f"{int(os.path.getmtime(DB_PATH))}_{filename}"
     save_path = os.path.join(UPLOADS_DIR, clean_name)
@@ -271,11 +311,13 @@ def serve_overview(request: Request, view: str = Query(None), readonly: str = Qu
     elif theme_cookie == "karl":
         template_name = "overview_karl.html"
 
+    admin_ok = is_admin_request(request)
     return templates.TemplateResponse(request, template_name, {
         "active_page": "overview",
         "current_theme": theme_cookie,
         "page_title": "Karl Tasks - Overview",
-        "is_readonly": _is_readonly(request, view, readonly)
+        "is_readonly": _is_readonly(request, view, readonly),
+        "is_admin": admin_ok
     })
 
 @app.get("/calendar", response_class=HTMLResponse)
@@ -285,7 +327,8 @@ def serve_calendar(request: Request, view: str = Query(None), readonly: str = Qu
         "active_page": "calendar",
         "current_theme": theme_cookie,
         "page_title": "Karl - Calendar & Schedule",
-        "is_readonly": _is_readonly(request, view, readonly)
+        "is_readonly": _is_readonly(request, view, readonly),
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/tasks", response_class=HTMLResponse)
@@ -295,7 +338,8 @@ def serve_tasks(request: Request, view: str = Query(None), readonly: str = Query
         "active_page": "tasks",
         "current_theme": theme_cookie,
         "page_title": "Karl - Projects & Tasks",
-        "is_readonly": _is_readonly(request, view, readonly)
+        "is_readonly": _is_readonly(request, view, readonly),
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/settings", response_class=HTMLResponse)
@@ -305,7 +349,8 @@ def serve_settings(request: Request, view: str = Query(None), readonly: str = Qu
         "active_page": "settings",
         "current_theme": theme_cookie,
         "page_title": "Karl - Pengaturan & Desain",
-        "is_readonly": _is_readonly(request, view, readonly)
+        "is_readonly": _is_readonly(request, view, readonly),
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/theme/karl", response_class=HTMLResponse)
@@ -314,7 +359,8 @@ def serve_theme_karl(request: Request):
         "active_page": "overview",
         "current_theme": "default",
         "page_title": "Karl Tasks - Command Center",
-        "is_readonly": False
+        "is_readonly": _is_readonly(request),
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/theme/bento", response_class=HTMLResponse)
@@ -323,7 +369,8 @@ def serve_theme_bento(request: Request):
         "active_page": "overview",
         "current_theme": "bento",
         "page_title": "Karl Tasks - Medical Bento Squircle",
-        "is_readonly": False
+        "is_readonly": _is_readonly(request),
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/theme/student", response_class=HTMLResponse)
@@ -332,7 +379,8 @@ def serve_theme_student(request: Request):
         "active_page": "overview",
         "current_theme": "student",
         "page_title": "Karl Tasks - Student Course Hub",
-        "is_readonly": False
+        "is_readonly": _is_readonly(request),
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/profile", response_class=HTMLResponse)
@@ -342,7 +390,8 @@ def serve_profile(request: Request):
         "active_page": "settings",
         "current_theme": theme_cookie,
         "page_title": "Karl - Pengaturan & Desain",
-        "is_readonly": False
+        "is_readonly": _is_readonly(request),
+        "is_admin": is_admin_request(request)
     })
 
 
@@ -361,7 +410,8 @@ def view_overview(request: Request):
         "active_page": "overview",
         "current_theme": theme_cookie,
         "page_title": "Karl Tasks - Overview (Pratinjau)",
-        "is_readonly": True
+        "is_readonly": True,
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/view/tasks", response_class=HTMLResponse)
@@ -371,7 +421,8 @@ def view_tasks(request: Request):
         "active_page": "tasks",
         "current_theme": theme_cookie,
         "page_title": "Karl - Tasks (Pratinjau)",
-        "is_readonly": True
+        "is_readonly": True,
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/view/calendar", response_class=HTMLResponse)
@@ -381,7 +432,8 @@ def view_calendar(request: Request):
         "active_page": "calendar",
         "current_theme": theme_cookie,
         "page_title": "Karl - Calendar (Pratinjau)",
-        "is_readonly": True
+        "is_readonly": True,
+        "is_admin": is_admin_request(request)
     })
 
 @app.get("/view/settings", response_class=HTMLResponse)
@@ -391,5 +443,6 @@ def view_settings(request: Request):
         "active_page": "settings",
         "current_theme": theme_cookie,
         "page_title": "Karl - Pengaturan (Pratinjau)",
-        "is_readonly": True
+        "is_readonly": True,
+        "is_admin": is_admin_request(request)
     })

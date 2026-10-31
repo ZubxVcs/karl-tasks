@@ -709,16 +709,43 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initReadonlyMode() {
-  window.openModal = function() {};
-  window.submitNewTask = function() {};
-  window.submitEditTask = function() {};
-  window.deleteTask = function() {};
-  window.toggleTaskStatus = function() {};
-  window.uploadFileForTask = function() {};
-  window.toggleStatusFromDetail = function() {};
-  window.deleteFromDetail = function() {};
-  window.editFromDetail = function() {};
-  window.openEditModal = function() {};
+  window.openModal = function() {
+    showToastNotification('Mode Tamu: Pembuatan tugas hanya bisa dilakukan oleh Karl.');
+  };
+  window.submitNewTask = function() {
+    showToastNotification('Mode Tamu: Tidak dapat menyimpan tugas ke server.');
+  };
+  window.submitEditTask = function() {
+    showToastNotification('Mode Tamu: Tidak dapat menyimpan perubahan ke server.');
+  };
+  window.deleteTask = function(id) {
+    showToastNotification('Mode Tamu: Kamu tidak memiliki izin menghapus tugas Karl.');
+  };
+  window.toggleTaskStatus = function(id, completed) {
+    if (typeof allTasks !== 'undefined') {
+      const t = allTasks.find(item => item.id === id);
+      if (t) t.completed = completed;
+    }
+    if (typeof renderAllViews === 'function') renderAllViews();
+    if (typeof renderTasksList === 'function') renderTasksList();
+    if (typeof renderTimeline === 'function') renderTimeline();
+    showToastNotification('Mode Tamu Sandbox: Status tugas hanya berubah di browsermu, database Karl tetap aman.');
+  };
+  window.uploadFileForTask = function() {
+    showToastNotification('Mode Tamu: Upload berkas dinonaktifkan.');
+  };
+  window.toggleStatusFromDetail = function() {
+    showToastNotification('Mode Tamu: Status tugas terkunci.');
+  };
+  window.deleteFromDetail = function() {
+    showToastNotification('Mode Tamu: Tidak dapat menghapus tugas.');
+  };
+  window.editFromDetail = function() {
+    showToastNotification('Mode Tamu: Tidak dapat mengedit tugas.');
+  };
+  window.openEditModal = function() {
+    showToastNotification('Mode Tamu: Tidak dapat mengedit tugas.');
+  };
 
   document.querySelectorAll('.dock-center-slot').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.pc-actions .btn-primary').forEach(el => el.style.display = 'none');
@@ -728,11 +755,52 @@ function initReadonlyMode() {
   document.querySelectorAll('.bento-add-mini-btn').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.student-sc-add').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.student-btn-new-board').forEach(el => el.style.display = 'none');
+}
 
-  document.querySelectorAll('.str-checkbox, .timeline-check-btn').forEach(el => {
-    el.style.pointerEvents = 'none';
-    el.style.opacity = '0.5';
-  });
+function showToastNotification(msg) {
+  let toast = document.getElementById('settings-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'settings-toast';
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  toast.innerText = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
+async function loginAdminPrompt() {
+  const pin = prompt('Masukkan PIN Admin Karl untuk membuka mode edit:');
+  if (!pin) return;
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin: pin.trim() })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert('Login Admin Berhasil! Mode Edit Aktif.');
+      window.location.href = '/';
+    } else {
+      alert(data.detail || 'PIN Salah');
+    }
+  } catch (e) {
+    alert('Gagal menghubungi server.');
+  }
+}
+
+async function logoutAdmin() {
+  if (!confirm('Kunci sesi admin dan kembali ke mode tamu?')) return;
+  try {
+    await fetch('/api/admin/logout', { method: 'POST' });
+    document.cookie = 'karl_admin_token=; Max-Age=0; path=/;';
+    alert('Sesi admin terkunci.');
+    window.location.href = '/view';
+  } catch (e) {
+    window.location.reload();
+  }
 }
 
 function copyPreviewLink() {
