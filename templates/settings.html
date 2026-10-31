@@ -141,9 +141,21 @@
       <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Muat ulang data tugas dan refresh local storage</div>
     </div>
     <button class="btn-secondary" onclick="clearAppCache()" style="min-height: 44px; color: var(--accent-red);">
-      🗑 Bersihkan Cache
+      Bersihkan Cache
     </button>
   </div>
+
+  {% if not is_readonly %}
+  <div class="settings-row" style="padding-top: 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">Link Pratinjau Publik</div>
+      <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Bagikan link ini agar orang lain bisa melihat tugas tanpa bisa mengedit</div>
+    </div>
+    <button class="btn-primary" onclick="copyPreviewLink()" style="min-height: 44px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;">
+      Salin Link Pratinjau
+    </button>
+  </div>
+  {% endif %}
 </div>
 
 

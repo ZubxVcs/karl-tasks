@@ -4367,3 +4367,112 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65) !important;
 }
+
+/* ========================================================
+   READ-ONLY / PREVIEW MODE
+   ======================================================== */
+.readonly-banner {
+  background: linear-gradient(135deg, #F59E0B, #FBBF24);
+  color: #78350F;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.readonly-banner-mobile {
+  display: block;
+  border-radius: 12px;
+  margin: 0 20px 8px;
+  padding: 8px 16px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.readonly-banner-desktop {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .readonly-banner-mobile {
+    display: none;
+  }
+  .readonly-banner-desktop {
+    display: inline-flex;
+    margin-right: 8px;
+  }
+}
+
+body[data-readonly="true"] .dock-center-slot {
+  display: none !important;
+}
+
+body[data-readonly="true"] .pc-actions .btn-primary {
+  display: none !important;
+}
+
+body[data-readonly="true"] .pc-actions .header-icon-btn[onclick="openDesignModal()"] {
+  display: none !important;
+}
+
+body[data-readonly="true"] .sheet-actions {
+  display: none !important;
+}
+
+body[data-readonly="true"] .dropzone-box {
+  display: none !important;
+}
+
+body[data-readonly="true"] .kebab-btn,
+body[data-readonly="true"] .bac-stripes-col,
+body[data-readonly="true"] .str-kebab-trigger {
+  display: none !important;
+}
+
+body[data-readonly="true"] .bento-add-mini-btn {
+  display: none !important;
+}
+
+body[data-readonly="true"] .student-sc-add {
+  display: none !important;
+}
+
+body[data-readonly="true"] .student-btn-new-board {
+  display: none !important;
+}
+
+body[data-readonly="true"] .str-check-circle,
+body[data-readonly="true"] .timeline-check-btn {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+body[data-readonly="true"] .str-checkbox {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+body[data-readonly="true"] .section-action[onclick*="openModal"],
+body[data-readonly="true"] .section-action {
+  display: none !important;
+}
+
+body[data-readonly="true"] .kebab-menu {
+  display: none !important;
+}
+
+body[data-readonly="true"] .btn-secondary[onclick*="clearAppCache"] {
+  display: none !important;
+}
+
+body[data-readonly="true"] .design-selection-grid,
+body[data-readonly="true"] #theme-selection-title {
+  display: none !important;
+}

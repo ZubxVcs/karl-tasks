@@ -656,6 +656,10 @@ async function deleteTask(id) {
 
 function toggleKebab(id, ev) {
   ev.stopPropagation();
+  if (document.body.dataset.readonly === 'true') {
+    openTaskDetail(id, ev);
+    return;
+  }
   const currentMenu = document.getElementById(`kebab-${id}`);
   const willShow = currentMenu ? !currentMenu.classList.contains('show') : false;
 
@@ -698,4 +702,52 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   applySavedAvatar();
   initDropzone();
+
+  if (document.body.dataset.readonly === 'true') {
+    initReadonlyMode();
+  }
 });
+
+function initReadonlyMode() {
+  window.openModal = function() {};
+  window.submitNewTask = function() {};
+  window.submitEditTask = function() {};
+  window.deleteTask = function() {};
+  window.toggleTaskStatus = function() {};
+  window.uploadFileForTask = function() {};
+  window.toggleStatusFromDetail = function() {};
+  window.deleteFromDetail = function() {};
+  window.editFromDetail = function() {};
+  window.openEditModal = function() {};
+
+  document.querySelectorAll('.dock-center-slot').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.pc-actions .btn-primary').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.sheet-actions').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.dropzone-box').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.kebab-btn, .bac-stripes-col, .str-kebab-trigger').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.bento-add-mini-btn').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.student-sc-add').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.student-btn-new-board').forEach(el => el.style.display = 'none');
+
+  document.querySelectorAll('.str-checkbox, .timeline-check-btn').forEach(el => {
+    el.style.pointerEvents = 'none';
+    el.style.opacity = '0.5';
+  });
+}
+
+function copyPreviewLink() {
+  var url = window.location.origin + '/view';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(function() {
+      alert('Link pratinjau berhasil disalin: ' + url);
+    });
+  } else {
+    var input = document.createElement('input');
+    input.value = url;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    alert('Link pratinjau berhasil disalin: ' + url);
+  }
+}

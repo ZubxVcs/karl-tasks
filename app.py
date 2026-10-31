@@ -1,7 +1,7 @@
 import os
 import sqlite3
 from typing import Optional
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -219,6 +219,14 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi import Request, UploadFile, File
 
+
+def _is_readonly(request: Request, view: str = None, readonly: str = None) -> bool:
+    if request.url.path.startswith("/view"):
+        return True
+    if view == "readonly" or readonly == "1":
+        return True
+    return False
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
@@ -253,8 +261,7 @@ def download_custom_file(filename: str):
     raise HTTPException(status_code=404, detail="File not found")
 
 @app.get("/", response_class=HTMLResponse)
-def serve_overview(request: Request):
-    # Cek cookie tema jika ada, default ke overview.html
+def serve_overview(request: Request, view: str = Query(None), readonly: str = Query(None)):
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     template_name = "overview.html"
     if theme_cookie == "bento":
@@ -263,38 +270,42 @@ def serve_overview(request: Request):
         template_name = "overview_student.html"
     elif theme_cookie == "karl":
         template_name = "overview_karl.html"
-        
+
     return templates.TemplateResponse(request, template_name, {
         "active_page": "overview",
         "current_theme": theme_cookie,
-        "page_title": "Karl Tasks • Overview"
+        "page_title": "Karl Tasks - Overview",
+        "is_readonly": _is_readonly(request, view, readonly)
     })
 
 @app.get("/calendar", response_class=HTMLResponse)
-def serve_calendar(request: Request):
+def serve_calendar(request: Request, view: str = Query(None), readonly: str = Query(None)):
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "calendar.html", {
         "active_page": "calendar",
         "current_theme": theme_cookie,
-        "page_title": "Karl • Calendar & Schedule"
+        "page_title": "Karl - Calendar & Schedule",
+        "is_readonly": _is_readonly(request, view, readonly)
     })
 
 @app.get("/tasks", response_class=HTMLResponse)
-def serve_tasks(request: Request):
+def serve_tasks(request: Request, view: str = Query(None), readonly: str = Query(None)):
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "tasks.html", {
         "active_page": "tasks",
         "current_theme": theme_cookie,
-        "page_title": "Karl • Projects & Tasks"
+        "page_title": "Karl - Projects & Tasks",
+        "is_readonly": _is_readonly(request, view, readonly)
     })
 
 @app.get("/settings", response_class=HTMLResponse)
-def serve_settings(request: Request):
+def serve_settings(request: Request, view: str = Query(None), readonly: str = Query(None)):
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "settings.html", {
         "active_page": "settings",
         "current_theme": theme_cookie,
-        "page_title": "Karl • Pengaturan & Desain"
+        "page_title": "Karl - Pengaturan & Desain",
+        "is_readonly": _is_readonly(request, view, readonly)
     })
 
 @app.get("/theme/karl", response_class=HTMLResponse)
@@ -302,7 +313,8 @@ def serve_theme_karl(request: Request):
     return templates.TemplateResponse(request, "overview_karl.html", {
         "active_page": "overview",
         "current_theme": "default",
-        "page_title": "Karl Tasks • Command Center"
+        "page_title": "Karl Tasks - Command Center",
+        "is_readonly": False
     })
 
 @app.get("/theme/bento", response_class=HTMLResponse)
@@ -310,7 +322,8 @@ def serve_theme_bento(request: Request):
     return templates.TemplateResponse(request, "overview_bento.html", {
         "active_page": "overview",
         "current_theme": "bento",
-        "page_title": "Karl Tasks • Medical Bento Squircle"
+        "page_title": "Karl Tasks - Medical Bento Squircle",
+        "is_readonly": False
     })
 
 @app.get("/theme/student", response_class=HTMLResponse)
@@ -318,7 +331,8 @@ def serve_theme_student(request: Request):
     return templates.TemplateResponse(request, "overview_student.html", {
         "active_page": "overview",
         "current_theme": "student",
-        "page_title": "Karl Tasks • Student Course Hub"
+        "page_title": "Karl Tasks - Student Course Hub",
+        "is_readonly": False
     })
 
 @app.get("/profile", response_class=HTMLResponse)
@@ -327,5 +341,55 @@ def serve_profile(request: Request):
     return templates.TemplateResponse(request, "settings.html", {
         "active_page": "settings",
         "current_theme": theme_cookie,
-        "page_title": "Karl • Pengaturan & Desain"
+        "page_title": "Karl - Pengaturan & Desain",
+        "is_readonly": False
+    })
+
+
+@app.get("/view", response_class=HTMLResponse)
+def view_overview(request: Request):
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
+    template_name = "overview.html"
+    if theme_cookie == "bento":
+        template_name = "overview_bento.html"
+    elif theme_cookie == "student":
+        template_name = "overview_student.html"
+    elif theme_cookie == "karl":
+        template_name = "overview_karl.html"
+
+    return templates.TemplateResponse(request, template_name, {
+        "active_page": "overview",
+        "current_theme": theme_cookie,
+        "page_title": "Karl Tasks - Overview (Pratinjau)",
+        "is_readonly": True
+    })
+
+@app.get("/view/tasks", response_class=HTMLResponse)
+def view_tasks(request: Request):
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
+    return templates.TemplateResponse(request, "tasks.html", {
+        "active_page": "tasks",
+        "current_theme": theme_cookie,
+        "page_title": "Karl - Tasks (Pratinjau)",
+        "is_readonly": True
+    })
+
+@app.get("/view/calendar", response_class=HTMLResponse)
+def view_calendar(request: Request):
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
+    return templates.TemplateResponse(request, "calendar.html", {
+        "active_page": "calendar",
+        "current_theme": theme_cookie,
+        "page_title": "Karl - Calendar (Pratinjau)",
+        "is_readonly": True
+    })
+
+@app.get("/view/settings", response_class=HTMLResponse)
+def view_settings(request: Request):
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
+    return templates.TemplateResponse(request, "settings.html", {
+        "active_page": "settings",
+        "current_theme": theme_cookie,
+        "page_title": "Karl - Pengaturan (Pratinjau)",
+        "is_readonly": True
     })
