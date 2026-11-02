@@ -770,24 +770,74 @@ function showToastNotification(msg) {
   setTimeout(() => toast.classList.remove('show'), 2600);
 }
 
-async function loginAdminPrompt() {
-  const pin = prompt('Masukkan PIN Admin Karl untuk membuka mode edit:');
-  if (!pin) return;
+function loginAdminPrompt() {
+  const modal = document.getElementById('admin-login-modal');
+  const input = document.getElementById('admin-pin-input');
+  const err = document.getElementById('admin-pin-error');
+  if (modal) {
+    if (err) err.style.display = 'none';
+    if (input) {
+      input.value = '';
+      setTimeout(() => input.focus(), 150);
+    }
+    modal.style.display = 'flex';
+  }
+}
+
+function closeAdminLoginModal() {
+  const modal = document.getElementById('admin-login-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function submitAdminPinLogin() {
+  const input = document.getElementById('admin-pin-input');
+  const err = document.getElementById('admin-pin-error');
+  const btn = document.getElementById('admin-login-submit-btn');
+  const pin = input ? input.value.trim() : '';
+
+  if (!pin) {
+    if (err) {
+      err.innerText = 'PIN tidak boleh kosong!';
+      err.style.display = 'block';
+    }
+    return;
+  }
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = 'Memverifikasi...';
+  }
+
   try {
     const res = await fetch('/api/admin/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pin: pin.trim() })
+      body: JSON.stringify({ pin: pin })
     });
     const data = await res.json();
     if (res.ok) {
-      alert('Login Admin Berhasil! Mode Edit Aktif.');
-      window.location.href = '/';
+      closeAdminLoginModal();
+      showToast('Login Admin Berhasil! Mode Edit Aktif.');
+      setTimeout(() => {
+        window.location.href = '/settings';
+      }, 500);
     } else {
-      alert(data.detail || 'PIN Salah');
+      if (err) {
+        err.innerText = data.detail || 'PIN Salah! Coba lagi.';
+        err.style.display = 'block';
+      }
+      if (input) input.focus();
     }
   } catch (e) {
-    alert('Gagal menghubungi server.');
+    if (err) {
+      err.innerText = 'Gagal menghubungi server.';
+      err.style.display = 'block';
+    }
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = 'Masuk';
+    }
   }
 }
 
