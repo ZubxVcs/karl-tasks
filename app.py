@@ -2,7 +2,7 @@ import os
 import sqlite3
 import hashlib
 from typing import Optional
-from fastapi import FastAPI, HTTPException, Query, Request, UploadFile, File, Response
+from fastapi import FastAPI, HTTPException, Query, Request, UploadFile, File, Response, Form
 from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -154,10 +154,8 @@ class AdminLoginRequest(BaseModel):
     pin: str
 
 @app.post("/api/admin/login")
-def admin_login(data: AdminLoginRequest, response: Response):
+def api_admin_login(data: AdminLoginRequest, response: Response):
     if data.pin.strip() == ADMIN_PIN:
-        # Session berlaku 7 hari (604800 detik), reset otomatis setiap minggu
-        # SameSite=lax, path=/, tanpa Secure agar cookie bisa disimpan baik di HTTPS Cloudflare maupun HTTP LAN
         response.set_cookie(
             key="karl_admin_token",
             value=ADMIN_TOKEN,
@@ -170,9 +168,31 @@ def admin_login(data: AdminLoginRequest, response: Response):
     raise HTTPException(status_code=401, detail="PIN Admin Salah")
 
 @app.post("/api/admin/logout")
-def admin_logout(response: Response):
+def api_admin_logout(response: Response):
     response.delete_cookie("karl_admin_token", path="/")
     return {"success": True, "message": "Logout Berhasil"}
+
+@app.post("/login", response_class=HTMLResponse)
+def form_login(request: Request, pin: str = Form(...)):
+    if pin.strip() == ADMIN_PIN:
+        response = RedirectResponse(url="/?admin_token=" + ADMIN_TOKEN, status_code=303)
+        response.set_cookie(
+            key="karl_admin_token",
+            value=ADMIN_TOKEN,
+            max_age=604800,
+            path="/",
+            samesite="lax",
+            httponly=False
+        )
+        return response
+    # Jika PIN salah, kembalikan ke /view/settings dengan pesan error
+    return RedirectResponse(url="/view/settings?error=pin_salah", status_code=303)
+
+@app.post("/logout", response_class=HTMLResponse)
+def form_logout(response: Response):
+    res = RedirectResponse(url="/view", status_code=303)
+    res.delete_cookie("karl_admin_token", path="/")
+    return res
 
 @app.post("/api/todos")
 def create_task(item: TaskCreate, request: Request):

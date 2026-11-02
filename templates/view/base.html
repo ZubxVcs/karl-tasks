@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=38.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=60.0">
      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
 </head>
 <body data-design="{{ current_theme | default('default') }}" data-readonly="{{ 'true' if is_readonly else 'false' }}">
@@ -492,22 +492,24 @@
         Masukkan PIN identitas Karl untuk membuka akses penuh (Create, Edit, Delete).
       </p>
       
-      <div style="width: 100%; margin-bottom: 20px;">
-        <input type="password" id="admin-pin-input" class="form-input" placeholder="Ketik PIN NIM..." 
-               style="text-align: center; font-size: 1.15rem; letter-spacing: 0.25em; font-family: monospace; font-weight: 700; height: 50px; border-radius: 14px; background: rgba(0,0,0,0.15);"
-               maxlength="20" onkeydown="if(event.key === 'Enter') submitAdminPinLogin()">
-        <div id="admin-pin-error" style="display: none; color: #EF4444; font-size: 0.8rem; font-weight: 700; margin-top: 8px;"></div>
-      </div>
+      <form action="/login" method="POST" style="width: 100%; margin: 0; padding: 0;">
+        <div style="width: 100%; margin-bottom: 20px;">
+          <input type="password" name="pin" id="admin-pin-input" class="form-input" placeholder="Ketik PIN NIM..." 
+                 style="text-align: center; font-size: 1.15rem; letter-spacing: 0.25em; font-family: monospace; font-weight: 700; height: 50px; border-radius: 14px; background: rgba(0,0,0,0.15);"
+                 maxlength="20" required autofocus>
+          <div id="admin-pin-error" style="display: none; color: #EF4444; font-size: 0.8rem; font-weight: 700; margin-top: 8px;"></div>
+        </div>
 
-      <div class="confirm-actions-row" style="width: 100%;">
-        <button type="button" class="confirm-btn-cancel" onclick="closeAdminLoginModal()" style="min-height: 44px;">
-          Batal
-        </button>
-        <button type="button" class="confirm-btn-proceed" id="admin-login-submit-btn" onclick="submitAdminPinLogin()" 
-                style="min-height: 44px; background: #EF1B18; color: #FFF;">
-          Masuk
-        </button>
-      </div>
+        <div class="confirm-actions-row" style="width: 100%;">
+          <button type="button" class="confirm-btn-cancel" onclick="closeAdminLoginModal()" style="min-height: 44px;">
+            Batal
+          </button>
+          <button type="submit" class="confirm-btn-proceed" id="admin-login-submit-btn" 
+                  style="min-height: 44px; background: #EF1B18; color: #FFF;">
+            Masuk
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -522,15 +524,17 @@
         Kamu akan keluar dari mode owner dan kembali ke mode pratinjau tamu (read-only).
       </p>
 
-      <div class="confirm-actions-row" style="width: 100%;">
-        <button type="button" class="confirm-btn-cancel" onclick="closeAdminLogoutModal()" style="min-height: 44px;">
-          Batal
-        </button>
-        <button type="button" class="confirm-btn-proceed" id="admin-logout-submit-btn" onclick="executeAdminLogout()" 
-                style="min-height: 44px; background: #EF1B18; color: #FFF;">
-          Kunci (Logout)
-        </button>
-      </div>
+      <form action="/logout" method="POST" style="width: 100%; margin: 0; padding: 0;">
+        <div class="confirm-actions-row" style="width: 100%;">
+          <button type="button" class="confirm-btn-cancel" onclick="closeAdminLogoutModal()" style="min-height: 44px;">
+            Batal
+          </button>
+          <button type="submit" class="confirm-btn-proceed" id="admin-logout-submit-btn" 
+                  style="min-height: 44px; background: #EF1B18; color: #FFF;">
+            Kunci (Logout)
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
