@@ -161,27 +161,16 @@
       <div class="settings-row-sub">Sesuaikan kenyamanan mata saat siang atau malam</div>
     </div>
     <button class="btn-secondary btn-touch-flex" onclick="toggleTheme()">
-      🌓 Ganti Tema
+   <i class="ph ph-moon"></i>Ganti Tema
     </button>
   </div>
-
-  <div class="settings-row settings-row-top">
-    <div>
-      <div class="settings-row-title-semibold">Bersihkan Cache Aplikasi</div>
-      <div class="settings-row-sub">Muat ulang data tugas dan refresh local storage</div>
-    </div>
-    <button class="btn-secondary btn-touch-danger" onclick="clearAppCache()">
-      🗑️ Reset Cache
-    </button>
-  </div>
-
   <div class="settings-row settings-row-bordered-top">
     <div>
       <div class="settings-row-title-semibold">Link Pratinjau Publik</div>
       <div class="settings-row-sub">Bagikan link ini agar orang lain bisa melihat tugas tanpa bisa mengubah database</div>
     </div>
     <button class="btn-primary btn-touch-flex" onclick="copyPreviewLink()">
-      🔗 Salin Link
+      <i class="ph ph-copy"></i>Salin Link
     </button>
   </div>
 </div>
@@ -190,62 +179,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-function updateSettingsView() {
-  const current = localStorage.getItem('karl_ui_design') || 'default';
-
-  // Reset all cards
-  ['default', 'bento', 'student'].forEach(theme => {
-    const card = document.getElementById(`theme-card-${theme}`);
-    const pill = document.getElementById(`status-pill-${theme}`);
-    const btn = document.getElementById(`btn-select-${theme}`);
-
-    if (card && pill && btn) {
-      if (theme === current) {
-        card.classList.add('selected');
-        pill.style.display = 'inline-block';
-        btn.innerText = 'Desain Sedang Digunakan';
-        btn.classList.add('active');
-      } else {
-        card.classList.remove('selected');
-        pill.style.display = 'none';
-        btn.innerText = 'Gunakan Desain Ini';
-        btn.classList.remove('active');
-      }
-    }
-  });
-}
-
-function selectDesignEngine(name) {
-  setDesignTheme(name);
-  updateSettingsView();
-  
-  const toast = document.getElementById('settings-toast');
-  if (toast) {
-    toast.innerText = `Desain ${name === 'bento' ? 'Medical Bento' : (name === 'student' ? 'Student Hub' : 'Karl Command Center')} aktif!`;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-      // Redirect ke template tema terkait
-      const targetPath = name === 'bento' ? '/theme/bento' : (name === 'student' ? '/theme/student' : '/theme/karl');
-      window.location.href = targetPath;
-    }, 600);
-  }
-}
-
-function clearAppCache() {
-  if (confirm('Bersihkan cache dan muat ulang halaman?')) {
-    localStorage.removeItem('karl_custom_avatar');
-    window.location.reload();
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  updateSettingsView();
-});
-
-function salinLinkSekarang() {
-  salinTeks(2611070020);
-}
-</script>
+<script src="/static/js/settings.js?v=1.0"></script>
 {% endblock %}

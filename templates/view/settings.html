@@ -17,10 +17,6 @@
       <span class="pill-badge pill-neutral">Teknik Informatika</span>
     </div>
     <h3 class="profile-user-name">Karl Firjatullah</h3>
-    <p class="profile-meta-text" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px;" onclick="salinLinkSekarang()" title="Klik untuk salin NIM">
-      <span>NIM: 2611070020</span>
-      <i class="ph ph-copy" style="font-size: 0.85rem; color: var(--primary);"></i>
-    </p>
   </div>
 </div>
 
@@ -177,58 +173,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-function updateSettingsView() {
-  const current = localStorage.getItem('karl_ui_design') || 'default';
-
-  // Reset all cards
-  ['default', 'bento', 'student'].forEach(theme => {
-    const card = document.getElementById(`theme-card-${theme}`);
-    const pill = document.getElementById(`status-pill-${theme}`);
-    const btn = document.getElementById(`btn-select-${theme}`);
-
-    if (card && pill && btn) {
-      if (theme === current) {
-        card.classList.add('selected');
-        pill.style.display = 'inline-block';
-        btn.innerText = 'Desain Sedang Digunakan';
-        btn.classList.add('active');
-      } else {
-        card.classList.remove('selected');
-        pill.style.display = 'none';
-        btn.innerText = 'Gunakan Desain Ini';
-        btn.classList.remove('active');
-      }
-    }
-  });
-}
-
-function selectDesignEngine(name) {
-  setDesignTheme(name);
-  updateSettingsView();
-  
-  const toast = document.getElementById('settings-toast');
-  if (toast) {
-    toast.innerText = `Desain ${name === 'bento' ? 'Medical Bento' : (name === 'student' ? 'Student Hub' : 'Karl Command Center')} aktif!`;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-      // Redirect ke template tema terkait
-      const targetPath = name === 'bento' ? '/theme/bento' : (name === 'student' ? '/theme/student' : '/theme/karl');
-      window.location.href = targetPath;
-    }, 600);
-  }
-}
-
-function clearAppCache() {
-  if (confirm('Bersihkan cache dan muat ulang halaman?')) {
-    localStorage.removeItem('karl_custom_avatar');
-    window.location.reload();
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  updateSettingsView();
-});
-</script>
+<script src="/static/js/settings.js?v=1.0"></script>
 {% endblock %}
