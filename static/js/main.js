@@ -882,6 +882,35 @@ async function executeAdminLogout() {
   }
 }
 
+function salinTeks(teks) {
+  var str = String(teks);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(str).then(function() {
+      showToast('Berhasil disalin: ' + str);
+    }).catch(function() {
+      fallbackSalin(str);
+    });
+  } else {
+    fallbackSalin(str);
+  }
+}
+
+function fallbackSalin(str) {
+  var el = document.createElement('textarea');
+  el.value = str;
+  el.style.position = 'fixed';
+  el.style.opacity = '0';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  showToast('Berhasil disalin: ' + str);
+}
+
+function salinLinkSekarang() {
+  salinTeks('2611070020');
+}
+
 function copyPreviewLink() {
   var url = window.location.origin + '/view';
   if (navigator.clipboard && navigator.clipboard.writeText) {

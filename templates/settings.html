@@ -17,7 +17,10 @@
       <span class="pill-badge pill-neutral">Teknik Informatika</span>
     </div>
     <h3 class="profile-user-name">Karl Firjatullah</h3>
-    <p class="profile-meta-text">NIM: 2611070020</p>
+    <p class="profile-meta-text" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px;" onclick="salinLinkSekarang()" title="Klik untuk salin NIM">
+      <span>NIM: 2611070020</span>
+      <i class="ph ph-copy" style="font-size: 0.85rem; color: var(--primary);"></i>
+    </p>
   </div>
 </div>
 
@@ -240,5 +243,9 @@ function clearAppCache() {
 document.addEventListener('DOMContentLoaded', () => {
   updateSettingsView();
 });
+
+function salinLinkSekarang() {
+  salinTeks(2611070020);
+}
 </script>
 {% endblock %}
