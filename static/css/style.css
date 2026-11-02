@@ -2006,6 +2006,11 @@ body[data-design="bento"] .mobile-header .avatar-wrap {
   border-color: var(--bento-outer);
 }
 
+body[data-design="bento"] .mobile-header,
+body[data-design="student"] .mobile-header {
+  display: flex !important;
+}
+
 /* Bento floating canvas on desktop */
 @media (min-width: 900px) {
   body[data-design="bento"] .main-content {
@@ -4368,9 +4373,7 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65) !important;
 }
 
-/* ========================================================
-   READ-ONLY / PREVIEW MODE
-   ======================================================== */
+/* READ-ONLY / PREVIEW MODE */
 .readonly-banner {
   background: linear-gradient(135deg, #F59E0B, #FBBF24);
   color: #78350F;
@@ -4415,10 +4418,6 @@ body[data-readonly="true"] .dock-center-slot {
 }
 
 body[data-readonly="true"] .pc-actions .btn-primary {
-  display: none !important;
-}
-
-body[data-readonly="true"] .pc-actions .header-icon-btn[onclick="openDesignModal()"] {
   display: none !important;
 }
 
