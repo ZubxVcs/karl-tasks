@@ -431,7 +431,7 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   display: flex;
   flex-direction: column;
   gap: 22px;
-  padding-bottom: 90px;
+  padding-bottom: 160px;
 }
 
 @media (min-width: 900px) {
@@ -592,6 +592,7 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   padding: 22px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
+  margin-bottom: 40px;
 }
 
 .timeline-head {
