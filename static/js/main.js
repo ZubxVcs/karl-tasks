@@ -822,9 +822,10 @@ async function submitAdminPinLogin() {
 
       closeAdminLoginModal();
       showToast('Login Admin Berhasil! Mode Edit Aktif.');
+      // Auto-restart / refresh halaman instan ke dashboard utama tanpa nunggu lama
       setTimeout(() => {
-        window.location.href = '/settings';
-      }, 500);
+        window.location.replace('/');
+      }, 300);
     } else {
       if (err) {
         err.innerText = data.detail || 'PIN Salah! Coba lagi.';
@@ -845,16 +846,37 @@ async function submitAdminPinLogin() {
   }
 }
 
-async function logoutAdmin() {
-  if (!confirm('Kunci sesi admin dan kembali ke mode tamu?')) return;
+function logoutAdmin() {
+  const modal = document.getElementById('admin-logout-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+  } else {
+    executeAdminLogout();
+  }
+}
+
+function closeAdminLogoutModal() {
+  const modal = document.getElementById('admin-logout-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function executeAdminLogout() {
+  const btn = document.getElementById('admin-logout-submit-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = 'Mengunci...';
+  }
   try {
     await fetch('/api/admin/logout', { method: 'POST' });
     document.cookie = 'karl_admin_token=; Max-Age=0; path=/;';
     localStorage.removeItem('karl_admin_token');
-    alert('Sesi admin terkunci.');
-    window.location.href = '/view';
+    closeAdminLogoutModal();
+    showToast('Sesi admin terkunci. Kembali ke mode tamu.');
+    setTimeout(() => {
+      window.location.replace('/view');
+    }, 300);
   } catch (e) {
-    window.location.reload();
+    window.location.replace('/view');
   }
 }
 
@@ -862,7 +884,7 @@ function copyPreviewLink() {
   var url = window.location.origin + '/view';
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(url).then(function() {
-      alert('Link pratinjau berhasil disalin: ' + url);
+      showToast('Link pratinjau berhasil disalin!');
     });
   } else {
     var input = document.createElement('input');
@@ -871,6 +893,6 @@ function copyPreviewLink() {
     input.select();
     document.execCommand('copy');
     document.body.removeChild(input);
-    alert('Link pratinjau berhasil disalin: ' + url);
+    showToast('Link pratinjau berhasil disalin!');
   }
 }

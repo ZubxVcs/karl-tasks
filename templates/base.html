@@ -512,7 +512,30 @@
     </div>
   </div>
 
-  <script src="/static/js/main.js?v=42.0"></script>
+  <!-- ==================== CUSTOM ADMIN LOGOUT MODAL ==================== -->
+  <div class="modal-overlay" id="admin-logout-modal" style="display: none; z-index: 1002;" onclick="closeAdminLogoutModal()">
+    <div class="modal-confirm-box" onclick="event.stopPropagation()">
+      <div class="confirm-icon-bubble" style="background: rgba(239, 27, 24, 0.15); color: #EF1B18;">
+        <i class="ph ph-sign-out" style="font-size: 1.7rem;"></i>
+      </div>
+      <h3 class="confirm-modal-heading">Kunci Sesi Admin?</h3>
+      <p class="confirm-modal-paragraph" style="margin-bottom: 24px;">
+        Kamu akan keluar dari mode owner dan kembali ke mode pratinjau tamu (read-only).
+      </p>
+
+      <div class="confirm-actions-row" style="width: 100%;">
+        <button type="button" class="confirm-btn-cancel" onclick="closeAdminLogoutModal()" style="min-height: 44px;">
+          Batal
+        </button>
+        <button type="button" class="confirm-btn-proceed" id="admin-logout-submit-btn" onclick="executeAdminLogout()" 
+                style="min-height: 44px; background: #EF1B18; color: #FFF;">
+          Kunci (Logout)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js?v=48.0"></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>
