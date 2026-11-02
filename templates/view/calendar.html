@@ -142,10 +142,15 @@
     currentMonth += delta;
     if (currentMonth < 0) { currentMonth = 11; currentYear--; }
     if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    
+    // Otomatis arahkan tanggal terpilih ke tanggal 1 di bulan baru agar sinkron dengan timeline
+    selectedDateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-01`;
+
     if (currentYear !== prevYear) {
       loadHolidays(currentYear);
     } else {
       renderCalendar();
+      renderTimeline();
     }
   };
 
