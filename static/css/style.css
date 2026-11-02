@@ -643,7 +643,10 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   -ms-overflow-style: none;  /* IE/Edge */
 }
 .filter-pills::-webkit-scrollbar {
-  display: none;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 .pill-btn {
@@ -975,10 +978,15 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   padding-bottom: 4px;
   margin-bottom: 20px;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / Edge */
 }
 
 .quick-cat-row::-webkit-scrollbar {
-  display: none;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 .qcat-chip {
