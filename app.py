@@ -444,4 +444,12 @@ def view_calendar(request: Request):
 
 @app.get("/view/settings", response_class=HTMLResponse)
 def view_settings(request: Request):
-    return RedirectResponse(url="/settings", status_code=303)
+    theme_cookie = request.cookies.get("karl_ui_design", "default")
+    admin_ok = is_admin_request(request)
+    return templates.TemplateResponse(request, "view/settings.html", {
+        "active_page": "settings",
+        "current_theme": theme_cookie,
+        "page_title": "Karl - Pengaturan (Mode View)",
+        "is_readonly": not admin_ok,
+        "is_admin": admin_ok
+    })
