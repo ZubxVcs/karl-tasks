@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <script>
     (function() {
+      // Sinkronisasi token admin dari localStorage ke cookie jika cookie sempat hilang
+      var localToken = localStorage.getItem('karl_admin_token');
+      if (localToken && !document.cookie.includes('karl_admin_token=')) {
+        document.cookie = 'karl_admin_token=' + localToken + '; max-age=604800; path=/; samesite=lax';
+      }
       var match = document.cookie.match(new RegExp('(^| )karl_ui_design=([^;]+)'));
       var d = match ? match[2] : (localStorage.getItem('karl_ui_design') || 'default');
       document.documentElement.setAttribute('data-design', d);
@@ -506,7 +511,7 @@
     </div>
   </div>
 
-  <script src="/static/js/main.js?v=35.0"></script>
+  <script src="/static/js/main.js?v=42.0"></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

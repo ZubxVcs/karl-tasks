@@ -815,7 +815,11 @@ async function submitAdminPinLogin() {
       body: JSON.stringify({ pin: pin })
     });
     const data = await res.json();
-    if (res.ok) {
+    if (res.ok && data.token) {
+      // Simpan cookie langsung lewat JS sebagai fallback kuat
+      document.cookie = `karl_admin_token=${data.token}; max-age=604800; path=/; samesite=lax`;
+      localStorage.setItem('karl_admin_token', data.token);
+
       closeAdminLoginModal();
       showToast('Login Admin Berhasil! Mode Edit Aktif.');
       setTimeout(() => {
@@ -846,6 +850,7 @@ async function logoutAdmin() {
   try {
     await fetch('/api/admin/logout', { method: 'POST' });
     document.cookie = 'karl_admin_token=; Max-Age=0; path=/;';
+    localStorage.removeItem('karl_admin_token');
     alert('Sesi admin terkunci.');
     window.location.href = '/view';
   } catch (e) {

@@ -16,6 +16,10 @@ def is_admin_request(request: Request) -> bool:
     token = request.cookies.get("karl_admin_token") or request.headers.get("X-Admin-Token")
     if token == ADMIN_TOKEN:
         return True
+    # Bypass otomatis jika Karl mengakses langsung dari jaringan lokal LAN / localhost
+    if request.client and request.client.host in ["127.0.0.1", "::1", "192.168.0.105"]:
+        if not request.headers.get("CF-Connecting-IP") and not request.headers.get("CF-Ray"):
+            return True
     return False
 
 def require_admin(request: Request):
@@ -152,20 +156,21 @@ class AdminLoginRequest(BaseModel):
 def admin_login(data: AdminLoginRequest, response: Response):
     if data.pin.strip() == ADMIN_PIN:
         # Session berlaku 7 hari (604800 detik), reset otomatis setiap minggu
+        # SameSite=lax, path=/, tanpa Secure agar cookie bisa disimpan baik di HTTPS Cloudflare maupun HTTP LAN
         response.set_cookie(
             key="karl_admin_token",
             value=ADMIN_TOKEN,
             max_age=604800,
+            path="/",
             samesite="lax",
-            httponly=True,
-            secure=True
+            httponly=False
         )
         return {"success": True, "token": ADMIN_TOKEN, "message": "Login Admin Berhasil (Sesi 7 Hari)"}
     raise HTTPException(status_code=401, detail="PIN Admin Salah")
 
 @app.post("/api/admin/logout")
 def admin_logout(response: Response):
-    response.delete_cookie("karl_admin_token")
+    response.delete_cookie("karl_admin_token", path="/")
     return {"success": True, "message": "Logout Berhasil"}
 
 @app.post("/api/todos")
