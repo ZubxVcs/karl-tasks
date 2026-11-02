@@ -3,7 +3,7 @@ import sqlite3
 import hashlib
 from typing import Optional
 from fastapi import FastAPI, HTTPException, Query, Request, UploadFile, File, Response
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,9 +16,6 @@ def is_admin_request(request: Request) -> bool:
     token = request.cookies.get("karl_admin_token") or request.headers.get("X-Admin-Token")
     if token == ADMIN_TOKEN:
         return True
-    if request.client and request.client.host in ["127.0.0.1", "::1"]:
-        if not request.headers.get("CF-Connecting-IP"):
-            return True
     return False
 
 def require_admin(request: Request):
@@ -154,14 +151,16 @@ class AdminLoginRequest(BaseModel):
 @app.post("/api/admin/login")
 def admin_login(data: AdminLoginRequest, response: Response):
     if data.pin.strip() == ADMIN_PIN:
+        # Session berlaku 7 hari (604800 detik), reset otomatis setiap minggu
         response.set_cookie(
             key="karl_admin_token",
             value=ADMIN_TOKEN,
-            max_age=31536000,
+            max_age=604800,
             samesite="lax",
-            httponly=False
+            httponly=True,
+            secure=True
         )
-        return {"success": True, "token": ADMIN_TOKEN, "message": "Login Admin Berhasil"}
+        return {"success": True, "token": ADMIN_TOKEN, "message": "Login Admin Berhasil (Sesi 7 Hari)"}
     raise HTTPException(status_code=401, detail="PIN Admin Salah")
 
 @app.post("/api/admin/logout")
@@ -302,6 +301,10 @@ def download_custom_file(filename: str):
 
 @app.get("/", response_class=HTMLResponse)
 def serve_overview(request: Request, view: str = Query(None), readonly: str = Query(None)):
+    # Pengunjung publik tanpa token admin otomatis diarahkan ke /view
+    if not is_admin_request(request):
+        return RedirectResponse(url="/view", status_code=303)
+
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     template_name = "overview.html"
     if theme_cookie == "bento":
@@ -311,87 +314,102 @@ def serve_overview(request: Request, view: str = Query(None), readonly: str = Qu
     elif theme_cookie == "karl":
         template_name = "overview_karl.html"
 
-    admin_ok = is_admin_request(request)
     return templates.TemplateResponse(request, template_name, {
         "active_page": "overview",
         "current_theme": theme_cookie,
         "page_title": "Karl Tasks - Overview",
-        "is_readonly": _is_readonly(request, view, readonly),
-        "is_admin": admin_ok
+        "is_readonly": False,
+        "is_admin": True
     })
 
 @app.get("/calendar", response_class=HTMLResponse)
 def serve_calendar(request: Request, view: str = Query(None), readonly: str = Query(None)):
+    if not is_admin_request(request):
+        return RedirectResponse(url="/view", status_code=303)
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "calendar.html", {
         "active_page": "calendar",
         "current_theme": theme_cookie,
-        "page_title": "Karl - Calendar & Schedule",
-        "is_readonly": _is_readonly(request, view, readonly),
-        "is_admin": is_admin_request(request)
+        "page_title": "Karl - Kalender Tugas",
+        "is_readonly": False,
+        "is_admin": True
     })
 
 @app.get("/tasks", response_class=HTMLResponse)
 def serve_tasks(request: Request, view: str = Query(None), readonly: str = Query(None)):
+    if not is_admin_request(request):
+        return RedirectResponse(url="/view", status_code=303)
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "tasks.html", {
         "active_page": "tasks",
         "current_theme": theme_cookie,
         "page_title": "Karl - Projects & Tasks",
-        "is_readonly": _is_readonly(request, view, readonly),
-        "is_admin": is_admin_request(request)
+        "is_readonly": False,
+        "is_admin": True
     })
 
 @app.get("/settings", response_class=HTMLResponse)
 def serve_settings(request: Request, view: str = Query(None), readonly: str = Query(None)):
+    # Jika pengunjung bukan admin resmi (Karl dengan token PIN), redirect paksa ke /view
+    if not is_admin_request(request):
+        return RedirectResponse(url="/view", status_code=303)
+
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "settings.html", {
         "active_page": "settings",
         "current_theme": theme_cookie,
         "page_title": "Karl - Pengaturan & Desain",
-        "is_readonly": _is_readonly(request, view, readonly),
-        "is_admin": is_admin_request(request)
+        "is_readonly": False,
+        "is_admin": True
     })
 
 @app.get("/theme/karl", response_class=HTMLResponse)
 def serve_theme_karl(request: Request):
+    if not is_admin_request(request):
+        return RedirectResponse(url="/view", status_code=303)
     return templates.TemplateResponse(request, "overview_karl.html", {
         "active_page": "overview",
         "current_theme": "default",
         "page_title": "Karl Tasks - Command Center",
-        "is_readonly": _is_readonly(request),
-        "is_admin": is_admin_request(request)
+        "is_readonly": False,
+        "is_admin": True
     })
 
 @app.get("/theme/bento", response_class=HTMLResponse)
 def serve_theme_bento(request: Request):
+    if not is_admin_request(request):
+        return RedirectResponse(url="/view", status_code=303)
     return templates.TemplateResponse(request, "overview_bento.html", {
         "active_page": "overview",
         "current_theme": "bento",
         "page_title": "Karl Tasks - Medical Bento Squircle",
-        "is_readonly": _is_readonly(request),
-        "is_admin": is_admin_request(request)
+        "is_readonly": False,
+        "is_admin": True
     })
 
 @app.get("/theme/student", response_class=HTMLResponse)
 def serve_theme_student(request: Request):
+    if not is_admin_request(request):
+        return RedirectResponse(url="/view", status_code=303)
     return templates.TemplateResponse(request, "overview_student.html", {
         "active_page": "overview",
         "current_theme": "student",
         "page_title": "Karl Tasks - Student Course Hub",
-        "is_readonly": _is_readonly(request),
-        "is_admin": is_admin_request(request)
+        "is_readonly": False,
+        "is_admin": True
     })
 
 @app.get("/profile", response_class=HTMLResponse)
 def serve_profile(request: Request):
+    if not is_admin_request(request):
+        return RedirectResponse(url="/view", status_code=303)
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     return templates.TemplateResponse(request, "settings.html", {
         "active_page": "settings",
         "current_theme": theme_cookie,
         "page_title": "Karl - Pengaturan & Desain",
-        "is_readonly": _is_readonly(request),
-        "is_admin": is_admin_request(request)
+        "is_readonly": False,
+        "is_admin": True
     })
 
 
@@ -407,33 +425,12 @@ def view_overview(request: Request):
 
 @app.get("/view/tasks", response_class=HTMLResponse)
 def view_tasks(request: Request):
-    theme_cookie = request.cookies.get("karl_ui_design", "default")
-    return templates.TemplateResponse(request, "tasks.html", {
-        "active_page": "tasks",
-        "current_theme": theme_cookie,
-        "page_title": "Karl - Tasks (Pratinjau)",
-        "is_readonly": True,
-        "is_admin": is_admin_request(request)
-    })
+    return RedirectResponse(url="/view", status_code=303)
 
 @app.get("/view/calendar", response_class=HTMLResponse)
 def view_calendar(request: Request):
-    theme_cookie = request.cookies.get("karl_ui_design", "default")
-    return templates.TemplateResponse(request, "calendar.html", {
-        "active_page": "calendar",
-        "current_theme": theme_cookie,
-        "page_title": "Karl - Calendar (Pratinjau)",
-        "is_readonly": True,
-        "is_admin": is_admin_request(request)
-    })
+    return RedirectResponse(url="/view", status_code=303)
 
 @app.get("/view/settings", response_class=HTMLResponse)
 def view_settings(request: Request):
-    theme_cookie = request.cookies.get("karl_ui_design", "default")
-    return templates.TemplateResponse(request, "settings.html", {
-        "active_page": "settings",
-        "current_theme": theme_cookie,
-        "page_title": "Karl - Pengaturan (Pratinjau)",
-        "is_readonly": True,
-        "is_admin": is_admin_request(request)
-    })
+    return RedirectResponse(url="/view", status_code=303)
