@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=35.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=38.0">
      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
 </head>
 <body data-design="{{ current_theme | default('default') }}" data-readonly="{{ 'true' if is_readonly else 'false' }}">
@@ -31,7 +31,6 @@
           <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Command Center</div>
         </div>
       </a>
-
       <nav class="pc-nav-links">
         <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="pc-nav-item {% if active_page == 'overview' %}active{% endif %}">Overview</a>
         <a href="{% if is_readonly %}/view/calendar{% else %}/calendar{% endif %}" class="pc-nav-item {% if active_page == 'calendar' %}active{% endif %}">Calendar</a>
@@ -43,7 +42,6 @@
       <div class="readonly-banner readonly-banner-desktop">Mode Tamu</div>
       {% endif %}
 
-      {% if not is_readonly %}
       <div class="pc-actions">
         <button class="header-icon-btn" onclick="openDesignModal()" title="Ganti Desain">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.04-.23-.29-.38-.63-.38-1.01 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-5.52-4.48-9.95-10-9.95z"></path><circle cx="7.5" cy="11.5" r="1.5"></circle><circle cx="10.5" cy="7.5" r="1.5"></circle><circle cx="16.5" cy="11.5" r="1.5"></circle><circle cx="13.5" cy="7.5" r="1.5"></circle></svg>
@@ -51,14 +49,10 @@
         <button class="header-icon-btn" onclick="toggleTheme()" title="Ganti Tema">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
-        <button class="btn-primary" onclick="openModal()" style="display: flex; align-items: center; gap: 6px;">
-          + New Task
-        </button>
         <div class="brand-logo-icon topbar-avatar">
           <img src="/static/img/karl_logo_square.png" alt="Karl">
         </div>
       </div>
-      {% endif %}
     </div>
   </header>
 
@@ -74,6 +68,9 @@
       </div>
     </div>
     <div style="display: flex; align-items: center; gap: 8px;">
+      {% if is_readonly %}
+      <div class="readonly-banner readonly-banner-mobile">Mode Tamu</div>
+      {% endif %}
       <button class="header-icon-btn" onclick="openDesignModal()" title="Ganti Desain">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.04-.23-.29-.38-.63-.38-1.01 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-5.52-4.48-9.95-10-9.95z"></path><circle cx="7.5" cy="11.5" r="1.5"></circle><circle cx="10.5" cy="7.5" r="1.5"></circle><circle cx="16.5" cy="11.5" r="1.5"></circle><circle cx="13.5" cy="7.5" r="1.5"></circle></svg>
       </button>
@@ -82,10 +79,6 @@
       </button>
     </div>
   </div>
-
-  {% if is_readonly %}
-  <div class="readonly-banner readonly-banner-mobile">Mode Tamu</div>
-  {% endif %}
 
   <!-- ==================== DEDICATED PAGE CONTENT ==================== -->
   <main class="main-content">

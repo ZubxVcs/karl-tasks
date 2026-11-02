@@ -4390,13 +4390,12 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
 }
 
 .readonly-banner-mobile {
-  display: block;
-  border-radius: 12px;
-  margin: 0 20px 8px;
-  padding: 8px 16px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  display: inline-flex;
+  border-radius: 9999px;
+  margin: 0;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  flex-shrink: 0;
 }
 
 .readonly-banner-desktop {
