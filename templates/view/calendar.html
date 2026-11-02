@@ -1,0 +1,43 @@
+{% extends "view/base.html" %}
+
+{% block content %}
+<div class="section-head-row">
+  <h2 class="section-title">Calendar & Schedule</h2>
+  <span class="section-action" onclick="openModal()">+ Add Event</span>
+</div>
+
+<!-- Monthly Calendar Card -->
+<div class="calendar-card">
+  <div class="calendar-top">
+    <div class="cal-header-date" id="cal-month-year">Oktober 2026</div>
+    <div style="display: flex; gap: 6px;">
+      <button class="cal-nav-btn" onclick="navMonth(-1)">‹</button>
+      <button class="cal-nav-btn" onclick="navMonth(1)">›</button>
+    </div>
+  </div>
+
+  <div class="weekdays-row">
+    <div class="weekday-item">Min</div>
+    <div class="weekday-item">Sen</div>
+    <div class="weekday-item">Sel</div>
+    <div class="weekday-item">Rab</div>
+    <div class="weekday-item">Kam</div>
+    <div class="weekday-item">Jum</div>
+    <div class="weekday-item">Sab</div>
+  </div>
+
+  <div class="days-grid" id="days-grid"></div>
+</div>
+
+<!-- Timeline Schedule of Selected Day -->
+<div class="timeline-card">
+  <div class="timeline-head">
+    <h3 class="section-title" id="timeline-title" style="font-size: 1.05rem;">Jadwal Hari Ini</h3>
+  </div>
+  <div class="timeline-list" id="timeline-list"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/calendar.js?v=20.0"></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "view/base.html" %}
+
+{% block content %}
+<div class="section-head-row">
+  <h2 class="section-title">Projects & Tasks</h2>
+  <span class="section-action" onclick="openModal()">+ Add New</span>
+</div>
+
+<!-- Filter Tabs -->
+<div class="filter-pills">
+  <button class="pill-btn active" data-filter="all">Semua</button>
+  <button class="pill-btn" data-filter="Kuliah">Kuliah</button>
+  <button class="pill-btn" data-filter="Homelab">Homelab</button>
+  <button class="pill-btn" data-filter="Coding">Coding</button>
+  <button class="pill-btn" data-filter="completed">Selesai</button>
+</div>
+
+<!-- Tasks Cards Container -->
+<div class="tasks-container" id="tasks-list">
+  <div style="text-align: center; padding: 40px; color: var(--text-muted); background: var(--card); border-radius: 20px; border: 1px solid var(--border);">
+    Memuat daftar tugas...
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/tasks.js?v=1.0"></script>
+{% endblock %}

@@ -461,7 +461,7 @@ def view_overview(request: Request):
 def view_tasks(request: Request):
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     admin_ok = is_admin_request(request)
-    return templates.TemplateResponse(request, "tasks.html", {
+    return templates.TemplateResponse(request, "view/tasks.html", {
         "active_page": "tasks",
         "current_theme": theme_cookie,
         "page_title": "Karl - Tasks (Pratinjau)",
@@ -473,7 +473,7 @@ def view_tasks(request: Request):
 def view_calendar(request: Request):
     theme_cookie = request.cookies.get("karl_ui_design", "default")
     admin_ok = is_admin_request(request)
-    return templates.TemplateResponse(request, "calendar.html", {
+    return templates.TemplateResponse(request, "view/calendar.html", {
         "active_page": "calendar",
         "current_theme": theme_cookie,
         "page_title": "Karl - Calendar (Pratinjau)",
