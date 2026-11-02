@@ -4373,7 +4373,154 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65) !important;
 }
 
-/* READ-ONLY / PREVIEW MODE */
+/* ========================================================
+   SETTINGS PAGE UTILITY CLASSES (CLEAN FROM INLINE STYLE)
+   ======================================================== */
+.settings-section-head {
+  margin-top: 28px;
+}
+
+.brand-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.settings-card-mb {
+  margin-bottom: 24px;
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-row-tight {
+  padding-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.settings-row-padded {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.settings-row-top {
+  padding-top: 16px;
+}
+
+.settings-row-bordered-top {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.settings-row-title-bold {
+  font-weight: 800;
+  color: var(--text-main);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-row-title-semibold {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.settings-row-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.settings-row-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.status-active-admin {
+  color: #10B981;
+  font-weight: 700;
+}
+
+.status-readonly-guest {
+  color: #F59E0B;
+  font-weight: 700;
+}
+
+.btn-min-touch {
+  min-height: 44px;
+}
+
+.btn-touch-danger {
+  min-height: 44px;
+  color: var(--accent-red);
+}
+
+.btn-touch-flex {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-task-placeholder {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+/* Modal form inputs & wrappers */
+.modal-form-full {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-input-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.modal-pin-input-custom {
+  text-align: center;
+  font-size: 1.15rem;
+  letter-spacing: 0.25em;
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  height: 50px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.modal-error-text {
+  display: none;
+  color: #EF4444;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.modal-submit-red {
+  min-height: 44px;
+  background: #EF1B18 !important;
+  color: #FFF !important;
+}
+
+.mobile-header-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .readonly-banner {
   background: linear-gradient(135deg, #F59E0B, #FBBF24);
   color: #78350F;

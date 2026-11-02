@@ -114,56 +114,56 @@
 </div>
 
 <!-- SECTION 3: MODE TAMPILAN & SERVER STATUS -->
-<div class="section-head-row" style="margin-top: 28px;">
+<div class="section-head-row settings-section-head">
   <h2 class="section-title">Hak Akses & Sistem</h2>
 </div>
 
-<div class="settings-card" style="margin-bottom: 24px;">
-  <div class="settings-row" style="padding-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+<div class="settings-card settings-card-mb">
+  <div class="settings-row settings-row-tight">
     <div>
-      <div style="font-weight: 800; color: var(--text-main); font-size: 1rem; display: flex; align-items: center; gap: 8px;">
+      <div class="settings-row-title-bold">
         <i class="ph ph-shield-check" style="font-size: 1.25rem; color: var(--primary);"></i>
         <span>Hak Akses Dashboard</span>
       </div>
-      <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+      <div class="settings-row-desc">
         {% if is_admin %}
-        <span style="color: #10B981; font-weight: 700;">Akses Admin Aktif</span>: Kamu memiliki kendali penuh menambah, mengubah, dan menghapus tugas.
+        <span class="status-active-admin">Akses Admin Aktif</span>: Kamu memiliki kendali penuh menambah, mengubah, dan menghapus tugas.
         {% else %}
-        <span style="color: #F59E0B; font-weight: 700;">Mode Tamu (Read-Only)</span>: Fitur tulis dinonaktifkan. Data terlindungi dari perubahan publik.
+        <span class="status-readonly-guest">Mode Tamu (Read-Only)</span>: Fitur tulis dinonaktifkan. Data terlindungi dari perubahan publik.
         {% endif %}
       </div>
     </div>
     <div>
       {% if is_admin %}
-      <button class="btn-secondary" onclick="logoutAdmin()" style="min-height: 44px; color: var(--accent-red); font-size: 0.85rem;">
+      <button class="btn-secondary btn-touch-danger" onclick="logoutAdmin()">
         Kunci (Logout)
       </button>
       {% else %}
-      <button class="btn-primary" onclick="loginAdminPrompt()" style="min-height: 44px; font-size: 0.85rem;">
+      <button class="btn-primary btn-min-touch" onclick="loginAdminPrompt()">
         Masuk Admin (Karl)
       </button>
       {% endif %}
     </div>
   </div>
 
-  <div class="settings-row" style="padding-top: 16px; padding-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+  <div class="settings-row settings-row-padded">
     <div>
-      <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">Mode Gelap / Terang</div>
-      <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Sesuaikan kenyamanan mata saat siang atau malam</div>
+      <div class="settings-row-title-semibold">Mode Gelap / Terang</div>
+      <div class="settings-row-sub">Sesuaikan kenyamanan mata saat siang atau malam</div>
     </div>
-    <button class="btn-secondary" onclick="toggleTheme()" style="min-height: 44px; display: inline-flex; align-items: center; gap: 8px;">
+    <button class="btn-secondary btn-touch-flex" onclick="toggleTheme()">
       🌓 Ganti Tema
     </button>
   </div>
 
   {% if is_admin %}
-  <div class="settings-row" style="padding-top: 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+  <div class="settings-row settings-row-bordered-top">
     <div>
-      <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">Link Pratinjau Publik</div>
-      <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Bagikan link ini agar orang lain bisa melihat tugas tanpa bisa mengubah database</div>
+      <div class="settings-row-title-semibold">Link Pratinjau Publik</div>
+      <div class="settings-row-sub">Bagikan link ini agar orang lain bisa melihat tugas tanpa bisa mengubah database</div>
     </div>
-    <button class="btn-primary" onclick="copyPreviewLink()" style="min-height: 44px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem;">
-      Salin Link Pratinjau
+    <button class="btn-primary btn-touch-flex" onclick="copyPreviewLink()">
+      🔗 Salin Link
     </button>
   </div>
   {% endif %}
