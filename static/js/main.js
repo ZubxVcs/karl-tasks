@@ -702,11 +702,68 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   applySavedAvatar();
   initDropzone();
+  initHoppingBallDock();
 
   if (document.body.dataset.readonly === 'true') {
     initReadonlyMode();
   }
 });
+
+/* ==================== FLOATING HOPPING BALL DOCK INTERACTION ==================== */
+function initHoppingBallDock() {
+  const dock = document.getElementById('floating-dock');
+  const ball = document.getElementById('dock-hopping-ball');
+  const iconWrap = document.getElementById('dock-ball-icon-wrap');
+  if (!dock || !ball || !iconWrap) return;
+
+  function updateBallPosition(targetSlot, isAnimated = true) {
+    if (!targetSlot) return;
+    const dockRect = dock.getBoundingClientRect();
+    const slotRect = targetSlot.getBoundingClientRect();
+
+    // Hitung posisi center X slot terhadap kontainer dock
+    const centerX = slotRect.left - dockRect.left + (slotRect.width / 2) - 22; // 22 = radius ball (44/2)
+    ball.style.setProperty('--ball-x', `${centerX}px`);
+    ball.style.transform = `translate(${centerX}px, 0)`;
+
+    // Salin SVG icon dari slot aktif ke dalam bola mengambang
+    const svgIcon = targetSlot.querySelector('svg');
+    if (svgIcon) {
+      iconWrap.innerHTML = svgIcon.outerHTML;
+    }
+
+    if (isAnimated) {
+      ball.classList.remove('is-hopping');
+      void ball.offsetWidth; // trigger reflow
+      ball.classList.add('is-hopping');
+    }
+  }
+
+  // Cari slot yang saat ini berstatus active
+  const activeSlot = dock.querySelector('.dock-slot.active');
+  if (activeSlot) {
+    // Tunggu sedikit agar layout flexbox dock sudah terukur sempurna
+    requestAnimationFrame(() => {
+      setTimeout(() => updateBallPosition(activeSlot, false), 50);
+    });
+  }
+
+  // Pasang listener klik halus untuk feedback visual seketika sebelum navigasi pindah halaman
+  dock.querySelectorAll('.dock-slot').forEach(slot => {
+    slot.addEventListener('click', function(e) {
+      dock.querySelectorAll('.dock-slot').forEach(s => s.classList.remove('active'));
+      this.classList.add('active');
+      updateBallPosition(this, true);
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    const currentActive = dock.querySelector('.dock-slot.active');
+    if (currentActive) {
+      updateBallPosition(currentActive, false);
+    }
+  });
+}
 
 function initReadonlyMode() {
   window.openModal = function() {
