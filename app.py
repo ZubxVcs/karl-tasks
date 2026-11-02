@@ -397,19 +397,15 @@ def serve_profile(request: Request):
 
 @app.get("/view", response_class=HTMLResponse)
 def view_overview(request: Request):
-    theme_cookie = request.cookies.get("karl_ui_design", "default")
-    template_name = "overview.html"
-    if theme_cookie == "bento":
-        template_name = "overview_bento.html"
-    elif theme_cookie == "student":
-        template_name = "overview_student.html"
-    elif theme_cookie == "karl":
-        template_name = "overview_karl.html"
+    conn = get_db()
+    tasks_raw = conn.execute("SELECT * FROM tasks ORDER BY completed ASC, deadline ASC").fetchall()
+    conn.close()
+    tasks_list = [dict(t) for t in tasks_raw]
 
-    return templates.TemplateResponse(request, template_name, {
-        "active_page": "overview",
-        "current_theme": theme_cookie,
-        "page_title": "Karl Tasks - Overview (Pratinjau)",
+    return templates.TemplateResponse(request, "view/index.html", {
+        "request": request,
+        "tasks": tasks_list,
+        "page_title": "Karl Tasks — Mode Pratinjau Publik",
         "is_readonly": True,
         "is_admin": is_admin_request(request)
     })
