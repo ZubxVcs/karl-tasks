@@ -2006,9 +2006,11 @@ body[data-design="bento"] .mobile-header .avatar-wrap {
   border-color: var(--bento-outer);
 }
 
-body[data-design="bento"] .mobile-header,
-body[data-design="student"] .mobile-header {
-  display: flex !important;
+@media (max-width: 899px) {
+  body[data-design="bento"] .mobile-header,
+  body[data-design="student"] .mobile-header {
+    display: flex !important;
+  }
 }
 
 /* Bento floating canvas on desktop */
