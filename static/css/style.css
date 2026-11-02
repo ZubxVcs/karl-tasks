@@ -4376,6 +4376,177 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
 }
 
 /* ========================================================
+   BASE TEMPLATE UTILITY CLASSES (CLEAN ZERO INLINE CSS)
+   ======================================================== */
+.btn-new-task-topbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-title-no-mb {
+  margin-bottom: 0 !important;
+}
+
+.form-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.upload-img-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hidden-file-input {
+  display: none !important;
+}
+
+.btn-upload-browse {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.input-flex-1 {
+  flex: 1;
+}
+
+.hidden-initially {
+  display: none !important;
+}
+
+.detail-block-title-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-block-title-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.file-link-box {
+  display: none;
+  margin-bottom: 14px;
+}
+
+.file-link-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.file-link-card {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: var(--bg-body);
+  border: 1.5px solid var(--primary);
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.file-link-icon {
+  font-size: 1.2rem;
+}
+
+.file-link-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-link-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-link-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.btn-download-attached {
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.dropzone-upload-icon {
+  margin: 0 auto 6px;
+  color: var(--primary);
+}
+
+.dropzone-title-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.dropzone-sub-text {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.modal-card-max-480 {
+  max-width: 480px;
+}
+
+.modal-body-p20 {
+  padding: 20px;
+}
+
+.z-confirm-modal {
+  display: none;
+  z-index: 1000;
+}
+
+.z-admin-login-modal {
+  display: none;
+  z-index: 1002;
+}
+
+.confirm-bubble-lock {
+  background: rgba(239, 27, 24, 0.15);
+  color: #EF1B18;
+}
+
+.confirm-para-mb20 {
+  margin-bottom: 20px;
+}
+
+.confirm-para-mb24 {
+  margin-bottom: 24px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.icon-size-modal {
+  font-size: 1.7rem;
+}
+
+/* ========================================================
    SETTINGS PAGE UTILITY CLASSES (CLEAN FROM INLINE STYLE)
    ======================================================== */
 .settings-section-head {
