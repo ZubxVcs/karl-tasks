@@ -150,6 +150,62 @@ def get_tasks():
         for r in rows
     ]
 
+_holidays_cache = {}
+
+@app.get("/api/holidays")
+def get_holidays(year: int = 2026):
+    global _holidays_cache
+    if year in _holidays_cache:
+        return _holidays_cache[year]
+    
+    url = f"https://api-hari-libur.vercel.app/api?year={year}"
+    try:
+        import urllib.request
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+        with urllib.request.urlopen(req, timeout=4) as resp:
+            res_json = json.loads(resp.read().decode())
+            data = res_json.get("data", [])
+            mapping = {}
+            for item in data:
+                d = item.get("date")
+                desc = item.get("description")
+                if d and desc:
+                    mapping[d] = desc
+            if mapping:
+                _holidays_cache[year] = mapping
+                return mapping
+    except Exception as e:
+        print(f"Error fetching live holidays from API for {year}:", e)
+    
+    # Fallback aman jika API eksternal offline / rate limit: SKB 3 Menteri 2026
+    fallback_2026 = {
+        "2026-01-01": "Tahun Baru 2026 Masehi",
+        "2026-01-16": "Isra Mikraj Nabi Muhammad SAW",
+        "2026-02-17": "Tahun Baru Imlek 2577 Kongzili",
+        "2026-03-18": "Cuti Bersama Hari Suci Nyepi 1948",
+        "2026-03-19": "Hari Suci Nyepi (Tahun Baru Saka 1948)",
+        "2026-03-20": "Cuti Bersama Idul Fitri 1447 H",
+        "2026-03-21": "Hari Raya Idul Fitri 1447 H",
+        "2026-03-22": "Hari Raya Idul Fitri 1447 H",
+        "2026-03-23": "Cuti Bersama Idul Fitri 1447 H",
+        "2026-03-24": "Cuti Bersama Idul Fitri 1447 H",
+        "2026-04-03": "Wafat Yesus Kristus (Jumat Agung)",
+        "2026-04-05": "Kebangkitan Yesus Kristus (Paskah)",
+        "2026-05-01": "Hari Buruh Internasional",
+        "2026-05-14": "Kenaikan Yesus Kristus",
+        "2026-05-15": "Cuti Bersama Kenaikan Yesus Kristus",
+        "2026-05-27": "Hari Raya Idul Adha 1447 H",
+        "2026-05-28": "Cuti Bersama Hari Raya Idul Adha 1447 H",
+        "2026-05-31": "Hari Raya Waisak 2570 BE",
+        "2026-06-01": "Hari Lahir Pancasila",
+        "2026-06-16": "Tahun Baru Islam 1448 H",
+        "2026-08-17": "Hari Kemerdekaan RI",
+        "2026-08-25": "Maulid Nabi Muhammad SAW",
+        "2026-12-24": "Cuti Bersama Hari Raya Natal",
+        "2026-12-25": "Hari Raya Natal"
+    }
+    return fallback_2026 if year == 2026 else {}
+
 class AdminLoginRequest(BaseModel):
     pin: str
 
