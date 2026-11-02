@@ -1,12 +1,38 @@
 let allTasks = [];
-let currentYear = 2026;
-let currentMonth = 9; // Oktober (0-indexed)
-let selectedDateStr = '2026-10-22';
+const now = new Date();
+let currentYear = now.getFullYear();
+let currentMonth = now.getMonth();
+let selectedDateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
 const monthNames = [
   'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
   'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
 ];
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function formatHumanDate(dateStr) {
+  if (!dateStr) return 'Tanpa batas';
+  try {
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      const day = parseInt(parts[2], 10);
+      const mIdx = parseInt(parts[1], 10) - 1;
+      return `${day} ${monthNames[mIdx] || ''} ${parts[0]}`;
+    }
+    return dateStr;
+  } catch (e) {
+    return dateStr;
+  }
+}
 
 async function reloadPageData() {
   try {
@@ -68,7 +94,7 @@ function renderTimeline() {
   if (!container || !titleEl) return;
   
   const dayTasks = allTasks.filter(t => t.deadline === selectedDateStr);
-  titleEl.innerText = selectedDateStr === '2026-10-22' ? "Jadwal Hari Ini" : `Jadwal (${formatHumanDate(selectedDateStr)})`;
+  titleEl.innerText = selectedDateStr === `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}` ? "Jadwal Hari Ini" : `Jadwal (${formatHumanDate(selectedDateStr)})`;
 
   const iconMap = {
     'Kuliah': '🎓',
