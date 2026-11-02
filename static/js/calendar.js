@@ -51,7 +51,10 @@ function renderCalendar() {
     monthYearEl.innerText = `${monthNames[currentMonth]} ${currentYear}`;
   }
   const grid = document.getElementById('days-grid');
-  if (!grid) return;
+  if (!grid) {
+    console.error('days-grid element not found!');
+    return;
+  }
   grid.innerHTML = '';
 
   const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
@@ -59,6 +62,8 @@ function renderCalendar() {
 
   for (let i = 0; i < firstDayIndex; i++) {
     const empty = document.createElement('div');
+    empty.className = 'day-cell empty';
+    empty.style.pointerEvents = 'none';
     grid.appendChild(empty);
   }
 
@@ -127,4 +132,8 @@ function renderTimeline() {
   `).join('');
 }
 
-document.addEventListener('DOMContentLoaded', reloadPageData);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', reloadPageData);
+} else {
+  reloadPageData();
+}
