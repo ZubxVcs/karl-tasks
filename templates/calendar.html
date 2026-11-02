@@ -162,7 +162,7 @@
     
     const dayTasks = allTasks.filter(t => t.deadline === selectedDateStr);
     const holidayNotice = holidaysMap[selectedDateStr] ? `<div class="holiday-tag-sub">🔴 ${escapeHtml(holidaysMap[selectedDateStr])}</div>` : '';
-    titleEl.innerHTML = (selectedDateStr === `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}` ? "Jadwal Hari Ini" : `Jadwal (${formatHumanDate(selectedDateStr)})`) + holidayNotice;
+    titleEl.innerHTML = `Jadwal (${formatHumanDate(selectedDateStr)})` + holidayNotice;
 
     const iconMap = {
       'Kuliah': '<i class="ph ph-graduation-cap"></i>',

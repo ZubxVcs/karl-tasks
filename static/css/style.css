@@ -431,6 +431,7 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   display: flex;
   flex-direction: column;
   gap: 22px;
+  padding-bottom: 90px;
 }
 
 @media (min-width: 900px) {
