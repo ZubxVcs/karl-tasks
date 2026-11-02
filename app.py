@@ -397,15 +397,10 @@ def serve_profile(request: Request):
 
 @app.get("/view", response_class=HTMLResponse)
 def view_overview(request: Request):
-    conn = get_db()
-    tasks_raw = conn.execute("SELECT * FROM tasks ORDER BY completed ASC, deadline ASC").fetchall()
-    conn.close()
-    tasks_list = [dict(t) for t in tasks_raw]
-
     return templates.TemplateResponse(request, "view/index.html", {
-        "request": request,
-        "tasks": tasks_list,
-        "page_title": "Karl Tasks — Mode Pratinjau Publik",
+        "active_page": "overview",
+        "current_theme": "karl",
+        "page_title": "Karl Tasks — Command Center (Pratinjau)",
         "is_readonly": True,
         "is_admin": is_admin_request(request)
     })

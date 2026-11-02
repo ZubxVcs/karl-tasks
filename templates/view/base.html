@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id" data-design="{{ current_theme | default('default') }}">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    (function() {
+      var match = document.cookie.match(new RegExp('(^| )karl_ui_design=([^;]+)'));
+      var d = match ? match[2] : (localStorage.getItem('karl_ui_design') || 'default');
+      document.documentElement.setAttribute('data-design', d);
+      var t = localStorage.getItem('karl_ui_theme');
+      if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>{{ page_title | default("Karl Tasks | Command Center") }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css?v=31.0">
+     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+</head>
+<body data-design="{{ current_theme | default('default') }}" data-readonly="{{ 'true' if is_readonly else 'false' }}">
+
+  <!-- ==================== DESKTOP TOPBAR ==================== -->
+  <header class="pc-topbar">
+    <div class="pc-topbar-inner">
+      <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="brand-group">
+        <div class="brand-logo-icon"><img src="/static/img/karl_logo_square.png" alt="Karl Logo"></div>
+        <div>
+          <div class="brand-name">Karl Tasks</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Command Center</div>
+        </div>
+      </a>
+
+      <nav class="pc-nav-links">
+        <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="pc-nav-item {% if active_page == 'overview' %}active{% endif %}">Overview</a>
+        <a href="{% if is_readonly %}/view/calendar{% else %}/calendar{% endif %}" class="pc-nav-item {% if active_page == 'calendar' %}active{% endif %}">Calendar</a>
+        <a href="{% if is_readonly %}/view/tasks{% else %}/tasks{% endif %}" class="pc-nav-item {% if active_page == 'tasks' %}active{% endif %}">Tasks</a>
+        <a href="{% if is_readonly %}/view/settings{% else %}/settings{% endif %}" class="pc-nav-item {% if active_page == 'settings' %}active{% endif %}">Settings</a>
+      </nav>
+
+      {% if is_readonly %}
+      <div class="readonly-banner readonly-banner-desktop">Mode Tamu</div>
+      {% endif %}
+
+      <div class="pc-actions">
+        <button class="header-icon-btn" onclick="openDesignModal()" title="Ganti Desain">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.04-.23-.29-.38-.63-.38-1.01 0-.83.67-1.5 1.5-1.5H16c3.31 0 6-2.69 6-6 0-5.52-4.48-9.95-10-9.95z"></path><circle cx="7.5" cy="11.5" r="1.5"></circle><circle cx="10.5" cy="7.5" r="1.5"></circle><circle cx="16.5" cy="11.5" r="1.5"></circle><circle cx="13.5" cy="7.5" r="1.5"></circle></svg>
+        </button>
+        <button class="header-icon-btn" onclick="toggleTheme()" title="Ganti Tema">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button class="btn-primary" onclick="openModal()" style="display: flex; align-items: center; gap: 6px;">
+          + New Task
+        </button>
+        <div class="brand-logo-icon topbar-avatar">
+          <img src="/static/img/karl_logo_square.png" alt="Karl">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBILE CLEAN HEADER ==================== -->
+  <div class="mobile-header">
+    <div class="profile-info">
+      <div class="avatar-wrap karl-avatar-glow">
+        <img src="/static/img/karl_logo_square.png" alt="Karl">
+      </div>
+      <div>
+        <div class="user-greeting">Command Center</div>
+        <div class="user-name">Karl Tasks</div>
+      </div>
+    </div>
+    <div>
+      <button class="header-icon-btn" onclick="toggleTheme()" title="Ganti Tema">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  {% if is_readonly %}
+  <div class="readonly-banner readonly-banner-mobile">Mode Tamu</div>
+  {% endif %}
+
+  <!-- ==================== DEDICATED PAGE CONTENT ==================== -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ==================== FLOATING DOCK (4-SLOT WITH CENTER +) ==================== -->
+  <div class="dock-wrap">
+    <nav class="dock">
+      <!-- Slot 0: Home -->
+      <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="dock-slot {% if active_page == 'overview' %}active{% endif %}" title="Home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+
+      <!-- Slot 1: Calendar -->
+      <a href="{% if is_readonly %}/view/calendar{% else %}/calendar{% endif %}" class="dock-slot {% if active_page == 'calendar' %}active{% endif %}" title="Calendar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      </a>
+
+      <!-- Center Slot: Add Task (+) Button -->
+      <div class="dock-center-slot">
+        <button class="dock-add-btn" onclick="openModal()" title="Add Task">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Slot 2: Tasks -->
+      <a href="{% if is_readonly %}/view/tasks{% else %}/tasks{% endif %}" class="dock-slot {% if active_page == 'tasks' %}active{% endif %}" title="Tasks">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      </a>
+
+      <!-- Slot 3: Settings -->
+      <a href="{% if is_readonly %}/view/settings{% else %}/settings{% endif %}" class="dock-slot {% if active_page == 'settings' %}active{% endif %}" title="Settings">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </a>
+    </nav>
+  </div>
+
+  <!-- ==================== ADD TASK MODAL ==================== -->
+  <div class="modal-overlay" id="task-modal" onclick="closeModal()">
+    <div class="modal-card modal-card-responsive" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title" style="margin-bottom: 0;">Tambah Tugas Baru</h3>
+        <button type="button" class="sheet-icon-btn" onclick="closeModal()" title="Tutup">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body-scroll">
+        <div class="modal-columns-grid">
+          <!-- Kolom Kiri: Metadata Pokok -->
+          <div class="modal-col">
+            <div class="form-group">
+              <label class="form-label">Judul Tugas</label>
+              <input type="text" class="form-input" id="input-task-title" placeholder="Contoh: Makalah Kasus / Latihan Soal">
+            </div>
+
+            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div>
+                <label class="form-label">Kategori</label>
+                <select class="form-select" id="input-task-cat">
+                  <option value="Kuliah" selected>Kuliah</option>
+                  <option value="Homelab">Homelab</option>
+                  <option value="Coding">Coding</option>
+                  <option value="Umum">Umum</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Prioritas</label>
+                <select class="form-select" id="input-task-prio">
+                  <option value="Tinggi">Tinggi</option>
+                  <option value="Sedang" selected>Sedang</option>
+                  <option value="Rendah">Rendah</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tenggat Waktu / Tanggal</label>
+              <input type="date" class="form-input" id="input-task-date">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Foto Dokumen / Slide Tugas (Opsional)</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="file" id="input-task-file-img" accept="image/*" style="display: none;" onchange="handleTaskImageUpload(event, 'input')">
+                <button type="button" class="btn-secondary" onclick="document.getElementById('input-task-file-img').click()" style="display: flex; align-items: center; gap: 6px; font-size: 0.82rem; padding: 10px 14px; white-space: nowrap;">
+                  Upload Foto
+                </button>
+                <input type="text" class="form-input" id="input-task-img" placeholder="URL foto atau hasil upload..." style="flex: 1;">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tautan Web Belajar / Webview Interaktif (Opsional)</label>
+              <input type="text" class="form-input" id="input-task-web" placeholder="Contoh: https://wikipedia.org / link materi...">
+            </div>
+          </div>
+
+          <!-- Kolom Kanan: Detail Soal & Catatan Jawaban -->
+          <div class="modal-col">
+            <div class="form-group">
+              <label class="form-label">Instruksi & Soal Dosen</label>
+              <textarea class="form-input" id="input-task-inst" rows="4" placeholder="Catatan soal / tugas..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Materi & Kunci Jawaban Siap Salin</label>
+              <textarea class="form-input" id="input-task-mat" rows="6" placeholder="Poin jawaban / rangkuman materi..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions-sticky">
+        <button class="btn-secondary" onclick="closeModal()">Batal</button>
+        <button class="btn-primary" onclick="submitNewTask()">Simpan Tugas</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== EDIT TASK MODAL ==================== -->
+  <div class="modal-overlay" id="edit-task-modal" onclick="closeEditModal()">
+    <div class="modal-card modal-card-responsive" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title" style="margin-bottom: 0;">Edit Tugas</h3>
+        <button type="button" class="sheet-icon-btn" onclick="closeEditModal()" title="Tutup">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <input type="hidden" id="edit-task-id">
+
+      <div class="modal-body-scroll">
+        <div class="modal-columns-grid">
+          <!-- Kolom Kiri: Metadata Pokok -->
+          <div class="modal-col">
+            <div class="form-group">
+              <label class="form-label">Judul Tugas</label>
+              <input type="text" class="form-input" id="edit-task-title" placeholder="Judul tugas...">
+            </div>
+
+            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div>
+                <label class="form-label">Kategori</label>
+                <select class="form-select" id="edit-task-cat">
+                  <option value="Kuliah">Kuliah</option>
+                  <option value="Homelab">Homelab</option>
+                  <option value="Coding">Coding</option>
+                  <option value="Umum">Umum</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Prioritas</label>
+                <select class="form-select" id="edit-task-prio">
+                  <option value="Tinggi">Tinggi</option>
+                  <option value="Sedang">Sedang</option>
+                  <option value="Rendah">Rendah</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tenggat Waktu / Tanggal</label>
+              <input type="date" class="form-input" id="edit-task-date">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Foto Dokumen / Slide Tugas (Opsional)</label>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="file" id="edit-task-file-img" accept="image/*" style="display: none;" onchange="handleTaskImageUpload(event, 'edit')">
+                <button type="button" class="btn-secondary" onclick="document.getElementById('edit-task-file-img').click()" style="display: flex; align-items: center; gap: 6px; font-size: 0.82rem; padding: 10px 14px; white-space: nowrap;">
+                  Upload Foto
+                </button>
+                <input type="text" class="form-input" id="edit-task-img" placeholder="URL foto atau hasil upload..." style="flex: 1;">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tautan Web Belajar / Webview Interaktif (Opsional)</label>
+              <input type="text" class="form-input" id="edit-task-web" placeholder="Contoh: https://wikipedia.org / link materi...">
+            </div>
+          </div>
+
+          <!-- Kolom Kanan: Detail Soal & Catatan Jawaban -->
+          <div class="modal-col">
+            <div class="form-group">
+              <label class="form-label">Instruksi & Soal Dosen</label>
+              <textarea class="form-input" id="edit-task-inst" rows="4" placeholder="Catatan soal / tugas..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Materi & Kunci Jawaban Siap Salin</label>
+              <textarea class="form-input" id="edit-task-mat" rows="6" placeholder="Poin jawaban / rangkuman materi..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions-sticky">
+        <button class="btn-secondary" onclick="closeEditModal()">Batal</button>
+        <button class="btn-primary" onclick="submitEditTask()">Perbarui Tugas</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TASK DETAIL SLIDE SHEET ==================== -->
+  <div class="detail-modal-overlay" id="detail-sheet-modal" onclick="closeDetailSheet(event)">
+    <div class="detail-sheet" id="detail-sheet-box" onclick="event.stopPropagation()">
+
+      <!-- Sheet Top Bar: Handle, Fullscreen Toggle, Close -->
+      <div class="sheet-top-actions">
+        <button class="sheet-icon-btn" onclick="toggleFullscreenSheet()" id="btn-fullscreen-toggle" title="Layar Penuh">
+          <svg id="icon-expand" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          <svg id="icon-compress" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display: none;"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7"/></svg>
+        </button>
+        <div class="sheet-handle-bar"></div>
+        <button class="sheet-icon-btn" onclick="closeDetailSheet()" title="Tutup">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="sheet-content">
+        <div class="detail-badge-row">
+          <span class="category-tag" id="detail-cat">Kuliah</span>
+          <span class="date-badge" id="detail-date">Deadline: 29 Okt 2026</span>
+        </div>
+
+        <h2 class="detail-title" id="detail-title">Judul Tugas</h2>
+
+        <!-- Block 1: Instruksi Tugas -->
+        <div class="detail-block" id="block-inst">
+          <div class="detail-block-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span>Instruksi & Soal Dosen</span>
+          </div>
+          <div class="detail-block-body" id="detail-inst"></div>
+        </div>
+
+        <!-- Block 2: Gambar di Tengah Konten (Hanya Tampil Jika Ada Gambar) -->
+        <div class="detail-center-img-wrap" id="detail-center-img-wrap" style="display: none;">
+          <img id="detail-img" class="detail-center-img" alt="Ilustrasi Tugas">
+        </div>
+
+        <!-- Block 3: Materi & Jawaban Siap Salin -->
+        <div class="detail-block" id="block-mat">
+          <div class="detail-block-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <span>Materi & Kunci Jawaban Siap Salin</span>
+          </div>
+          <div class="detail-block-body" id="detail-mat"></div>
+        </div>
+
+        <!-- Block 4: Interactive Webview / HTML Viewer -->
+        <div class="detail-block" id="block-web" style="display: none;">
+          <div class="detail-block-title" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span>Web Pembahasan Interaktif</span>
+            </div>
+            <button type="button" class="web-fullscreen-btn" onclick="toggleWebviewFullscreen()" id="btn-web-fullscreen">
+              Buka Web Fullscreen
+            </button>
+          </div>
+          <div class="iframe-container" id="iframe-wrap">
+            <!-- Floating close button specifically visible during iframe fullscreen -->
+            <button type="button" class="floating-close-web" id="btn-floating-close-web" onclick="toggleWebviewFullscreen()" title="Kecilkan Layar">
+              Tutup Fullscreen
+            </button>
+            <iframe id="detail-iframe" class="detail-preview-frame"></iframe>
+          </div>
+        </div>
+
+        <!-- Block 5: File Tersimpan & Drag-Drop Upload -->
+        <div id="file-link-wrap" style="display: none; margin-bottom: 14px;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase;">Berkas Tugas Terlampir</div>
+          <div style="display: flex; gap: 8px; align-items: center; background: var(--bg-body); border: 1.5px solid var(--primary); padding: 10px 14px; border-radius: 12px;">
+            <span style="font-size: 1.2rem;">📄</span>
+            <div style="flex: 1; min-width: 0;">
+              <div id="file-name-label" style="font-size: 0.82rem; font-weight: 700; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Berkas Tugas</div>
+              <div style="font-size: 0.7rem; color: var(--text-muted);">Siap diunduh / diserahkan</div>
+            </div>
+            <a id="btn-download-file" href="#" target="_blank" class="btn-primary" style="padding: 6px 12px; font-size: 0.75rem; border-radius: 8px; text-decoration: none;">
+              Unduh
+            </a>
+          </div>
+        </div>
+
+        <div class="dropzone-box" id="task-dropzone">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 6px; color: var(--primary);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);">Drop berkas tugas di sini</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">PDF, DOCX, ZIP, gambar (atau klik untuk upload)</div>
+          <input type="file" id="dropzone-input" style="display: none;">
+        </div>
+
+        <!-- Action Row: Full CRUD (Edit, Selesai/Batal, Hapus) & Share WA -->
+        <div class="sheet-actions">
+          <button type="button" class="action-btn-sheet btn-sheet-edit" id="btn-detail-edit" onclick="editFromDetail()">
+            <i class="ph ph-pencil-simple"></i>
+            <span>Edit</span>
+          </button>
+          <button type="button" class="action-btn-sheet btn-sheet-status" id="btn-detail-status" onclick="toggleStatusFromDetail()">
+            <i class="ph ph-check-circle" id="icon-detail-status"></i>
+            <span id="label-detail-status">Selesai</span>
+          </button>
+          <button type="button" class="action-btn-sheet btn-sheet-delete" id="btn-detail-delete" onclick="deleteFromDetail()">
+            <i class="ph ph-trash"></i>
+            <span>Hapus</span>
+          </button>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <a id="btn-share-wa" href="#" target="_blank" class="action-btn-wa">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.97.531 1.939.817 2.796.817 3.179 0 5.767-2.587 5.767-5.766.001-3.181-2.586-5.767-5.767-5.767zm7.505 5.766c-.001 4.14-3.366 7.505-7.505 7.505-.884 0-1.748-.157-2.553-.459l-3.567.935.952-3.479c-.352-.871-.537-1.808-.537-2.756 0-4.14 3.365-7.506 7.505-7.506 4.14 0 7.505 3.365 7.505 7.506z"/></svg>
+            <span>Kirim Tugas ke WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DESIGN SWITCHER MODAL ==================== -->
+  <div class="modal-overlay" id="design-modal" onclick="closeDesignModal()">
+    <div class="modal-card modal-card-responsive" onclick="event.stopPropagation()" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="margin-bottom: 0;">Ganti Desain</h3>
+        <button type="button" class="sheet-icon-btn" onclick="closeDesignModal()" title="Tutup">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body-scroll" style="padding: 20px;">
+        <div class="design-option-list">
+          <button class="design-option-card" onclick="requestThemeSwitch('default')">
+            <div class="design-option-preview design-preview-crimson">
+              <div class="dp-bar dp-bar1"></div>
+              <div class="dp-bar dp-bar2"></div>
+              <div class="dp-bar dp-bar3"></div>
+            </div>
+            <div class="design-option-info">
+              <div class="design-option-name">Karl Crimson Starburst</div>
+              <div class="design-option-desc">Desain orisinal logo Karl</div>
+            </div>
+            <div class="design-option-check" id="design-check-default"></div>
+          </button>
+          <button class="design-option-card" onclick="requestThemeSwitch('bento')">
+            <div class="design-option-preview design-preview-bento">
+              <div class="dp-sq dp-sq1"></div>
+              <div class="dp-sq dp-sq2"></div>
+              <div class="dp-sq dp-sq3"></div>
+              <div class="dp-sq dp-sq4"></div>
+            </div>
+            <div class="design-option-info">
+              <div class="design-option-name">Medical Bento Squircle</div>
+              <div class="design-option-desc">Dashboard medis, bento grid pastel, kartu janji</div>
+            </div>
+            <div class="design-option-check" id="design-check-bento"></div>
+          </button>
+          <button class="design-option-card" onclick="requestThemeSwitch('student')">
+            <div class="design-option-preview design-preview-student">
+              <div class="dp-pill dp-pill1"></div>
+              <div class="dp-pill dp-pill2"></div>
+              <div class="dp-pill dp-pill3"></div>
+            </div>
+            <div class="design-option-info">
+              <div class="design-option-name">Student Course Hub</div>
+              <div class="design-option-desc">Dashboard kampus, violet periwinkle, pill badges</div>
+            </div>
+            <div class="design-option-check" id="design-check-student"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CUSTOM CONFIRMATION MODAL ==================== -->
+  <div class="modal-overlay" id="custom-confirm-modal" style="display: none; z-index: 1000;" onclick="handleCustomConfirm(false)">
+    <div class="modal-confirm-box" onclick="event.stopPropagation()">
+      <div class="confirm-icon-bubble">
+        <i class="ph ph-warning"></i>
+      </div>
+      <h3 class="confirm-modal-heading" id="confirm-modal-title">Ganti Desain?</h3>
+      <p class="confirm-modal-paragraph" id="confirm-modal-desc">
+        Apakah kamu yakin ingin beralih ke desain ini? Halaman akan diperbarui otomatis sesuai tata letak pilihanmu.
+      </p>
+      <div class="confirm-actions-row">
+        <button type="button" class="confirm-btn-cancel" onclick="handleCustomConfirm(false)">
+          Batal
+        </button>
+        <button type="button" class="confirm-btn-proceed" id="confirm-modal-yes" onclick="handleCustomConfirm(true)">
+          Yaa
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js?v=31.0"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
