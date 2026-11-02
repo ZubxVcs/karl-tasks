@@ -1,40 +1,37 @@
 {% extends "view/base.html" %}
 
 {% block content %}
-<div class="section-head-row">
-  <h2 class="section-title">Calendar & Schedule</h2>
-  <span class="section-action" onclick="openModal()">+ Add Event</span>
-</div>
-
-<!-- Monthly Calendar Card -->
-<div class="calendar-card">
-  <div class="calendar-top">
-    <div class="cal-header-date" id="cal-month-year">Oktober 2026</div>
-    <div style="display: flex; gap: 6px;">
-      <button class="cal-nav-btn" onclick="navMonth(-1)">‹</button>
-      <button class="cal-nav-btn" onclick="navMonth(1)">›</button>
+<div class="calendar-layout-container">
+  <!-- Monthly Calendar Card -->
+  <div class="calendar-card">
+    <div class="calendar-top">
+      <div class="cal-header-date" id="cal-month-year">November 2026</div>
+      <div style="display: flex; gap: 6px;">
+        <button class="cal-nav-btn" onclick="navMonth(-1)">‹</button>
+        <button class="cal-nav-btn" onclick="navMonth(1)">›</button>
+      </div>
     </div>
+
+    <div class="weekdays-row">
+      <div class="weekday-item is-sunday">Min</div>
+      <div class="weekday-item">Sen</div>
+      <div class="weekday-item">Sel</div>
+      <div class="weekday-item">Rab</div>
+      <div class="weekday-item">Kam</div>
+      <div class="weekday-item">Jum</div>
+      <div class="weekday-item">Sab</div>
+    </div>
+
+    <div class="days-grid" id="days-grid"></div>
   </div>
 
-  <div class="weekdays-row">
-    <div class="weekday-item">Min</div>
-    <div class="weekday-item">Sen</div>
-    <div class="weekday-item">Sel</div>
-    <div class="weekday-item">Rab</div>
-    <div class="weekday-item">Kam</div>
-    <div class="weekday-item">Jum</div>
-    <div class="weekday-item">Sab</div>
+  <!-- Timeline Schedule of Selected Day -->
+  <div class="timeline-card">
+    <div class="timeline-head">
+      <h3 class="section-title" id="timeline-title" style="font-size: 1.05rem;">Jadwal Hari Ini</h3>
+    </div>
+    <div class="timeline-list" id="timeline-list"></div>
   </div>
-
-  <div class="days-grid" id="days-grid"></div>
-</div>
-
-<!-- Timeline Schedule of Selected Day -->
-<div class="timeline-card">
-  <div class="timeline-head">
-    <h3 class="section-title" id="timeline-title" style="font-size: 1.05rem;">Jadwal Hari Ini</h3>
-  </div>
-  <div class="timeline-list" id="timeline-list"></div>
 </div>
 {% endblock %}
 
@@ -51,6 +48,29 @@
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
     'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
   ];
+
+  const holidaysMap = {
+    // Hari Libur Nasional & Cuti Bersama 2026 (Indonesia)
+    '2026-01-01': 'Tahun Baru 2026 Masehi',
+    '2026-01-16': 'Isra Mi\'raj Nabi Muhammad SAW',
+    '2026-02-17': 'Tahun Baru Imlek 2577 Kongzili',
+    '2026-03-20': 'Hari Raya Nyepi Tahun Baru Saka 1948',
+    '2026-03-21': 'Hari Raya Idul Fitri 1447 H',
+    '2026-03-22': 'Hari Raya Idul Fitri 1447 H (Hari Kedua)',
+    '2026-04-03': 'Wafat Isa Al-Masih (Jumat Agung)',
+    '2026-04-05': 'Hari Paskah',
+    '2026-05-01': 'Hari Buruh Internasional',
+    '2026-05-14': 'Kenaikan Isa Al-Masih',
+    '2026-05-27': 'Hari Raya Idul Adha 1447 H',
+    '2026-05-31': 'Hari Raya Waisak 2570 BE',
+    '2026-06-01': 'Hari Lahir Pancasila',
+    '2026-06-16': 'Tahun Baru Islam 1448 H',
+    '2026-08-17': 'Hari Kemerdekaan RI Ke-81',
+    '2026-08-25': 'Maulid Nabi Muhammad SAW',
+    '2026-11-10': 'Hari Pahlawan Nasional',
+    '2026-11-28': 'Hari Menanam Pohon Indonesia',
+    '2026-12-25': 'Hari Raya Natal'
+  };
 
   function escapeHtml(str) {
     if (!str) return '';
@@ -109,12 +129,20 @@
 
     for (let day = 1; day <= totalDays; day++) {
       const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
+      const isSunday = dayOfWeek === 0;
+      const holidayName = holidaysMap[dateStr];
+      const isRedDate = isSunday || !!holidayName;
+
       const hasEvent = allTasks.some(t => t.deadline === dateStr);
       const isSelected = dateStr === selectedDateStr;
 
       const cell = document.createElement('div');
-      cell.className = `day-cell ${isSelected ? 'selected' : ''} ${hasEvent ? 'has-event' : ''}`;
+      cell.className = `day-cell ${isSelected ? 'selected' : ''} ${hasEvent ? 'has-event' : ''} ${isRedDate ? 'is-holiday' : ''}`;
       cell.innerText = day;
+      if (holidayName) {
+        cell.title = holidayName;
+      }
       cell.onclick = () => selectDate(dateStr);
       grid.appendChild(cell);
     }
@@ -139,7 +167,8 @@
     if (!container || !titleEl) return;
     
     const dayTasks = allTasks.filter(t => t.deadline === selectedDateStr);
-    titleEl.innerText = selectedDateStr === `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}` ? "Jadwal Hari Ini" : `Jadwal (${formatHumanDate(selectedDateStr)})`;
+    const holidayNotice = holidaysMap[selectedDateStr] ? `<div class="holiday-tag-sub">🔴 ${escapeHtml(holidaysMap[selectedDateStr])}</div>` : '';
+    titleEl.innerHTML = (selectedDateStr === `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}` ? "Jadwal Hari Ini" : `Jadwal (${formatHumanDate(selectedDateStr)})`) + holidayNotice;
 
     const iconMap = {
       'Kuliah': '🎓',
