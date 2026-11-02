@@ -455,10 +455,12 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
 .calendar-card {
   background: var(--card);
   border-radius: 22px;
-  padding: 22px;
+  padding: 18px 16px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
   margin-bottom: 22px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .calendar-top {
@@ -532,12 +534,14 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
 
 .days-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
   text-align: center;
+  width: 100%;
 }
 
 .day-cell {
+  width: 100%;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
@@ -550,7 +554,8 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   cursor: pointer;
   position: relative;
   transition: all 0.15s ease;
-  min-height: 38px;
+  min-height: 36px;
+  box-sizing: border-box;
 }
 
 [data-theme="dark"] .day-cell {
