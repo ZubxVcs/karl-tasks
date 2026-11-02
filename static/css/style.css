@@ -496,11 +496,21 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   justify-content: center;
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-main) !important;
   border-radius: 50%;
   cursor: pointer;
   position: relative;
   transition: all 0.15s ease;
+  min-height: 38px;
+}
+
+[data-theme="dark"] .day-cell {
+  color: #F8FAFC !important;
+}
+
+.day-cell.empty {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .day-cell:active {
