@@ -1,0 +1,10 @@
+{
+  "title": "Karl Tasks Command Center",
+  "port": 8788,
+  "names": {
+    "ketua": "Coko",
+    "team": ["Claude", "Nisa", "Agus", "Rina"],
+    "freelancers": ["Freelancer", "Subagent", "Bot"]
+  },
+  "autostart": true
+}
