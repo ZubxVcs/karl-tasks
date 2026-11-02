@@ -13,7 +13,7 @@ ADMIN_PIN = os.environ.get("KARL_ADMIN_PIN", "2611070020")
 ADMIN_TOKEN = hashlib.sha256(ADMIN_PIN.encode()).hexdigest()[:32]
 
 def is_admin_request(request: Request) -> bool:
-    token = request.cookies.get("karl_admin_token") or request.headers.get("X-Admin-Token")
+    token = request.cookies.get("karl_admin_token") or request.headers.get("X-Admin-Token") or request.query_params.get("admin_token")
     if token == ADMIN_TOKEN:
         return True
     # Bypass otomatis jika Karl mengakses langsung dari jaringan lokal LAN / localhost
@@ -58,6 +58,7 @@ app = FastAPI(title="Karl's Task Studio API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -305,7 +306,7 @@ def download_custom_file(filename: str):
     raise HTTPException(status_code=404, detail="File not found")
 
 @app.get("/", response_class=HTMLResponse)
-def serve_overview(request: Request, view: str = Query(None), readonly: str = Query(None)):
+def serve_overview(request: Request, view: str = Query(None), readonly: str = Query(None), admin_token: str = Query(None)):
     # Pengunjung publik tanpa token admin otomatis diarahkan ke /view
     if not is_admin_request(request):
         return RedirectResponse(url="/view", status_code=303)
@@ -319,13 +320,26 @@ def serve_overview(request: Request, view: str = Query(None), readonly: str = Qu
     elif theme_cookie == "karl":
         template_name = "overview_karl.html"
 
-    return templates.TemplateResponse(request, template_name, {
+    response = templates.TemplateResponse(request, template_name, {
         "active_page": "overview",
         "current_theme": theme_cookie,
         "page_title": "Karl Tasks - Overview",
         "is_readonly": False,
         "is_admin": True
     })
+
+    # Jika user masuk membawa admin_token dari query URL, set cookie permanen sekarang juga
+    if admin_token and admin_token == ADMIN_TOKEN:
+        response.set_cookie(
+            key="karl_admin_token",
+            value=ADMIN_TOKEN,
+            max_age=604800,
+            path="/",
+            samesite="lax",
+            httponly=False
+        )
+
+    return response
 
 @app.get("/calendar", response_class=HTMLResponse)
 def serve_calendar(request: Request, view: str = Query(None), readonly: str = Query(None)):

@@ -812,20 +812,22 @@ async function submitAdminPinLogin() {
     const res = await fetch('/api/admin/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify({ pin: pin })
     });
     const data = await res.json();
     if (res.ok && data.token) {
       // Simpan cookie langsung lewat JS sebagai fallback kuat
-      document.cookie = `karl_admin_token=${data.token}; max-age=604800; path=/; samesite=lax`;
+      document.cookie = 'karl_admin_token=' + data.token + '; max-age=604800; path=/; samesite=lax';
       localStorage.setItem('karl_admin_token', data.token);
 
       closeAdminLoginModal();
-      showToast('Login Admin Berhasil! Mode Edit Aktif.');
-      // Auto-restart / refresh halaman instan ke dashboard utama tanpa nunggu lama
+      showToast('Login Berhasil! Mengalihkan ke Dashboard Owner...');
+      
+      // Auto-restart / redirect pasti ke halaman home owner
       setTimeout(() => {
-        window.location.replace('/');
-      }, 300);
+        window.location.href = '/?admin_token=' + data.token;
+      }, 200);
     } else {
       if (err) {
         err.innerText = data.detail || 'PIN Salah! Coba lagi.';
