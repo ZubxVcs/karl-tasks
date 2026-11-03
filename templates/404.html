@@ -1,20 +1,79 @@
-{% extends "view/base.html" if is_readonly else "base.html" %}
-
-{% block title %}404 | Halaman Tidak Ditemukan - Karl Tasks{% endblock %}
-
-{% block content %}
-<div class="main-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; text-align: center; padding: 24px;">
-  <div style="font-family: 'JetBrains Mono', monospace; font-size: clamp(4.5rem, 15vw, 8rem); font-weight: 800; line-height: 1; background: linear-gradient(135deg, #EF1B18, #E76720); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.04em; margin-bottom: 8px;">
-    404
-  </div>
-  <h1 style="font-size: clamp(1.2rem, 4vw, 1.75rem); font-weight: 800; color: var(--text-main); margin-bottom: 8px;">
-    Halaman Tidak Ditemukan
-  </h1>
-  <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 440px; margin-bottom: 24px; line-height: 1.6;">
-    Halaman atau modul tugas yang kamu cari tidak tersedia di server homelab Karl.
-  </p>
-  <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 20px rgba(239, 27, 24, 0.4);">
-    <i class="ph ph-arrow-left"></i> Kembali ke Dashboard
-  </a>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | Halaman Tidak Ditemukan - Karl Tasks</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/static/img/favicon.png">
+  <link rel="shortcut icon" href="/static/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #0A0D14;
+      color: #F8FAFC;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .error-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(5.5rem, 18vw, 9.5rem);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #EF1B18, #E76720);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: clamp(1.2rem, 4vw, 1.75rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #F8FAFC;
+    }
+    p {
+      color: #94A3B8;
+      font-size: 0.95rem;
+      max-width: 420px;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #EF1B18;
+      color: #FFF;
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      box-shadow: 0 4px 20px rgba(239, 27, 24, 0.45);
+      transition: all 0.2s ease;
+    }
+    .btn-home:hover {
+      background: #D91512;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(239, 27, 24, 0.65);
+    }
+  </style>
+</head>
+<body>
+  <div class="error-code">404</div>
+  <h1>Halaman Tidak Ditemukan</h1>
+  <p>Alamat yang kamu tuju tidak ada atau jalurnya salah ketik le.</p>
+  <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="btn-home">← Balik ke Beranda</a>
+</body>
+</html>
