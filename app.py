@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import BaseModel
 
 ADMIN_PIN = os.environ.get("KARL_ADMIN_PIN", "2611070020")
@@ -72,6 +73,24 @@ async def add_cache_headers(request: Request, call_next):
     if request.url.path.startswith("/static/") or request.url.path.startswith("/uploads/"):
         response.headers["Cache-Control"] = "public, max-age=86400, stale-while-revalidate=604800"
     return response
+
+@app.exception_handler(StarletteHTTPException)
+async def custom_404_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        is_ro = not is_admin_request(request)
+        theme = request.cookies.get("karl_ui_design", "karl")
+        return templates.TemplateResponse(
+            request,
+            "404.html",
+            {
+                "current_theme": theme,
+                "is_readonly": is_ro,
+                "active_page": "404",
+                "page_title": "404 Tidak Ditemukan - Karl Tasks"
+            },
+            status_code=404
+        )
+    return HTMLResponse(content=f"<h1>Error {exc.status_code}</h1><p>{exc.detail}</p>", status_code=exc.status_code)
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")

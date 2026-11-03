@@ -1,0 +1,20 @@
+{% extends "view/base.html" if is_readonly else "base.html" %}
+
+{% block title %}404 | Halaman Tidak Ditemukan - Karl Tasks{% endblock %}
+
+{% block content %}
+<div class="main-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; text-align: center; padding: 24px;">
+  <div style="font-family: 'JetBrains Mono', monospace; font-size: clamp(4.5rem, 15vw, 8rem); font-weight: 800; line-height: 1; background: linear-gradient(135deg, #EF1B18, #E76720); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.04em; margin-bottom: 8px;">
+    404
+  </div>
+  <h1 style="font-size: clamp(1.2rem, 4vw, 1.75rem); font-weight: 800; color: var(--text-main); margin-bottom: 8px;">
+    Halaman Tidak Ditemukan
+  </h1>
+  <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 440px; margin-bottom: 24px; line-height: 1.6;">
+    Halaman atau modul tugas yang kamu cari tidak tersedia di server homelab Karl.
+  </p>
+  <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 20px rgba(239, 27, 24, 0.4);">
+    <i class="ph ph-arrow-left"></i> Kembali ke Dashboard
+  </a>
+</div>
+{% endblock %}
