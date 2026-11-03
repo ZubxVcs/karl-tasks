@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lembar Jawaban Tugas Kewirausahaan 1 - Karl Firjatullah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A0D14;
+      --card: #141722;
+      --card-inner: #1C2030;
+      --border: #252A3D;
+      --text-main: #F8FAFC;
+      --text-body: #CBD5E1;
+      --text-muted: #8E96AB;
+      --primary: #EF1B18;
+      --orange: #E76720;
+      --green: #10B981;
+      --accent-badge: rgba(239, 27, 24, 0.12);
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      padding: 24px 16px 80px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Top Identity Card */
+    .id-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .id-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--orange));
+    }
+    .instansi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .instansi-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--orange);
+      text-transform: uppercase;
+    }
+    .mata-kuliah {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      background: var(--card-inner);
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.88rem;
+    }
+    .student-grid span strong {
+      color: var(--text-main);
+    }
+
+    /* Penjelasan Banner Panduan Tulis */
+    .guide-banner {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: 0.88rem;
+      color: #A7F3D0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Section Header */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Box Model Tulis Tangan */
+    .write-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+
+    .write-label {
+      display: inline-block;
+      background: var(--accent-badge);
+      color: var(--primary);
+      border: 1px solid rgba(239, 27, 24, 0.3);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .salin-kertas {
+      background: #0D101A;
+      border: 1px dashed #3A4260;
+      border-radius: 12px;
+      padding: 16px 18px;
+      color: #E2E8F0;
+      font-size: 0.94rem;
+      line-height: 1.7;
+    }
+
+    .salin-kertas p {
+      margin-bottom: 10px;
+    }
+    .salin-kertas p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-tulis {
+      color: #FBBF24;
+      font-weight: 700;
+    }
+
+    .point-number {
+      font-weight: 700;
+      color: #60A5FA;
+    }
+
+    .copy-btn {
+      margin-top: 12px;
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      color: var(--text-body);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .copy-btn:hover {
+      background: var(--primary);
+      color: #FFF;
+      border-color: var(--primary);
+    }
+
+    /* Footer Action */
+    .bottom-bar {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .btn-kembali {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 12px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: inline-block;
+      transition: all 0.2s ease;
+    }
+    .btn-kembali:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Top Identity -->
+  <div class="id-card">
+    <div class="instansi-header">
+      <span class="instansi-title">Universitas Sains Indonesia</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted);">Semester Ganjil 2026/2027</span>
+    </div>
+    <div class="mata-kuliah">Tugas 1: Ide Usaha & Bauran Pemasaran (Neil Borden)</div>
+    <div class="student-grid">
+      <span>Nama: <strong>Karl Firjatullah</strong></span>
+      <span>NIM: <strong>2611070020</strong></span>
+      <span>Prodi: <strong>Teknik Informatika</strong></span>
+      <span>Mata Kuliah: <strong>Kewirausahaan 1 (USI1047)</strong></span>
+    </div>
+  </div>
+
+  <div class="guide-banner">
+    <span>✍️</span>
+    <div>
+      <strong>Panduan Tulis di Kertas:</strong> Salin teks di dalam kotak bergaris putus-putus ke lembar kertas tugas/folio. Kalimat dibuat padat, akademis, dan langsung menjawab poin 4, 6, dan 7 dari 12 unsur Neil Borden.
+    </div>
+  </div>
+
+  <!-- BAGIAN 1: IDE USAHA -->
+  <div class="section-title">Bagian I: Profil Ide Usaha</div>
+  <div class="write-box">
+    <span class="write-label">Format Tulisan Lembar Jawaban</span>
+    <div class="salin-kertas" id="teks-bagian-1">
+      <p><strong>1. Nama Usaha:</strong> <span class="highlight-tulis">ByteCraft Studio</span> (Digital Creative & Software Solution)</p>
+      <p><strong>2. Bidang Usaha:</strong> Jasa Teknologi Informasi, Pembuatan Website Bisnis, dan Pengembangan Aplikasi Perangkat Lunak untuk UMKM serta Pelaku Usaha.</p>
+      <p><strong>3. Alasan Pemilihan Ide Usaha:</strong> Banyak pelaku usaha mikro dan UMKM yang membutuhkan transformasi digital (katalog online, sistem pencatatan otomatis, dan landing page), namun terkendala tingginya biaya agensi besar. ByteCraft Studio hadir memberikan solusi web modern, responsif, dan terjangkau.</p>
+    </div>
+    <button class="copy-btn" onclick="salinKonten('teks-bagian-1')">📋 Salin Teks Bagian I</button>
+  </div>
+
+  <!-- BAGIAN 2: TIGA ELEMEN NEIL BORDEN -->
+  <div class="section-title">Bagian II: Penerapan 3 Elemen Neil Borden (Poin 4, 6, 7)</div>
+
+  <!-- Poin 4: Channels of Distribution -->
+  <div class="write-box">
+    <span class="write-label">Poin 4: Channels of Distribution (Saluran Distribusi)</span>
+    <div class="salin-kertas" id="teks-poin-4">
+      <p><strong>A. Channels of Distribution (Saluran Distribusi Jasa):</strong></p>
+      <p>Saluran distribusi yang diterapkan adalah <span class="highlight-tulis">Saluran Langsung (Direct Channel) tingkat nol</span>, yaitu jasa disalurkan langsung dari produsen/developer kepada klien tanpa perantara pihak ketiga.</p>
+      <p><strong>Implementasi Lapangan:</strong></p>
+      <p>• <em>Website Resmi (Landing Page):</em> Klien dapat melihat portofolio proyek, daftar harga paket web, dan langsung melakukan pemesanan via formulir interaktif.</p>
+      <p>• <em>Kanal Komunikasi Langsung:</em> Konsultasi kebutuhan teknis, brief aplikasi, dan pengiriman invoice dilakukan langsung melalui WhatsApp Business dan email resmi studio.</p>
+      <p>• <em>Pengiriman Hasil (Delivery):</em> Hasil kodingan dideploy langsung ke server/hosting klien atau diserahkan melalui repositori GitHub privat.</p>
+    </div>
+    <button class="copy-btn" onclick="salinKonten('teks-poin-4')">📋 Salin Teks Poin 4</button>
+  </div>
+
+  <!-- Poin 6: Advertising -->
+  <div class="write-box">
+    <span class="write-label">Poin 6: Advertising (Periklanan)</span>
+    <div class="salin-kertas" id="teks-poin-6">
+      <p><strong>B. Advertising (Strategi Periklanan):</strong></p>
+      <p>Periklanan difokuskan pada <span class="highlight-tulis">Digital Targeted Ads (Iklan Digital Bertarget)</span> guna menjangkau pemilik bisnis lokal dan UMKM yang membutuhkan digitalisasi operasional.</p>
+      <p><strong>Implementasi Lapangan:</strong></p>
+      <p>• <em>Meta Ads (Instagram & Facebook Ads):</em> Menayangkan iklan video visual berformat Reels/Feed berupa studi kasus <em>before-after</em> (UMKM tanpa web vs UMKM dengan web otomatis) menyasar demografi pengusaha usia 22–45 tahun.</p>
+      <p>• <em>Google Search Ads:</em> Menargetkan kata kunci pencarian aktif dengan intensi beli tinggi, seperti <em>"jasa pembuatan website murah"</em> dan <em>"jasa aplikasi kasir umkm"</em>.</p>
+      <p>• <em>Content Marketing Organik:</em> Mengunggah konten edukasi teknologi gratis di TikTok dan LinkedIn untuk membangun reputasi dan kredibilitas brand.</p>
+    </div>
+    <button class="copy-btn" onclick="salinKonten('teks-poin-6')">📋 Salin Teks Poin 6</button>
+  </div>
+
+  <!-- Poin 7: Promotions -->
+  <div class="write-box">
+    <span class="write-label">Poin 7: Promotions (Promosi Penjualan)</span>
+    <div class="salin-kertas" id="teks-poin-7">
+      <p><strong>C. Promotions (Promosi Penjualan / Sales Promotion):</strong></p>
+      <p>Strategi promosi menggunakan insentif jangka pendek untuk mempercepat keputusan pembelian bagi klien baru yang masih ragu menggunakan jasa pembuatan web.</p>
+      <p><strong>Implementasi Lapangan:</strong></p>
+      <p>• <em>Diskon Peluncuran (Early Bird Discount):</em> Potongan harga langsung 20% bagi 5 klien pertama setiap bulannya.</p>
+      <p>• <em>Penawaran Bundling Nilai Tambah (Value-Added Bundle):</em> Setiap pemesanan website paket bisnis gratis domain `.my.id` 1 tahun dan layanan pemeliharaan (maintenance bug) gratis selama 3 bulan pertama.</p>
+      <p>• <em>Program Referral Klien:</em> Klien lama yang mereferensikan kenalan bisnisnya mendapatkan cashback 10% dari nilai proyek referral yang berhasil disepakati.</p>
+    </div>
+    <button class="copy-btn" onclick="salinKonten('teks-poin-7')">📋 Salin Teks Poin 7</button>
+  </div>
+
+  <!-- Tombol Aksi Bawah -->
+  <div class="bottom-bar">
+    <a href="/view/tasks" class="btn-kembali">← Kembali ke Dashboard Tugas</a>
+  </div>
+</div>
+
+<script>
+  function salinKonten(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const text = el.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Teks berhasil disalin ke clipboard!');
+    }).catch(err => {
+      console.error('Gagal salin:', err);
+    });
+  }
+</script>
+
+</body>
+</html>
