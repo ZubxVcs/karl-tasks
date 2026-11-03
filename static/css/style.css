@@ -3825,16 +3825,33 @@ body[data-design="student"] .kebab-menu {
 }
 
 .str-check-circle {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: 2px solid #8C97AC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.str-check-circle.checked {
+  background: #10B981 !important;
+  border-color: #10B981 !important;
+  color: #FFFFFF !important;
 }
 
 .str-checkbox:hover .str-check-circle {
-  border-color: #6C5DD3;
-  background: rgba(108, 93, 211, 0.1);
+  border-color: #10B981;
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.str-check-icon {
+  font-size: 0.85rem;
+  color: #FFFFFF !important;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .str-info {

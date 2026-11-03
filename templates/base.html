@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=860.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=870.0">
      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
 </head>
 <body data-design="{{ current_theme | default('default') }}" data-readonly="{{ 'true' if is_readonly else 'false' }}">
@@ -48,7 +48,7 @@
   <header class="pc-topbar">
     <div class="pc-topbar-inner">
       <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="brand-group">
-        <div class="brand-logo-icon"><img src="/static/img/karl_logo_square.png" alt="Karl Logo"></div>
+        <div class="brand-logo-icon"><img src="/static/img/karl_logo.jpg" alt="Karl Logo"></div>
         <div>
           <div class="brand-name">Karl Tasks</div>
           <div class="brand-subtitle">Command Center</div>
@@ -74,7 +74,7 @@
           + New Task
         </button>
         <div class="brand-logo-icon topbar-avatar">
-          <img src="/static/img/karl_logo_square.png" alt="Karl">
+          <img src="/static/img/karl_logo.jpg" alt="Karl">
         </div>
       </div>
     </div>
