@@ -74,7 +74,11 @@ function renderKarlView() {
     if (activeList.length === 0) {
       container.innerHTML = '<div class="empty-task-placeholder">Tidak ada tugas aktif di kategori ini.</div>';
     } else {
-      container.innerHTML = activeList.map(t => `
+      const isUts = (t) => t && t.title && (t.title.toUpperCase().includes('UTS') || t.title.toUpperCase().startsWith('UJIAN'));
+      const regularTasks = activeList.filter(t => !isUts(t));
+      const utsTasks = activeList.filter(t => isUts(t));
+
+      const renderCard = (t) => `
         <div class="project-card ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)">
           <div class="project-card-header">
             <span class="date-badge">
@@ -91,7 +95,7 @@ function renderKarlView() {
               <div class="kebab-item delete" onclick="deleteTask(${t.id})">✕ Hapus Tugas</div>
             </div>
           </div>
-          <div class="project-title">${escapeHtml(t.title)}</div>
+          <div class="project-title ${t.completed ? 'task-title-completed' : ''}">${escapeHtml(t.title)}</div>
           <div class="project-card-footer">
             <div class="priority-indicator">
               <span class="dot-prio-${t.priority}"></span>
@@ -100,7 +104,27 @@ function renderKarlView() {
             <span class="category-tag">${t.category}</span>
           </div>
         </div>
-      `).join('');
+      `;
+
+      let htmlOut = '';
+      if (regularTasks.length > 0) {
+        htmlOut += regularTasks.map(renderCard).join('');
+      }
+      if (utsTasks.length > 0) {
+        htmlOut += `
+          <div class="uts-section-divider">
+            <div class="uts-divider-line"></div>
+            <div class="uts-divider-badge">
+              <i class="ph ph-exam"></i>
+              <span>UJIAN TENGAH SEMESTER (UTS)</span>
+            </div>
+            <div class="uts-divider-line right"></div>
+          </div>
+        `;
+        htmlOut += utsTasks.map(renderCard).join('');
+      }
+
+      container.innerHTML = htmlOut;
     }
   }
 }

@@ -87,7 +87,11 @@ function renderBentoView() {
     if (activeList.length === 0) {
       bentoContainer.innerHTML = '<div class="empty-task-placeholder">Tidak ada tugas pada filter ini.</div>';
     } else {
-      bentoContainer.innerHTML = activeList.map(t => `
+      const isUts = (t) => t && t.title && (t.title.toUpperCase().includes('UTS') || t.title.toUpperCase().startsWith('UJIAN'));
+      const regularTasks = activeList.filter(t => !isUts(t));
+      const utsTasks = activeList.filter(t => isUts(t));
+
+      const renderBentoCard = (t) => `
         <div class="bento-appointment-card ${t.completed ? 'completed' : ''}" id="card-${t.id}" onclick="openTaskDetail(${t.id}, event)" style="position: relative;">
           <div class="bac-main">
             <div class="bac-top-row">
@@ -126,7 +130,27 @@ function renderBentoView() {
             </div>
           </div>
         </div>
-      `).join('');
+      `;
+
+      let htmlOut = '';
+      if (regularTasks.length > 0) {
+        htmlOut += regularTasks.map(renderBentoCard).join('');
+      }
+      if (utsTasks.length > 0) {
+        htmlOut += `
+          <div class="uts-section-divider">
+            <div class="uts-divider-line"></div>
+            <div class="uts-divider-badge">
+              <i class="ph ph-exam"></i>
+              <span>UJIAN TENGAH SEMESTER (UTS)</span>
+            </div>
+            <div class="uts-divider-line right"></div>
+          </div>
+        `;
+        htmlOut += utsTasks.map(renderBentoCard).join('');
+      }
+
+      bentoContainer.innerHTML = htmlOut;
     }
   }
 }
