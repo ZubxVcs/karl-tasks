@@ -188,10 +188,18 @@
       background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.35);
       border-radius: 8px;
-      padding: 8px 14px;
+      padding: 10px 14px;
       color: #34D399;
       font-weight: 700;
-      display: inline-block;
+      display: block;
+      line-height: 1.6;
+    }
+    .ans-reason {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #A7F3D0;
+      margin-top: 4px;
     }
 
     .copy-btn {
@@ -277,7 +285,10 @@
       Bagi semua ruas dengan 2:<br>
       \( \frac{4}{2} \le x < \frac{16}{2} \)<br>
       \( 2 \le x < 8 \)<br>
-      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | 2 ≤ x < 8, x ∈ ℝ } atau [2, 8)</div>
+      <div class="final-ans">
+        <strong>Himpunan Penyelesaian (HP) = { x | 2 ≤ x < 8, x ∈ ℝ } atau [2, 8)</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Angka 2 bertanda kurung siku [ (karena \( \le \)), sedangkan angka 8 bertanda kurung biasa ) (karena tanda \( < \) murni).</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-p1')">📋 Salin Jawaban No. 1</button>
   </div>
@@ -298,7 +309,10 @@
       <strong>Langkah 3:</strong> Operasikan hasil hitungannya:<br>
       \( (3 - 2)x > 12 \)<br>
       \( 1x > 12 \implies x > 12 \)<br>
-      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | x > 12, x ∈ ℝ } atau (12, ∞)</div>
+      <div class="final-ans">
+        <strong>Himpunan Penyelesaian (HP) = { x | x > 12, x ∈ ℝ } atau (12, ∞)</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Nilai \( x \) bergerak dari 12 ke arah kanan tanpa batas, kurung biasa digunakan karena tidak memuat tanda sama dengan.</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-p2')">📋 Salin Jawaban No. 2</button>
   </div>
@@ -316,7 +330,10 @@
       \( x + 1 = 0 \Rightarrow x = -1 \)<br>
       Uji garis bilangan: Karena tanda ketaksamaan \( < 0 \) (negatif), daerah penyelesaian berada di antara kedua akar:<br>
       \( -1 < x < 5 \)<br>
-      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | -1 < x < 5, x ∈ ℝ } atau (-1, 5)</div>
+      <div class="final-ans">
+        <strong>Himpunan Penyelesaian (HP) = { x | -1 < x < 5, x ∈ ℝ } atau (-1, 5)</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Koefisien \( x^2 \) positif dan tanda \( < 0 \), sehingga kurva parabola berada di bawah sumbu-X (di antara kedua akar).</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-p3')">📋 Salin Jawaban No. 3</button>
   </div>
@@ -334,7 +351,10 @@
       • Untuk \( 2 \le x < 5 \): misal \( x = 3 \Rightarrow \frac{1}{-2} < 0 \) (-)<br>
       • Untuk \( x > 5 \): misal \( x = 6 \Rightarrow \frac{4}{1} > 0 \) (+)<br>
       Yang diminta adalah nilai \( \le 0 \) (negatif):<br>
-      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | 2 ≤ x < 5, x ∈ ℝ } atau [2, 5)</div>
+      <div class="final-ans">
+        <strong>Himpunan Penyelesaian (HP) = { x | 2 ≤ x < 5, x ∈ ℝ } atau [2, 5)</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Angka 5 wajib terbuka kurung ) karena sebagai penyebut tidak boleh nol (\( x \ne 5 \)), sedangkan angka 2 tertutup [.</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-p4')">📋 Salin Jawaban No. 4</button>
   </div>
@@ -352,7 +372,10 @@
       \( -6 < 2x < 8 \)<br>
       Bagi 2 semua ruas:<br>
       \( -3 < x < 4 \)<br>
-      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | -3 < x < 4, x ∈ ℝ } atau (-3, 4)</div>
+      <div class="final-ans">
+        <strong>Himpunan Penyelesaian (HP) = { x | -3 < x < 4, x ∈ ℝ } atau (-3, 4)</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Bentuk mutlak \( |u| < 7 \) melepas tanda mutlak menjadi rentang simetris antara -7 dan 7.</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-p5')">📋 Salin Jawaban No. 5</button>
   </div>
@@ -370,7 +393,10 @@
       \( -2 \le 2x \le 14 \)<br>
       Bagi 2 semua ruas:<br>
       \( -1 \le x \le 7 \)<br>
-      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | -1 ≤ x ≤ 7, x ∈ ℝ } atau [-1, 7]</div>
+      <div class="final-ans">
+        <strong>Himpunan Penyelesaian (HP) = { x | -1 ≤ x ≤ 7, x ∈ ℝ } atau [-1, 7]</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Tanda \( \le \) membuat kedua batas ujung (-1 dan 7) termasuk dalam himpunan sehingga memakai kurung siku tertutup.</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-p6')">📋 Salin Jawaban No. 6</button>
   </div>
@@ -397,7 +423,10 @@
       • <strong>Opsi B:</strong> Elemen domain {1, 2, 3} masing-masing tepat dipasangkan satu kali ke {4, 5, 6} (Fungsi)<br>
       • Opsi C: Angka 1 bercabang ke 2 dan 4 (Bukan fungsi)<br>
       • Opsi D: Angka 2 bercabang ke 1 dan 3 (Bukan fungsi)<br>
-      <div class="final-ans">Jawaban: B. {(1,4), (2,5), (3,6)}</div>
+      <div class="final-ans">
+        <strong>Jawaban: B. {(1,4), (2,5), (3,6)}</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Pada opsi B, setiap anggota domain {1, 2, 3} muncul tepat satu kali dan tidak ada yang memiliki pasangan ganda.</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-fd1')">📋 Salin Jawaban FD No. 1</button>
   </div>
@@ -461,7 +490,10 @@
       • \( 3 \to 6 = 2 \times 3 \)<br>
       Secara verbal, setiap anggota domain bernilai <strong>"setengah dari"</strong> anggota kodomain (atau kodomain bernilai "dua kali dari" domain).<br>
       Rumus fungsi matematisnya: \( f(x) = 2x \).<br>
-      <div class="final-ans">Jawaban: Relasi "Setengah Dari" (atau rumus fungsi \( f(x) = 2x \))</div>
+      <div class="final-ans">
+        <strong>Jawaban: Relasi "Setengah Dari" (atau rumus fungsi \( f(x) = 2x \))</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Karena angka 1 adalah setengah dari 2, 2 setengah dari 4, dan 3 setengah dari 6.</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-fd5')">📋 Salin Jawaban FD No. 5</button>
   </div>
@@ -482,7 +514,10 @@
       • Pernyataan B SALAH: Domain bercabang ke 2 pasangan.<br>
       • Pernyataan C SALAH: Domain bercabang ke 2 hasil.<br>
       • Pernyataan D SALAH: Domain tidak memiliki relasi.<br>
-      <div class="final-ans">Jawaban: A. Setiap siswa dipasangkan dengan satu nomor induk</div>
+      <div class="final-ans">
+        <strong>Jawaban: A. Setiap siswa dipasangkan dengan satu nomor induk</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Menjadi fungsi karena satu siswa (domain) hanya memiliki tepat satu nomor induk unik (kodomain), tidak boleh memiliki dua atau lebih.</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-fd6')">📋 Salin Jawaban FD No. 6</button>
   </div>
@@ -527,7 +562,10 @@
       \( 3a = 19 - 4 \)<br>
       \( 3a = 15 \)<br>
       \( a = \frac{15}{3} = 5 \)<br>
-      <div class="final-ans">Jawaban: Nilai a = 5</div>
+      <div class="final-ans">
+        <strong>Jawaban: Nilai a = 5</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Nilai \( g(3) = 3a + 4 = 19 \implies 3a = 15 \implies a = 5 \).</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-fl2')">📋 Salin Jawaban FL No. 2</button>
   </div>
@@ -592,7 +630,10 @@
       \( 2m = 21 - 5 \)<br>
       \( 2m = 16 \)<br>
       \( m = \frac{16}{2} = 8 \)<br>
-      <div class="final-ans">Jawaban: Nilai m = 8</div>
+      <div class="final-ans">
+        <strong>Jawaban: Nilai m = 8</strong>
+        <span class="ans-reason">💡 <em>Alasan:</em> Nilai \( f(m) = 2m + 5 = 21 \implies 2m = 16 \implies m = 8 \).</span>
+      </div>
     </div>
     <button class="copy-btn" onclick="salin('ans-fl6')">📋 Salin Jawaban FL No. 6</button>
   </div>
