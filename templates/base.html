@@ -38,6 +38,7 @@
   <link rel="apple-touch-icon" href="/static/img/icon-192.png?v=3.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/style.css?v=870.0">
      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
@@ -48,7 +49,7 @@
   <header class="pc-topbar">
     <div class="pc-topbar-inner">
       <a href="{% if is_readonly %}/view{% else %}/{% endif %}" class="brand-group">
-        <div class="brand-logo-icon"><img src="/static/img/karl_logo.jpg" alt="Karl Logo"></div>
+        <div class="brand-logo-icon"><img src="/static/img/karl_logo.webp" alt="Karl Logo" loading="lazy" decoding="async"></div>
         <div>
           <div class="brand-name">Karl Tasks</div>
           <div class="brand-subtitle">Command Center</div>
@@ -74,7 +75,7 @@
           + New Task
         </button>
         <div class="brand-logo-icon topbar-avatar">
-          <img src="/static/img/karl_logo.jpg" alt="Karl">
+          <img src="/static/img/karl_logo.webp" alt="Karl" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -84,7 +85,7 @@
   <div class="mobile-header">
     <div class="profile-info">
       <div class="avatar-wrap karl-avatar-glow">
-        <img src="/static/img/karl_logo_square.png" alt="Karl">
+        <img src="/static/img/karl_logo.webp" alt="Karl" loading="lazy" decoding="async">
       </div>
       <div>
         <div class="user-greeting">Command Center</div>
@@ -552,7 +553,7 @@
     </div>
   </div>
 
-  <script src="/static/js/main.js?v=120.0"></script>
+  <script src="/static/js/main.js?v=120.0" defer></script>
   {% block scripts %}{% endblock %}
 </body>
 </html>
