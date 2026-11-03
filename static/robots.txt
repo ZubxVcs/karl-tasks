@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /view
+Allow: /static/
+
+Sitemap: https://todo.firjatu.my.id/sitemap.xml
