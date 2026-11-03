@@ -4701,11 +4701,24 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
 .z-confirm-modal {
   display: none;
   z-index: 3000 !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .z-admin-login-modal {
   display: none;
   z-index: 3002 !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+@media (max-width: 768px) {
+  .modal-overlay.z-confirm-modal,
+  .modal-overlay.z-admin-login-modal {
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px !important;
+  }
 }
 
 .confirm-bubble-lock {

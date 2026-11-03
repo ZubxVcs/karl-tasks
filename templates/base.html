@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=850.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=860.0">
      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
 </head>
 <body data-design="{{ current_theme | default('default') }}" data-readonly="{{ 'true' if is_readonly else 'false' }}">
@@ -477,7 +477,7 @@
   </div>
 
   <!-- ==================== CUSTOM CONFIRMATION MODAL ==================== -->
-  <div class="modal-overlay" id="custom-confirm-modal" class="z-confirm-modal" onclick="handleCustomConfirm(false)">
+  <div class="modal-overlay z-confirm-modal" id="custom-confirm-modal" onclick="handleCustomConfirm(false)">
     <div class="modal-confirm-box" onclick="event.stopPropagation()">
       <div class="confirm-icon-bubble">
         <i class="ph ph-warning"></i>
@@ -498,30 +498,28 @@
   </div>
 
   <!-- ==================== CUSTOM ADMIN LOGIN MODAL ==================== -->
-  <div class="modal-overlay" id="admin-login-modal" class="z-admin-login-modal" onclick="closeAdminLoginModal()">
+  <div class="modal-overlay z-admin-login-modal" id="admin-login-modal" onclick="closeAdminLoginModal()">
     <div class="modal-confirm-box" onclick="event.stopPropagation()">
       <div class="confirm-icon-bubble confirm-bubble-lock">
         <i class="ph ph-lock-key icon-size-modal"></i>
       </div>
-      <h3 class="confirm-modal-heading">Masuk Admin Karl</h3>
+      <h3 class="confirm-modal-heading">Masuk Mode Admin</h3>
       <p class="confirm-modal-paragraph confirm-para-mb20">
-        Masukkan PIN identitas Karl untuk membuka akses penuh (Create, Edit, Delete).
+        Masukkan PIN untuk membuka akses penuh (Create, Edit, Delete).
       </p>
       
       <form action="/login" method="POST" class="modal-form-full">
         <div class="modal-input-group">
-          <input type="password" name="pin" id="admin-pin-input" class="form-input" placeholder="Ketik PIN NIM..." 
-                 class="modal-pin-input-custom"
+          <input type="password" name="pin" id="admin-pin-input" class="form-input modal-pin-input-custom" placeholder="Masukkan PIN..." 
                  maxlength="20" required autofocus>
           <div id="admin-pin-error" class="modal-error-text"></div>
         </div>
 
         <div class="confirm-actions-row w-full">
-          <button type="button" class="confirm-btn-cancel" onclick="closeAdminLoginModal()" class="btn-min-touch">
+          <button type="button" class="confirm-btn-cancel btn-min-touch" onclick="closeAdminLoginModal()">
             Batal
           </button>
-          <button type="submit" class="confirm-btn-proceed" id="admin-login-submit-btn" 
-                  class="btn-proceed-red">
+          <button type="submit" class="confirm-btn-proceed btn-proceed-red" id="admin-login-submit-btn">
             Masuk
           </button>
         </div>
@@ -530,7 +528,7 @@
   </div>
 
   <!-- ==================== CUSTOM ADMIN LOGOUT MODAL ==================== -->
-  <div class="modal-overlay" id="admin-logout-modal" class="z-admin-login-modal" onclick="closeAdminLogoutModal()">
+  <div class="modal-overlay z-admin-login-modal" id="admin-logout-modal" onclick="closeAdminLogoutModal()">
     <div class="modal-confirm-box" onclick="event.stopPropagation()">
       <div class="confirm-icon-bubble confirm-bubble-lock">
         <i class="ph ph-sign-out icon-size-modal"></i>
