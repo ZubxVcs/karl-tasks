@@ -1047,6 +1047,7 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   box-sizing: border-box;
 }
 
+/* Default (Tema Karl) - Merah Karl #EF1B18 */
 .uts-divider-line {
   flex: 1;
   height: 1.5px;
@@ -1072,6 +1073,7 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
   text-transform: uppercase;
   white-space: nowrap;
   box-shadow: 0 2px 10px rgba(239, 27, 24, 0.15);
+  transition: all 0.2s ease;
 }
 
 [data-theme="dark"] .uts-divider-badge {
@@ -1082,6 +1084,52 @@ html[data-design="student"][data-theme="dark"], body[data-design="student"][data
 
 .uts-divider-badge i {
   font-size: 1rem;
+}
+
+/* Tema Student - Ungu Edukasi #6C5DD3 */
+body[data-design="student"] .uts-divider-line {
+  background: linear-gradient(90deg, transparent, rgba(108, 93, 211, 0.4), rgba(108, 93, 211, 0.7));
+}
+body[data-design="student"] .uts-divider-line.right {
+  background: linear-gradient(90deg, rgba(108, 93, 211, 0.7), rgba(108, 93, 211, 0.4), transparent);
+}
+body[data-design="student"] .uts-divider-badge {
+  color: #6C5DD3;
+  border-color: rgba(108, 93, 211, 0.35);
+  background: rgba(108, 93, 211, 0.10);
+  box-shadow: 0 2px 10px rgba(108, 93, 211, 0.15);
+}
+body[data-design="student"][data-theme="dark"] .uts-divider-badge {
+  color: #8B7BE8;
+  border-color: rgba(139, 123, 232, 0.4);
+  background: rgba(108, 93, 211, 0.20);
+}
+
+/* Tema Bento - Slate / Modern Monokrom Minimalist */
+body[data-design="bento"] .uts-divider-line {
+  background: linear-gradient(90deg, transparent, rgba(71, 85, 105, 0.3), rgba(71, 85, 105, 0.6));
+}
+body[data-design="bento"] .uts-divider-line.right {
+  background: linear-gradient(90deg, rgba(71, 85, 105, 0.6), rgba(71, 85, 105, 0.3), transparent);
+}
+body[data-design="bento"] .uts-divider-badge {
+  border-radius: 12px;
+  color: #334155;
+  border-color: rgba(71, 85, 105, 0.25);
+  background: #F1F5F9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+body[data-design="bento"][data-theme="dark"] .uts-divider-line {
+  background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.5));
+}
+body[data-design="bento"][data-theme="dark"] .uts-divider-line.right {
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.5), rgba(148, 163, 184, 0.2), transparent);
+}
+body[data-design="bento"][data-theme="dark"] .uts-divider-badge {
+  color: #F8FAFC;
+  border-color: rgba(255, 255, 255, 0.15);
+  background: #1E2330;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 .quick-cat-row {
   display: flex;
