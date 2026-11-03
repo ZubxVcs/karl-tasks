@@ -6,22 +6,20 @@
   <title>Lembar Jawaban Ringkas Kalkulus 1 - Siap Salin Kertas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0A0D14;
       --card: #141722;
-      --card-inner: #1C2030;
       --border: #252A3D;
       --text-main: #F8FAFC;
-      --text-body: #E2E8F0;
+      --text-body: #CBD5E1;
       --text-muted: #94A3B8;
       --primary: #EF1B18;
-      --orange: #E76720;
       --green: #10B981;
+      --blue: #38BDF8;
       --font-mono: 'JetBrains Mono', monospace;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: var(--bg);
@@ -30,13 +28,7 @@
       padding: 16px 12px 60px;
       line-height: 1.5;
     }
-
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    /* Top Identity Header */
+    .container { max-width: 760px; margin: 0 auto; }
     .id-header {
       background: var(--card);
       border: 1px solid var(--border);
@@ -45,16 +37,8 @@
       margin-bottom: 18px;
       border-left: 4px solid var(--primary);
     }
-    .id-header h1 {
-      font-size: 1.15rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-    .id-header p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
+    .id-header h1 { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+    .id-header p { font-size: 0.85rem; color: var(--text-muted); }
     .badge-sec {
       display: inline-block;
       background: var(--primary);
@@ -65,61 +49,58 @@
       border-radius: 6px;
       text-transform: uppercase;
       margin: 20px 0 10px;
+      letter-spacing: 0.05em;
     }
-
-    /* Row Item Kartu Siap Tulis */
     .folio-item {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 12px 16px;
+      padding: 14px 16px;
       margin-bottom: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-
-    .soal-line {
-      font-weight: 700;
-      color: #38BDF8;
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-    }
-
+    .soal-line { font-weight: 700; color: var(--blue); font-size: 0.95rem; margin-bottom: 8px; }
     .cara-tulis {
       background: #0D101A;
       border: 1px dashed #3A4260;
       border-radius: 8px;
-      padding: 10px 14px;
+      padding: 12px 14px;
       font-family: var(--font-mono);
       font-size: 0.88rem;
       color: var(--text-body);
-      line-height: 1.6;
+      line-height: 1.7;
     }
-
-    .kesimpulan {
-      margin-top: 6px;
+    .kesimpulan-box {
+      margin-top: 8px;
+      background: rgba(16, 185, 129, 0.12);
+      border-left: 3px solid var(--green);
+      padding: 8px 12px;
+      border-radius: 6px;
       color: #34D399;
       font-weight: 700;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-
 <div class="container">
   <div class="id-header">
-    <h1>Lembar Jawaban Ringkas (Siap Salin Folio)</h1>
-    <p>Karl Firjatullah (2611070020) • Kalkulus 1 Pertemuan 6 • Format Super Singkat</p>
+    <h1>Lembar Jawaban Langsung Siap Salin Kertas</h1>
+    <p>Karl Firjatullah (2611070020) • Kalkulus 1 Pertemuan 6 (Format Langkah Pendek + Kalimat Jadi)</p>
   </div>
 
-  <!-- BAGIAN 1 -->
-  <span class="badge-sec">Bagian 1: Pertidaksamaan</span>
+  <!-- BAGIAN 1: PERTIDAKSAMAAN -->
+  <span class="badge-sec">Halaman 1: Pertidaksamaan</span>
 
   <div class="folio-item">
     <div class="soal-line">1. 5 ≤ 2x + 1 &lt; 17</div>
     <div class="cara-tulis">
 5 - 1 ≤ 2x &lt; 17 - 1<br>
 4 ≤ 2x &lt; 16<br>
-2 ≤ x &lt; 8<br>
-<span class="kesimpulan">➔ HP = [2, 8)</span> (2 ikut, 8 tidak)
+2 ≤ x &lt; 8
+      <div class="kesimpulan-box">
+        Jadi, himpunan penyelesaiannya adalah HP = { x | 2 ≤ x &lt; 8 } atau [2, 8)
+      </div>
     </div>
   </div>
 
@@ -127,8 +108,10 @@
     <div class="soal-line">2. 3x - 7 &gt; 2x + 5</div>
     <div class="cara-tulis">
 3x - 2x &gt; 5 + 7<br>
-x &gt; 12<br>
-<span class="kesimpulan">➔ HP = (12, ∞)</span> (lebih besar dari 12)
+x &gt; 12
+      <div class="kesimpulan-box">
+        Jadi, himpunan penyelesaiannya adalah HP = { x | x &gt; 12 } atau (12, ∞)
+      </div>
     </div>
   </div>
 
@@ -136,9 +119,11 @@ x &gt; 12<br>
     <div class="soal-line">3. x² - 4x - 5 &lt; 0</div>
     <div class="cara-tulis">
 (x - 5)(x + 1) &lt; 0<br>
-Akar: x = 5 atau x = -1<br>
-Tanda &lt; 0 ➔ ambil tengah<br>
-<span class="kesimpulan">➔ HP = (-1, 5)</span> (antara -1 sampai 5)
+Pembuat nol: x = 5 atau x = -1<br>
+Uji garis bilangan: -1 &lt; x &lt; 5
+      <div class="kesimpulan-box">
+        Jadi, himpunan penyelesaiannya adalah HP = { x | -1 &lt; x &lt; 5 } atau (-1, 5)
+      </div>
     </div>
   </div>
 
@@ -147,8 +132,10 @@ Tanda &lt; 0 ➔ ambil tengah<br>
     <div class="cara-tulis">
 Pembilang: x = 2 (tertutup)<br>
 Penyebut: x ≠ 5 (terbuka)<br>
-Daerah negatif: 2 ≤ x &lt; 5<br>
-<span class="kesimpulan">➔ HP = [2, 5)</span> (5 tidak boleh ikut)
+Daerah negatif: 2 ≤ x &lt; 5
+      <div class="kesimpulan-box">
+        Jadi, himpunan penyelesaiannya adalah HP = { x | 2 ≤ x &lt; 5 } atau [2, 5)
+      </div>
     </div>
   </div>
 
@@ -157,8 +144,10 @@ Daerah negatif: 2 ≤ x &lt; 5<br>
     <div class="cara-tulis">
 -7 &lt; 2x - 1 &lt; 7<br>
 -6 &lt; 2x &lt; 8<br>
--3 &lt; x &lt; 4<br>
-<span class="kesimpulan">➔ HP = (-3, 4)</span> (antara -3 dan 4)
+-3 &lt; x &lt; 4
+      <div class="kesimpulan-box">
+        Jadi, himpunan penyelesaiannya adalah HP = { x | -3 &lt; x &lt; 4 } atau (-3, 4)
+      </div>
     </div>
   </div>
 
@@ -167,129 +156,163 @@ Daerah negatif: 2 ≤ x &lt; 5<br>
     <div class="cara-tulis">
 -8 ≤ 2x - 6 ≤ 8<br>
 -2 ≤ 2x ≤ 14<br>
--1 ≤ x ≤ 7<br>
-<span class="kesimpulan">➔ HP = [-1, 7]</span> (tertutup dari -1 ke 7)
+-1 ≤ x ≤ 7
+      <div class="kesimpulan-box">
+        Jadi, himpunan penyelesaiannya adalah HP = { x | -1 ≤ x ≤ 7 } atau [-1, 7]
+      </div>
     </div>
   </div>
 
-  <!-- BAGIAN 2 -->
-  <span class="badge-sec">Bagian 2: Fungsi Dasar</span>
+  <!-- BAGIAN 2: FUNGSI DASAR -->
+  <span class="badge-sec">Halaman 2: Fungsi Dasar</span>
 
   <div class="folio-item">
-    <div class="soal-line">1. Pilihan relasi fungsi</div>
+    <div class="soal-line">1. Manakah relasi berikut yang merupakan fungsi?</div>
     <div class="cara-tulis">
-Domain {1, 2, 3} tidak boleh mendua.<br>
-<span class="kesimpulan">➔ Jawaban: B. {(1,4), (2,5), (3,6)}</span> (tepat 1 pasangan)
+Syarat fungsi: setiap anggota domain tidak boleh mendua.<br>
+• A, C, D bukan fungsi (ada domain yang punya 2 pasangan).<br>
+• B fungsi (semua domain {1, 2, 3} tepat punya 1 pasangan).
+      <div class="kesimpulan-box">
+        Jadi, pilihan yang benar adalah B. {(1,4), (2,5), (3,6)}
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">2. Banyak fungsi A={1,2,3} ke B={a,b}</div>
+    <div class="soal-line">2. A = {1, 2, 3} dan B = {a, b}. Banyak fungsi dari A ke B?</div>
     <div class="cara-tulis">
-Rumus = n(B)^n(A)<br>
-= 2³ = 8<br>
-<span class="kesimpulan">➔ Jawaban: 8 fungsi</span>
+n(A) = 3<br>
+n(B) = 2<br>
+Banyak pemetaan = n(B)^n(A) = 2³ = 8
+      <div class="kesimpulan-box">
+        Jadi, banyak fungsi yang mungkin dari A ke B adalah 8 fungsi.
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">3. Apakah {(2,5), (4,7), (6,9), (8,11)} fungsi?</div>
+    <div class="soal-line">3. Apakah relasi {(2,5), (4,7), (6,9), (8,11)} merupakan fungsi?</div>
     <div class="cara-tulis">
-Domain {2, 4, 6, 8} punya tepat 1 kawan.<br>
-<span class="kesimpulan">➔ Jawaban: Ya, FUNGSI</span> (domain tidak bercabang)
+Domain = {2, 4, 6, 8}<br>
+Setiap anggota domain punya tepat satu pasangan (tidak ada yang dobel).
+      <div class="kesimpulan-box">
+        Jadi, relasi tersebut merupakan FUNGSI.
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">4. Banyak fungsi P={a,b,c,d} ke Q={1,2,3}</div>
+    <div class="soal-line">4. Banyak fungsi dari P = {a, b, c, d} ke Q = {1, 2, 3}?</div>
     <div class="cara-tulis">
-Rumus = n(Q)^n(P)<br>
-= 3⁴ = 81<br>
-<span class="kesimpulan">➔ Jawaban: 81 fungsi</span>
+n(P) = 4<br>
+n(Q) = 3<br>
+Banyak pemetaan = n(Q)^n(P) = 3⁴ = 81
+      <div class="kesimpulan-box">
+        Jadi, banyak fungsi dari himpunan P ke Q adalah 81 fungsi.
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">5. Relasi 1→2, 2→4, 3→6</div>
+    <div class="soal-line">5. Diagram pemetaan: 1 → 2, 2 → 4, 3 → 6. Tentukan relasinya!</div>
     <div class="cara-tulis">
-1 = 1/2 dari 2, 2 = 1/2 dari 4, 3 = 1/2 dari 6<br>
-<span class="kesimpulan">➔ Jawaban: Relasi "Setengah Dari"</span> (atau f(x) = 2x)
+1 = 1/2 dari 2<br>
+2 = 1/2 dari 4<br>
+3 = 1/2 dari 6
+      <div class="kesimpulan-box">
+        Jadi, nama relasinya adalah "Setengah Dari" (rumus f(x) = 2x).
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">6. Pernyataan yang merupakan fungsi</div>
+    <div class="soal-line">6. Manakah yang merupakan fungsi?</div>
     <div class="cara-tulis">
-Satu siswa hanya punya 1 nomor induk.<br>
-<span class="kesimpulan">➔ Jawaban: A. Setiap siswa dipasangkan dengan satu nomor induk</span>
+Fungsi mengharuskan setiap domain tepat punya satu kawan di kodomain.
+      <div class="kesimpulan-box">
+        Jadi, pilihan yang benar adalah A. Setiap siswa dipasangkan dengan satu nomor induk.
+      </div>
     </div>
   </div>
 
-  <!-- BAGIAN 3 -->
-  <span class="badge-sec">Bagian 3: Fungsi Lanjutan</span>
+  <!-- BAGIAN 3: FUNGSI LANJUTAN -->
+  <span class="badge-sec">Halaman 3: Fungsi Lanjutan</span>
 
   <div class="folio-item">
-    <div class="soal-line">1. f(x) = 3x - 2</div>
+    <div class="soal-line">1. f(x) = 3x - 2. Tentukan f(5) dan f(-2)</div>
     <div class="cara-tulis">
 a. f(5) = 3(5) - 2 = 15 - 2 = 13<br>
-b. f(-2) = 3(-2) - 2 = -6 - 2 = -8<br>
-<span class="kesimpulan">➔ Jawaban: a = 13 | b = -8</span>
+b. f(-2) = 3(-2) - 2 = -6 - 2 = -8
+      <div class="kesimpulan-box">
+        Jadi, nilai f(5) = 13 dan f(-2) = -8
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">2. g(x) = ax + 4, g(3) = 19. Nilai a?</div>
+    <div class="soal-line">2. g(x) = ax + 4 dan g(3) = 19. Tentukan nilai a!</div>
     <div class="cara-tulis">
-3a + 4 = 19<br>
+g(3) = a(3) + 4 = 19<br>
+3a = 19 - 4<br>
 3a = 15<br>
-a = 15/3 = 5<br>
-<span class="kesimpulan">➔ Jawaban: a = 5</span>
+a = 15 / 3 = 5
+      <div class="kesimpulan-box">
+        Jadi, nilai a adalah 5.
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">3. h(x) = 2x² - 3x + 1. Hitung h(4)</div>
+    <div class="soal-line">3. h(x) = 2x² - 3x + 1. Hitung nilai h(4)!</div>
     <div class="cara-tulis">
 h(4) = 2(4)² - 3(4) + 1<br>
-= 2(16) - 12 + 1<br>
-= 32 - 12 + 1 = 21<br>
-<span class="kesimpulan">➔ Jawaban: h(4) = 21</span>
+h(4) = 2(16) - 12 + 1<br>
+h(4) = 32 - 12 + 1 = 21
+      <div class="kesimpulan-box">
+        Jadi, nilai h(4) adalah 21.
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">4. f: x → 5x + 1. Rumus & bayangan 7</div>
+    <div class="soal-line">4. f: x → 5x + 1. Tentukan rumus fungsi dan bayangan dari 7!</div>
     <div class="cara-tulis">
-Rumus: f(x) = 5x + 1<br>
-f(7) = 5(7) + 1 = 35 + 1 = 36<br>
-<span class="kesimpulan">➔ Jawaban: Rumus f(x)=5x+1 | Bayangan = 36</span>
+Rumus fungsi: f(x) = 5x + 1<br>
+Bayangan dari 7: f(7) = 5(7) + 1 = 35 + 1 = 36
+      <div class="kesimpulan-box">
+        Jadi, rumus fungsinya f(x) = 5x + 1 dan bayangan dari 7 adalah 36.
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">5. p(x) = 4x - 7, domain {1, 3, 5}. Range?</div>
+    <div class="soal-line">5. p(x) = 4x - 7 dan domain {1, 3, 5}. Tentukan range-nya!</div>
     <div class="cara-tulis">
 p(1) = 4(1) - 7 = -3<br>
 p(3) = 4(3) - 7 = 5<br>
-p(5) = 4(5) - 7 = 13<br>
-<span class="kesimpulan">➔ Jawaban: Range = {-3, 5, 13}</span>
+p(5) = 4(5) - 7 = 13
+      <div class="kesimpulan-box">
+        Jadi, daerah hasil (range)-nya adalah { -3, 5, 13 }
+      </div>
     </div>
   </div>
 
   <div class="folio-item">
-    <div class="soal-line">6. f(x) = 2x + 5, f(m) = 21. Nilai m?</div>
+    <div class="soal-line">6. f(x) = 2x + 5. Jika f(m) = 21, tentukan nilai m!</div>
     <div class="cara-tulis">
-2m + 5 = 21<br>
+f(m) = 2m + 5 = 21<br>
+2m = 21 - 5<br>
 2m = 16<br>
-m = 16/2 = 8<br>
-<span class="kesimpulan">➔ Jawaban: m = 8</span>
+m = 16 / 2 = 8
+      <div class="kesimpulan-box">
+        Jadi, nilai m adalah 8.
+      </div>
     </div>
   </div>
 
-  <div style="text-align: center; margin-top: 24px;">
+  <div style="text-align: center; margin-top: 30px;">
     <a href="/view/tasks" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">← Kembali ke To-Do List</a>
   </div>
 </div>
-
 </body>
 </html>
