@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=650.0">
+  <link rel="stylesheet" href="/static/css/style.css?v=700.0">
      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
 </head>
 <body data-design="{{ current_theme | default('default') }}" data-readonly="{{ 'true' if is_readonly else 'false' }}">
@@ -135,7 +135,7 @@
   <div class="modal-overlay" id="task-modal" onclick="closeModal()">
     <div class="modal-card modal-card-responsive" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <h3 class="modal-title" class="modal-title-no-mb">Tambah Tugas Baru</h3>
+        <h3 class="modal-title modal-title-no-mb">Tambah Tugas Baru</h3>
         <button type="button" class="sheet-icon-btn" onclick="closeModal()" title="Tutup">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
@@ -150,7 +150,7 @@
               <input type="text" class="form-input" id="input-task-title" placeholder="Contoh: Makalah Kasus / Latihan Soal">
             </div>
 
-            <div class="form-group" class="form-grid-2col">
+            <div class="form-group form-grid-2col">
               <div>
                 <label class="form-label">Kategori</label>
                 <select class="form-select" id="input-task-cat">
@@ -218,7 +218,7 @@
   <div class="modal-overlay" id="edit-task-modal" onclick="closeEditModal()">
     <div class="modal-card modal-card-responsive" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <h3 class="modal-title" class="modal-title-no-mb">Edit Tugas</h3>
+        <h3 class="modal-title modal-title-no-mb">Edit Tugas</h3>
         <button type="button" class="sheet-icon-btn" onclick="closeEditModal()" title="Tutup">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
@@ -234,7 +234,7 @@
               <input type="text" class="form-input" id="edit-task-title" placeholder="Judul tugas...">
             </div>
 
-            <div class="form-group" class="form-grid-2col">
+            <div class="form-group form-grid-2col">
               <div>
                 <label class="form-label">Kategori</label>
                 <select class="form-select" id="edit-task-cat">
@@ -347,7 +347,7 @@
 
         <!-- Block 4: Interactive Webview / HTML Viewer -->
         <div class="detail-block" id="block-web" class="hidden-initially">
-          <div class="detail-block-title" class="detail-block-title-flex">
+          <div class="detail-block-title detail-block-title-flex">
             <div class="detail-block-title-left">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
               <span>Web Pembahasan Interaktif</span>
@@ -374,7 +374,7 @@
               <div id="file-name-label" class="file-link-name">Berkas Tugas</div>
               <div class="file-link-sub">Siap diunduh / diserahkan</div>
             </div>
-            <a id="btn-download-file" href="#" target="_blank" class="btn-primary" class="btn-download-attached">
+            <a id="btn-download-file" href="#" target="_blank" class="btn-primary btn-download-attached">
               Unduh
             </a>
           </div>
@@ -417,12 +417,12 @@
   <div class="modal-overlay" id="design-modal" onclick="closeDesignModal()">
     <div class="modal-card modal-card-responsive" onclick="event.stopPropagation()" class="modal-card-max-480">
       <div class="modal-header">
-        <h3 class="modal-title" class="modal-title-no-mb">Ganti Desain</h3>
+        <h3 class="modal-title modal-title-no-mb">Ganti Desain</h3>
         <button type="button" class="sheet-icon-btn" onclick="closeDesignModal()" title="Tutup">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
-      <div class="modal-body-scroll" class="modal-body-p20">
+      <div class="modal-body-scroll modal-body-p20">
         <div class="design-option-list">
           <button class="design-option-card" onclick="requestThemeSwitch('default')">
             <div class="design-option-preview design-preview-crimson">
@@ -490,11 +490,11 @@
   <!-- ==================== CUSTOM ADMIN LOGIN MODAL ==================== -->
   <div class="modal-overlay" id="admin-login-modal" class="z-admin-login-modal" onclick="closeAdminLoginModal()">
     <div class="modal-confirm-box" onclick="event.stopPropagation()">
-      <div class="confirm-icon-bubble" class="confirm-bubble-lock">
+      <div class="confirm-icon-bubble confirm-bubble-lock">
         <i class="ph ph-lock-key icon-size-modal"></i>
       </div>
       <h3 class="confirm-modal-heading">Masuk Mode Admin</h3>
-      <p class="confirm-modal-paragraph" class="confirm-para-mb20">
+      <p class="confirm-modal-paragraph confirm-para-mb20">
         Masukkan PIN untuk membuka akses penuh (Create, Edit, Delete).
       </p>
       
@@ -506,7 +506,7 @@
           <div id="admin-pin-error" class="modal-error-text"></div>
         </div>
 
-        <div class="confirm-actions-row" class="w-full">
+        <div class="confirm-actions-row w-full">
           <button type="button" class="confirm-btn-cancel" onclick="closeAdminLoginModal()" class="btn-min-touch">
             Batal
           </button>
@@ -522,16 +522,16 @@
   <!-- ==================== CUSTOM ADMIN LOGOUT MODAL ==================== -->
   <div class="modal-overlay" id="admin-logout-modal" class="z-admin-login-modal" onclick="closeAdminLogoutModal()">
     <div class="modal-confirm-box" onclick="event.stopPropagation()">
-      <div class="confirm-icon-bubble" class="confirm-bubble-lock">
+      <div class="confirm-icon-bubble confirm-bubble-lock">
         <i class="ph ph-sign-out icon-size-modal"></i>
       </div>
       <h3 class="confirm-modal-heading">Kunci Sesi Admin?</h3>
-      <p class="confirm-modal-paragraph" class="confirm-para-mb24">
+      <p class="confirm-modal-paragraph confirm-para-mb24">
         Kamu akan keluar dari mode owner dan kembali ke mode pratinjau tamu (read-only).
       </p>
 
       <form action="/logout" method="POST" class="modal-form-full">
-        <div class="confirm-actions-row" class="w-full">
+        <div class="confirm-actions-row w-full">
           <button type="button" class="confirm-btn-cancel" onclick="closeAdminLogoutModal()" class="btn-min-touch">
             Batal
           </button>

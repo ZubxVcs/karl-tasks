@@ -1850,14 +1850,29 @@ body[data-design="bento"][data-theme="dark"] .uts-divider-badge {
 
 /* Mobile responsive layout */
 @media (max-width: 768px) {
+  .modal-overlay {
+    padding: 10px 8px;
+    align-items: flex-end;
+  }
   .modal-card-responsive {
     max-width: 100%;
-    max-height: 92vh;
-    border-radius: 16px;
+    max-height: 88vh;
+    border-radius: 20px 20px 12px 12px;
+  }
+  .modal-body-scroll {
+    padding: 16px 14px 24px;
   }
   .modal-columns-grid {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+  .modal-actions-sticky {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .modal-actions-sticky button {
+    flex: 1;
+    min-height: 44px;
   }
 }
 
