@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lembar Jawaban Latihan Soal Kalkulus 1 - Pertemuan 6</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --bg: #0A0D14;
+      --card: #141722;
+      --card-inner: #1C2030;
+      --border: #252A3D;
+      --text-main: #F8FAFC;
+      --text-body: #CBD5E1;
+      --text-muted: #8E96AB;
+      --primary: #EF1B18;
+      --orange: #E76720;
+      --blue: #38BDF8;
+      --green: #10B981;
+      --accent-badge: rgba(239, 27, 24, 0.12);
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      padding: 24px 16px 80px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Top Identity Card */
+    .id-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .id-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--orange));
+    }
+    .instansi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .instansi-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--orange);
+      text-transform: uppercase;
+    }
+    .mata-kuliah {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      background: var(--card-inner);
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.88rem;
+    }
+    .student-grid span strong {
+      color: var(--text-main);
+    }
+
+    /* Guide Banner */
+    .guide-banner {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: 0.88rem;
+      color: #A7F3D0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Section Category Header */
+    .cat-divider {
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cat-badge {
+      background: var(--primary);
+      color: #FFF;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(239, 27, 24, 0.3);
+    }
+    .cat-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Soal & Jawaban Card */
+    .soal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    }
+    .soal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .soal-num {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--blue);
+    }
+    .soal-text {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #F1F5F9;
+      margin-bottom: 14px;
+      background: rgba(255,255,255,0.02);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border-left: 3px solid var(--blue);
+    }
+
+    .tulis-box {
+      background: #0D101A;
+      border: 1px dashed #3A4260;
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: #E2E8F0;
+    }
+
+    .step-title {
+      color: var(--orange);
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .final-ans {
+      margin-top: 10px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #34D399;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .copy-btn {
+      margin-top: 10px;
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      color: var(--text-body);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .copy-btn:hover {
+      background: var(--primary);
+      color: #FFF;
+      border-color: var(--primary);
+    }
+
+    .btn-kembali {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 12px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 30px;
+      transition: all 0.2s ease;
+    }
+    .btn-kembali:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Identity -->
+  <div class="id-card">
+    <div class="instansi-header">
+      <span class="instansi-title">Universitas Sains Indonesia</span>
+      <span style="font-size: 0.8rem; color: var(--text-muted);">Semester Ganjil 2026/2027</span>
+    </div>
+    <div class="mata-kuliah">Lembar Jawaban: Kalkulus 1 (Pertemuan 6 - Pertidaksamaan & Fungsi)</div>
+    <div class="student-grid">
+      <span>Nama: <strong>Karl Firjatullah</strong></span>
+      <span>NIM: <strong>2611070020</strong></span>
+      <span>Prodi: <strong>Teknik Informatika</strong></span>
+      <span>Mata Kuliah: <strong>Kalkulus 1 (FIC103)</strong></span>
+    </div>
+  </div>
+
+  <div class="guide-banner">
+    <span>✍️</span>
+    <div>
+      <strong>Format Siap Salin ke Kertas Folio:</strong> Seluruh soal dari file PDF Pertemuan 6 sudah diselesaikan lengkap langkah demi langkah beserta himpunan penyelesaian akhirnya.
+    </div>
+  </div>
+
+  <!-- ==================== BAGIAN 1: PERTIDAKSAMAAN ==================== -->
+  <div class="cat-divider">
+    <span class="cat-badge">Bagian I: Pertidaksamaan</span>
+    <div class="cat-line"></div>
+  </div>
+
+  <!-- Soal 1 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 1</span></div>
+    <div class="soal-text">Tentukan himpunan penyelesaian dari: \( 5 \le 2x + 1 < 17 \)</div>
+    <div class="tulis-box" id="ans-p1">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Kurangkan semua ruas dengan 1:<br>
+      \( 5 - 1 \le 2x < 17 - 1 \)<br>
+      \( 4 \le 2x < 16 \)<br>
+      Bagi semua ruas dengan 2:<br>
+      \( \frac{4}{2} \le x < \frac{16}{2} \)<br>
+      \( 2 \le x < 8 \)<br>
+      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | 2 ≤ x < 8, x ∈ ℝ } atau [2, 8)</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-p1')">📋 Salin Jawaban No. 1</button>
+  </div>
+
+  <!-- Soal 2 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 2</span></div>
+    <div class="soal-text">Tentukan himpunan penyelesaian dari: \( 3x - 7 > 2x + 5 \)</div>
+    <div class="tulis-box" id="ans-p2">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Pindahkan suku bervariabel \( x \) ke ruas kiri dan konstanta ke ruas kanan:<br>
+      \( 3x - 2x > 5 + 7 \)<br>
+      \( x > 12 \)<br>
+      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | x > 12, x ∈ ℝ } atau (12, ∞)</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-p2')">📋 Salin Jawaban No. 2</button>
+  </div>
+
+  <!-- Soal 3 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 3</span></div>
+    <div class="soal-text">Tentukan himpunan penyelesaian dari: \( x^2 - 4x - 5 < 0 \)</div>
+    <div class="tulis-box" id="ans-p3">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Faktorkan persamaan kuadrat:<br>
+      \( (x - 5)(x + 1) < 0 \)<br>
+      Titik pembuat nol:<br>
+      \( x - 5 = 0 \Rightarrow x = 5 \)<br>
+      \( x + 1 = 0 \Rightarrow x = -1 \)<br>
+      Uji garis bilangan: Karena tanda ketaksamaan \( < 0 \) (negatif), daerah penyelesaian berada di antara kedua akar:<br>
+      \( -1 < x < 5 \)<br>
+      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | -1 < x < 5, x ∈ ℝ } atau (-1, 5)</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-p3')">📋 Salin Jawaban No. 3</button>
+  </div>
+
+  <!-- Soal 4 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 4</span></div>
+    <div class="soal-text">Tentukan himpunan penyelesaian dari: \( \frac{x - 2}{x - 5} \le 0 \)</div>
+    <div class="tulis-box" id="ans-p4">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      1. Pembuat nol pembilang: \( x - 2 = 0 \Rightarrow x = 2 \) (titik tertutup karena bertanda \( \le \))<br>
+      2. Pembuat nol penyebut: \( x - 5 = 0 \Rightarrow x = 5 \) (syarat penyebut \( x \ne 5 \), titik terbuka)<br>
+      3. Uji interval garis bilangan:<br>
+      • Untuk \( x < 2 \): misal \( x = 0 \Rightarrow \frac{-2}{-5} > 0 \) (+)<br>
+      • Untuk \( 2 \le x < 5 \): misal \( x = 3 \Rightarrow \frac{1}{-2} < 0 \) (-)<br>
+      • Untuk \( x > 5 \): misal \( x = 6 \Rightarrow \frac{4}{1} > 0 \) (+)<br>
+      Yang diminta adalah nilai \( \le 0 \) (negatif):<br>
+      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | 2 ≤ x < 5, x ∈ ℝ } atau [2, 5)</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-p4')">📋 Salin Jawaban No. 4</button>
+  </div>
+
+  <!-- Soal 5 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 5</span></div>
+    <div class="soal-text">Tentukan himpunan penyelesaian dari nilai mutlak: \( |2x - 1| < 7 \)</div>
+    <div class="tulis-box" id="ans-p5">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Sifat pertidaksamaan nilai mutlak \( |u| < a \Leftrightarrow -a < u < a \):<br>
+      \( -7 < 2x - 1 < 7 \)<br>
+      Tambahkan 1 ke semua ruas:<br>
+      \( -7 + 1 < 2x < 7 + 1 \)<br>
+      \( -6 < 2x < 8 \)<br>
+      Bagi 2 semua ruas:<br>
+      \( -3 < x < 4 \)<br>
+      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | -3 < x < 4, x ∈ ℝ } atau (-3, 4)</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-p5')">📋 Salin Jawaban No. 5</button>
+  </div>
+
+  <!-- Soal 6 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 6</span></div>
+    <div class="soal-text">Tentukan himpunan penyelesaian dari nilai mutlak: \( |2x - 6| \le 8 \)</div>
+    <div class="tulis-box" id="ans-p6">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Sifat pertidaksamaan nilai mutlak \( |u| \le a \Leftrightarrow -a \le u \le a \):<br>
+      \( -8 \le 2x - 6 \le 8 \)<br>
+      Tambahkan 6 ke semua ruas:<br>
+      \( -8 + 6 \le 2x \le 8 + 6 \)<br>
+      \( -2 \le 2x \le 14 \)<br>
+      Bagi 2 semua ruas:<br>
+      \( -1 \le x \le 7 \)<br>
+      <div class="final-ans">Himpunan Penyelesaian (HP) = { x | -1 ≤ x ≤ 7, x ∈ ℝ } atau [-1, 7]</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-p6')">📋 Salin Jawaban No. 6</button>
+  </div>
+
+  <!-- ==================== BAGIAN 2: FUNGSI DASAR ==================== -->
+  <div class="cat-divider">
+    <span class="cat-badge">Bagian II: Fungsi Dasar</span>
+    <div class="cat-line"></div>
+  </div>
+
+  <!-- Soal FD 1 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 1</span></div>
+    <div class="soal-text">Manakah relasi berikut yang merupakan fungsi?<br>
+    A. {(1,2), (2,3), (2,5)}<br>
+    B. {(1,4), (2,5), (3,6)}<br>
+    C. {(1,2), (1,4), (3,5)}<br>
+    D. {(2,1), (2,3), (4,5)}
+    </div>
+    <div class="tulis-box" id="ans-fd1">
+      <span class="step-title">Penjelasan:</span>
+      Syarat suatu relasi disebut <strong>fungsi</strong> adalah setiap anggota domain (elemen pertama \( x \)) harus memiliki tepat <strong>satu</strong> pasangan di kodomain (elemen kedua \( y \)) dan tidak boleh bercabang.<br>
+      • Opsi A: Angka 2 bercabang ke 3 dan 5 (Bukan fungsi)<br>
+      • <strong>Opsi B:</strong> Elemen domain {1, 2, 3} masing-masing tepat dipasangkan satu kali ke {4, 5, 6} (Fungsi)<br>
+      • Opsi C: Angka 1 bercabang ke 2 dan 4 (Bukan fungsi)<br>
+      • Opsi D: Angka 2 bercabang ke 1 dan 3 (Bukan fungsi)<br>
+      <div class="final-ans">Jawaban: B. {(1,4), (2,5), (3,6)}</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fd1')">📋 Salin Jawaban FD No. 1</button>
+  </div>
+
+  <!-- Soal FD 2 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 2</span></div>
+    <div class="soal-text">Diketahui himpunan \( A = \{1, 2, 3\} \) dan \( B = \{a, b\} \). Berapa banyak fungsi yang mungkin dari himpunan A ke B?</div>
+    <div class="tulis-box" id="ans-fd2">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Banyaknya anggota himpunan \( A \) adalah \( n(A) = 3 \).<br>
+      Banyaknya anggota himpunan \( B \) adalah \( n(B) = 2 \).<br>
+      Rumus banyak pemetaan/fungsi dari himpunan \( A \) ke \( B \) adalah:<br>
+      \( \text{Banyak Fungsi} = n(B)^{n(A)} \)<br>
+      \( \text{Banyak Fungsi} = 2^3 = 8 \)<br>
+      <div class="final-ans">Jawaban: 8 kemungkinan fungsi</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fd2')">📋 Salin Jawaban FD No. 2</button>
+  </div>
+
+  <!-- Soal FD 3 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 3</span></div>
+    <div class="soal-text">Perhatikan pasangan berurutan berikut: {(2,5), (4,7), (6,9), (8,11)}. Apakah relasi tersebut merupakan fungsi?</div>
+    <div class="tulis-box" id="ans-fd3">
+      <span class="step-title">Penjelasan:</span>
+      Himpunan domain adalah \( D = \{2, 4, 6, 8\} \).<br>
+      Setiap anggota domain muncul tepat satu kali dan memiliki tepat satu kawan di kodomain:<br>
+      \( 2 \to 5 \), \( 4 \to 7 \), \( 6 \to 9 \), \( 8 \to 11 \).<br>
+      Tidak ada anggota domain yang mendua atau tidak memiliki pasangan.<br>
+      <div class="final-ans">Jawaban: Ya, relasi tersebut merupakan FUNGSI.</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fd3')">📋 Salin Jawaban FD No. 3</button>
+  </div>
+
+  <!-- Soal FD 4 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 4</span></div>
+    <div class="soal-text">Tentukan banyak fungsi yang mungkin dari himpunan \( P = \{a, b, c, d\} \) ke himpunan \( Q = \{1, 2, 3\} \).</div>
+    <div class="tulis-box" id="ans-fd4">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Jumlah anggota himpunan \( P \): \( n(P) = 4 \)<br>
+      Jumlah anggota himpunan \( Q \): \( n(Q) = 3 \)<br>
+      Rumus banyak pemetaan dari \( P \) ke \( Q \):<br>
+      \( \text{Banyak Fungsi} = n(Q)^{n(P)} \)<br>
+      \( \text{Banyak Fungsi} = 3^4 = 81 \)<br>
+      <div class="final-ans">Jawaban: 81 kemungkinan fungsi</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fd4')">📋 Salin Jawaban FD No. 4</button>
+  </div>
+
+  <!-- Soal FD 5 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 5</span></div>
+    <div class="soal-text">Diketahui diagram pemetaan: \( 1 \to 2 \), \( 2 \to 4 \), \( 3 \to 6 \). Tentukan relasinya!</div>
+    <div class="tulis-box" id="ans-fd5">
+      <span class="step-title">Analisis Pola Relasi:</span>
+      Perhatikan perbandingan nilai domain \( x \) dan bayangan \( y \):<br>
+      • \( 1 \to 2 = 2 \times 1 \)<br>
+      • \( 2 \to 4 = 2 \times 2 \)<br>
+      • \( 3 \to 6 = 2 \times 3 \)<br>
+      Secara verbal, setiap anggota domain bernilai <strong>"setengah dari"</strong> anggota kodomain (atau kodomain bernilai "dua kali dari" domain).<br>
+      Rumus fungsi matematisnya: \( f(x) = 2x \).<br>
+      <div class="final-ans">Jawaban: Relasi "Setengah Dari" (atau rumus fungsi \( f(x) = 2x \))</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fd5')">📋 Salin Jawaban FD No. 5</button>
+  </div>
+
+  <!-- Soal FD 6 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 6</span></div>
+    <div class="soal-text">Manakah pernyataan berikut yang merupakan fungsi?<br>
+    A. Setiap siswa dipasangkan dengan satu nomor induk<br>
+    B. Satu siswa memiliki dua nomor induk<br>
+    C. Satu bilangan dipasangkan ke dua hasil berbeda<br>
+    D. Semua anggota domain tidak memiliki pasangan
+    </div>
+    <div class="tulis-box" id="ans-fd6">
+      <span class="step-title">Penjelasan Konseptual:</span>
+      Definisi fungsi mensyaratkan setiap elemen domain wajib memiliki tepat satu kawan di kodomain.<br>
+      • <strong>Pernyataan A BENAR:</strong> Setiap siswa (domain) berpasangan dengan tepat satu nomor induk (kodomain).<br>
+      • Pernyataan B SALAH: Domain bercabang ke 2 pasangan.<br>
+      • Pernyataan C SALAH: Domain bercabang ke 2 hasil.<br>
+      • Pernyataan D SALAH: Domain tidak memiliki relasi.<br>
+      <div class="final-ans">Jawaban: A. Setiap siswa dipasangkan dengan satu nomor induk</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fd6')">📋 Salin Jawaban FD No. 6</button>
+  </div>
+
+  <!-- ==================== BAGIAN 3: FUNGSI LANJUTAN ==================== -->
+  <div class="cat-divider">
+    <span class="cat-badge">Bagian III: Fungsi Lanjutan</span>
+    <div class="cat-line"></div>
+  </div>
+
+  <!-- Soal FL 1 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 1</span></div>
+    <div class="soal-text">Diketahui rumus fungsi \( f(x) = 3x - 2 \). Tentukan nilai dari:<br>
+    a. \( f(5) \)<br>
+    b. \( f(-2) \)
+    </div>
+    <div class="tulis-box" id="ans-fl1">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      <strong>a. Menentukan \( f(5) \):</strong><br>
+      Substitusikan \( x = 5 \):<br>
+      \( f(5) = 3(5) - 2 \)<br>
+      \( f(5) = 15 - 2 = 13 \)<br><br>
+      <strong>b. Menentukan \( f(-2) \):</strong><br>
+      Substitusikan \( x = -2 \):<br>
+      \( f(-2) = 3(-2) - 2 \)<br>
+      \( f(-2) = -6 - 2 = -8 \)<br>
+      <div class="final-ans">Jawaban: a. f(5) = 13 &nbsp;|&nbsp; b. f(-2) = -8</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fl1')">📋 Salin Jawaban FL No. 1</button>
+  </div>
+
+  <!-- Soal FL 2 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 2</span></div>
+    <div class="soal-text">Jika \( g(x) = ax + 4 \) dan diketahui \( g(3) = 19 \), tentukan nilai \( a \)!</div>
+    <div class="tulis-box" id="ans-fl2">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Substitusikan \( x = 3 \) ke rumus fungsi \( g(x) \):<br>
+      \( g(3) = a(3) + 4 = 19 \)<br>
+      \( 3a + 4 = 19 \)<br>
+      \( 3a = 19 - 4 \)<br>
+      \( 3a = 15 \)<br>
+      \( a = \frac{15}{3} = 5 \)<br>
+      <div class="final-ans">Jawaban: Nilai a = 5</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fl2')">📋 Salin Jawaban FL No. 2</button>
+  </div>
+
+  <!-- Soal FL 3 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 3</span></div>
+    <div class="soal-text">Diketahui fungsi kuadrat: \( h(x) = 2x^2 - 3x + 1 \). Hitung nilai dari \( h(4) \)!</div>
+    <div class="tulis-box" id="ans-fl3">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Substitusikan \( x = 4 \) ke dalam persamaan fungsi:<br>
+      \( h(4) = 2(4)^2 - 3(4) + 1 \)<br>
+      \( h(4) = 2(16) - 12 + 1 \)<br>
+      \( h(4) = 32 - 12 + 1 \)<br>
+      \( h(4) = 20 + 1 = 21 \)<br>
+      <div class="final-ans">Jawaban: h(4) = 21</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fl3')">📋 Salin Jawaban FL No. 3</button>
+  </div>
+
+  <!-- Soal FL 4 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 4</span></div>
+    <div class="soal-text">Diketahui pemetaan \( f : x \to 5x + 1 \). Tentukan rumus fungsi dan bayangan dari 7!</div>
+    <div class="tulis-box" id="ans-fl4">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      1. Rumus fungsi dari notasi pemetaan \( f : x \to 5x + 1 \) adalah:<br>
+      <strong>\( f(x) = 5x + 1 \)</strong><br><br>
+      2. Bayangan dari 7 (artinya mencari nilai \( f(7) \)):<br>
+      Substitusikan \( x = 7 \):<br>
+      \( f(7) = 5(7) + 1 \)<br>
+      \( f(7) = 35 + 1 = 36 \)<br>
+      <div class="final-ans">Jawaban: Rumus f(x) = 5x + 1 &nbsp;|&nbsp; Bayangan dari 7 = 36</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fl4')">📋 Salin Jawaban FL No. 4</button>
+  </div>
+
+  <!-- Soal FL 5 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 5</span></div>
+    <div class="soal-text">Jika \( p(x) = 4x - 7 \) dan domain \( D = \{1, 3, 5\} \), tentukan daerah hasil (range)-nya!</div>
+    <div class="tulis-box" id="ans-fl5">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Hitung nilai bayangan untuk setiap anggota domain \( x \in \{1, 3, 5\} \):<br>
+      • Untuk \( x = 1 \): \( p(1) = 4(1) - 7 = 4 - 7 = -3 \)<br>
+      • Untuk \( x = 3 \): \( p(3) = 4(3) - 7 = 12 - 7 = 5 \)<br>
+      • Untuk \( x = 5 \): \( p(5) = 4(5) - 7 = 20 - 7 = 13 \)<br>
+      <div class="final-ans">Jawaban: Range = { -3, 5, 13 }</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fl5')">📋 Salin Jawaban FL No. 5</button>
+  </div>
+
+  <!-- Soal FL 6 -->
+  <div class="soal-card">
+    <div class="soal-head"><span class="soal-num">Nomor 6</span></div>
+    <div class="soal-text">Diketahui fungsi linear \( f(x) = 2x + 5 \). Jika \( f(m) = 21 \), tentukan nilai \( m \)!</div>
+    <div class="tulis-box" id="ans-fl6">
+      <span class="step-title">Langkah Pengerjaan:</span>
+      Substitusikan \( x = m \) ke dalam rumus fungsi:<br>
+      \( f(m) = 2(m) + 5 = 21 \)<br>
+      \( 2m + 5 = 21 \)<br>
+      \( 2m = 21 - 5 \)<br>
+      \( 2m = 16 \)<br>
+      \( m = \frac{16}{2} = 8 \)<br>
+      <div class="final-ans">Jawaban: Nilai m = 8</div>
+    </div>
+    <button class="copy-btn" onclick="salin('ans-fl6')">📋 Salin Jawaban FL No. 6</button>
+  </div>
+
+  <div style="text-align: center;">
+    <a href="/view/tasks" class="btn-kembali">← Kembali ke Dashboard Tugas</a>
+  </div>
+</div>
+
+<script>
+  function salin(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    navigator.clipboard.writeText(el.innerText).then(() => {
+      alert('Langkah jawaban berhasil disalin ke clipboard!');
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+</script>
+
+</body>
+</html>
