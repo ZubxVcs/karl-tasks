@@ -1480,7 +1480,7 @@ body[data-design="bento"][data-theme="dark"] .uts-divider-badge {
   inset: 0;
   background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(8px);
-  z-index: 200;
+  z-index: 2000;
   display: flex;
   align-items: flex-end;
   opacity: 0;
@@ -1794,7 +1794,7 @@ body[data-design="bento"][data-theme="dark"] .uts-divider-badge {
   height: 100vh;
   background: rgba(0,0,0,0.65);
   backdrop-filter: blur(8px);
-  z-index: 250;
+  z-index: 2000;
   display: none;
   align-items: center;
   justify-content: center;
@@ -4700,12 +4700,12 @@ body[data-design="bento"][data-theme="dark"] .filter-pills {
 
 .z-confirm-modal {
   display: none;
-  z-index: 1000;
+  z-index: 3000 !important;
 }
 
 .z-admin-login-modal {
   display: none;
-  z-index: 1002;
+  z-index: 3002 !important;
 }
 
 .confirm-bubble-lock {
