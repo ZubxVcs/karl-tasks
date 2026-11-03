@@ -7,7 +7,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 4px;
+      font-size: 0.9em;
+      line-height: 1.1;
+    }
+    .frac-top {
+      border-bottom: 1.5px solid currentColor;
+      padding-bottom: 1px;
+    }
+    .frac-bottom {
+      padding-top: 1px;
+    }
     :root {
       --bg: #0A0D14;
       --card: #141722;
@@ -130,6 +148,7 @@ Uji garis bilangan: -1 &lt; x &lt; 5
   <div class="folio-item">
     <div class="soal-line">4. (x - 2) / (x - 5) ≤ 0</div>
     <div class="cara-tulis">
+Bentuk pecahan: <span class="frac"><span class="frac-top">x - 2</span><span class="frac-bottom">x - 5</span></span> ≤ 0<br>
 Pembilang: x = 2 (tertutup)<br>
 Penyebut: x ≠ 5 (terbuka)<br>
 Daerah negatif: 2 ≤ x &lt; 5
@@ -216,11 +235,12 @@ Banyak pemetaan = n(Q)^n(P) = 3⁴ = 81
   <div class="folio-item">
     <div class="soal-line">5. Diagram pemetaan: 1 → 2, 2 → 4, 3 → 6. Tentukan relasinya!</div>
     <div class="cara-tulis">
-1 = 1/2 dari 2<br>
-2 = 1/2 dari 4<br>
-3 = 1/2 dari 6
+Perhatikan hubungan domain ke kodomain:<br>
+1 = <span class="frac"><span class="frac-top">1</span><span class="frac-bottom">2</span></span> dari 2<br>
+2 = <span class="frac"><span class="frac-top">1</span><span class="frac-bottom">2</span></span> dari 4<br>
+3 = <span class="frac"><span class="frac-top">1</span><span class="frac-bottom">2</span></span> dari 6
       <div class="kesimpulan-box">
-        Jadi, nama relasinya adalah "Setengah Dari" (rumus f(x) = 2x).
+        Jadi, relasi tersebut adalah "Setengah Dari" (atau rumus fungsi f(x) = 2x).
       </div>
     </div>
   </div>
@@ -255,7 +275,7 @@ b. f(-2) = 3(-2) - 2 = -6 - 2 = -8
 g(3) = a(3) + 4 = 19<br>
 3a = 19 - 4<br>
 3a = 15<br>
-a = 15 / 3 = 5
+a = <span class="frac"><span class="frac-top">15</span><span class="frac-bottom">3</span></span> = 5
       <div class="kesimpulan-box">
         Jadi, nilai a adalah 5.
       </div>
@@ -303,7 +323,7 @@ p(5) = 4(5) - 7 = 13
 f(m) = 2m + 5 = 21<br>
 2m = 21 - 5<br>
 2m = 16<br>
-m = 16 / 2 = 8
+m = <span class="frac"><span class="frac-top">16</span><span class="frac-bottom">2</span></span> = 8
       <div class="kesimpulan-box">
         Jadi, nilai m adalah 8.
       </div>
