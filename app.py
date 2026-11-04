@@ -537,7 +537,7 @@ def view_overview(request: Request):
     return templates.TemplateResponse(request, "view/index.html", {
         "active_page": "overview",
         "current_theme": "karl",
-        "page_title": "Karl Tasks — Command Center (Pratinjau)",
+        "page_title": "Karl Tasks | Command Center (Pratinjau)",
         "is_readonly": True,
         "is_admin": is_admin_request(request)
     })
